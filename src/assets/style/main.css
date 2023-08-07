@@ -13,7 +13,15 @@
   }
 }
 
+@layer utilities {
+  .res-image {
+    @apply object-cover object-center max-w-full max-h-full;
+  }
+}
+
 /* Reset */
 input {
   all: unset;
 }
+
+/* Classes */
