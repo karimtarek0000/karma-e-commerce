@@ -12,8 +12,8 @@
 
         <!-- Actions -->
         <div class="flex items-center">
-          <!-- <ActionsCart /> -->
-          <NuxtLink class="login-btn" to="/"> login </NuxtLink>
+          <ActionsCart />
+          <!-- <NuxtLink class="login-btn" to="/"> login </NuxtLink> -->
         </div>
       </div>
     </div>
