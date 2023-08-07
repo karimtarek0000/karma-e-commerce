@@ -1,8 +1,6 @@
 export const useProducts = defineStore("products", {
   state: () => {
-    return {
-      name: "apple",
-    };
+    return {};
   },
   getters: {},
   actions: {},
