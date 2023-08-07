@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const router = useRouter();
+const categoryName = ref<string>("");
 const items = reactive([
   {
     name: "electronics",
@@ -25,6 +26,7 @@ const items = reactive([
 
 const overCategoryHandler = (item: any): void => {
   // TODO: send item name to the server
+  categoryName.value = item.name;
 };
 const clickCategoryHandler = (item: any): void => {
   // TODO: Go to the page to view specific category
@@ -40,7 +42,7 @@ const clickCategoryHandler = (item: any): void => {
           <button
             v-for="item in items"
             :key="item.name"
-            class="link"
+            class="font-bold link"
             @mouseover="overCategoryHandler(item)"
             @click="clickCategoryHandler(item)"
           >
@@ -49,7 +51,7 @@ const clickCategoryHandler = (item: any): void => {
 
           <!-- View the category after the user over on it -->
           <!-- TODO: on desktop only -->
-          <CategoryView />
+          <CategoryView :categoryName="categoryName" />
         </div>
         <NuxtLink class="capitalize text-14" to="/">All categories</NuxtLink>
       </div>
