@@ -20,9 +20,12 @@ module.exports = {
     extend: {
       backgroundColor: {
         primary: withOpacity("color-primary"),
+        primaryDarken: withOpacity("color-primary-darken"),
       },
       fontSize: {
+        12: "0.75rem",
         14: "0.875rem",
+        18: "1.125rem",
       },
       fontWeight: {
         regular: 400,

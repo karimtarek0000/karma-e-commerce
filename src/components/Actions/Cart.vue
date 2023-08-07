@@ -1,10 +1,17 @@
 <script setup lang="ts"></script>
 
 <template>
-  <NuxtLink class="flex items-center" to="/">
-    <span>Count</span>
-    <ShareRenderSVG style="height: 40px; width: 20px" iconName="cart" />
+  <NuxtLink class="cart" to="/">
+    <span>10</span>
+    <ShareRenderSVG iconName="cart" />
   </NuxtLink>
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.cart {
+  @apply relative flex items-center;
+}
+.cart span {
+  @apply flex justify-center items-center absolute -top-[16px] -end-[15px] rounded-full w-[25px] h-[25px] bg-primaryDarken text-white text-14;
+}
+</style>

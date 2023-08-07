@@ -8,6 +8,6 @@
 
 <style scoped>
 .input {
-  @apply px-2 py-2 leading-[0] min-w-[50%] text-black bg-white rounded-md text-14;
+  @apply px-2 py-2 leading-[0] shrink min-w-[31.25rem] text-black bg-white rounded-md text-14;
 }
 </style>

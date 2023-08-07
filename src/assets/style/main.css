@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --color-primary: 196, 209, 11;
+    --color-primary-darken: 196, 102, 6;
   }
 
   body {
