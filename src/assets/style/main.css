@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 196, 209, 11;
+  }
+
+  body {
+    font-family: "Roboto", "sans-serif";
+  }
+}
+
+/* Reset */
+input {
+  all: unset;
+}
