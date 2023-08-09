@@ -2,10 +2,10 @@
 
 <template>
   <div class="cart-view" aria-modal="true" role="dialog" tabindex="-1">
-    <div class="space-y-6">
+    <div class="space-y-2">
       <!-- List of products -->
       <div class="cart-view-list">
-        <div v-for="index in 5" :key="index" class="flex items-center gap-4">
+        <div v-for="index in 5" :key="index" class="flex items-center gap-1">
           <img
             src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
             alt=""
@@ -19,12 +19,13 @@
             <p class="flex items-center justify-center mt-4 gap-x-3 text-14">
               Price: <span class="font-bold">$1000</span>
             </p>
+            <span>del</span>
           </div>
         </div>
       </div>
 
       <!-- Actions -->
-      <div class="space-y-4 text-center">
+      <div class="space-y-2 text-center">
         <NuxtLink to="/" class="view-cart-btn"
           >View my cart <span class="font-bold">(3)</span></NuxtLink
         >
@@ -36,10 +37,10 @@
 
 <style scoped>
 .cart-view {
-  @apply absolute rounded-md  shadow-xl top-[100%] mt-2 z-20 w-screen max-w-[18.75rem] px-4 py-8 bg-white -end-[100%] lg:px-8;
+  @apply absolute rounded-md shadow-xl top-[100%] mt-2 z-20 w-screen max-w-[18.75rem] p-3 bg-white -end-[100%];
 }
 .cart-view-list {
-  @apply space-y-4 max-h-[200px] overflow-auto scrollbar-none;
+  @apply space-y-4 max-h-[14.375rem] overflow-auto scrollbar-none;
 }
 .view-cart-btn {
   @apply block px-5 py-3 text-sm text-black transition border border-secondary rounded hover:ring-1 hover:ring-secondary;

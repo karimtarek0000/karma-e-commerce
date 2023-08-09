@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { LGlargeOrEqual } from "@/composables/useBreakPoints";
 const router = useRouter();
 const categoryName = ref<string>("");
 const items = reactive([
@@ -51,7 +50,7 @@ const clickCategoryHandler = (item: any): void => {
           </button>
 
           <!-- View the category after the user over on it -->
-          <CategoryView v-if="LGlargeOrEqual" :categoryName="categoryName" />
+          <CategoryView :categoryName="categoryName" />
         </div>
         <NuxtLink class="capitalize text-14" to="/">All categories</NuxtLink>
       </div>

@@ -1,10 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
+  <NavbarDesktop />
   <main>
-    <NavbarDesktop />
     <slot />
-
-    <Footer />
   </main>
+  <Footer />
 </template>

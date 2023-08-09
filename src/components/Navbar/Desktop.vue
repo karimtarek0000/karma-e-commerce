@@ -5,7 +5,7 @@
     <div class="container py-4">
       <div class="flex items-center">
         <!-- Logo -->
-        <Logo />
+        <Logo class="shrink-0" />
 
         <!-- Search -->
         <Search />

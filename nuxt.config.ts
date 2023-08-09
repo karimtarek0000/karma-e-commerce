@@ -2,12 +2,11 @@
 export default defineNuxtConfig({
   srcDir: "src/",
   devtools: { enabled: true },
-  routeRules: {
-    "/": { swr: 3600 }, // Revalidate after each 1 hour
-  },
+  // routeRules: {
+  //   "/": { swr: 3600 }, // Revalidate after each 1 hour
+  // },
   css: ["~/assets/style/main.css"],
-  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt"],
-
+  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "@nuxtjs/device"],
   // Pinia - state mangement
   pinia: {
     autoImports: ["defineStore", "acceptHMRUpdate"],
@@ -20,6 +19,16 @@ export default defineNuxtConfig({
     preload: true,
     prefetch: true,
     preconnect: true,
+  },
+  // Image/nuxt
+  image: {
+    // The screen sizes predefined by `@nuxt/image`:
+    screens: {
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+    },
   },
   postcss: {
     plugins: {

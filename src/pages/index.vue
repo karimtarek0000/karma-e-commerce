@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { isDesktop } = useDevice();
+</script>
 
 <template>
-  <CategoryNavbar />
+  <CategoryNavbar v-if="isDesktop" />
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
