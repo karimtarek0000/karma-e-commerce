@@ -1,10 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const toggleCartQuickView = ref<boolean>(false);
+</script>
 
 <template>
-  <NuxtLink class="cart" to="/">
+  <button class="cart" @click="toggleCartQuickView = !toggleCartQuickView">
     <span>10</span>
     <ShareRenderSVG iconName="cart" />
-  </NuxtLink>
+    <ActionsCartQuickView v-show="toggleCartQuickView" />
+  </button>
 </template>
 
 <style scoped>

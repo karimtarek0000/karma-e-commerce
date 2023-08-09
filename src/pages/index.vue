@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
-<template></template>
+<template>
+  <CategoryNavbar />
+</template>
 
 <style lang="scss" scoped></style>

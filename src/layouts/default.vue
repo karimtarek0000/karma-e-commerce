@@ -3,7 +3,6 @@
 <template>
   <main>
     <NavbarDesktop />
-    <CategoryNavbar />
     <slot />
   </main>
 </template>
