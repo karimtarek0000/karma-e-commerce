@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LGlargeOrEqual } from "@/composables/useBreakPoints";
 const router = useRouter();
 const categoryName = ref<string>("");
 const items = reactive([
@@ -50,8 +51,7 @@ const clickCategoryHandler = (item: any): void => {
           </button>
 
           <!-- View the category after the user over on it -->
-          <!-- TODO: on desktop only -->
-          <CategoryView :categoryName="categoryName" />
+          <CategoryView v-if="LGlargeOrEqual" :categoryName="categoryName" />
         </div>
         <NuxtLink class="capitalize text-14" to="/">All categories</NuxtLink>
       </div>
@@ -70,7 +70,7 @@ const clickCategoryHandler = (item: any): void => {
   @apply flex items-center gap-x-4;
 }
 .link {
-  @apply uppercase text-18 rounded-sm px-3 py-1 hover:bg-primaryDarken hover:text-white;
+  @apply uppercase text-18 rounded-sm px-3 py-1 hover:bg-secondary hover:text-white;
 }
 
 .link:hover ~ .view,

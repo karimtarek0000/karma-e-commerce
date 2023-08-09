@@ -20,7 +20,11 @@ module.exports = {
     extend: {
       backgroundColor: {
         primary: withOpacity("color-primary"),
-        primaryDarken: withOpacity("color-primary-darken"),
+        secondary: withOpacity("color-secondary"),
+      },
+      colors: {
+        primary: withOpacity("color-primary"),
+        secondary: withOpacity("color-secondary"),
       },
       fontSize: {
         12: "0.75rem",
@@ -31,14 +35,11 @@ module.exports = {
         regular: 400,
         bold: 700,
       },
-      colors: {
-        primary: withOpacity("--color-primary"),
-      },
       gridTemplateColumns: {},
     },
     container: {
       center: true,
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };

@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --color-primary: 196, 209, 11;
-    --color-primary-darken: 196, 102, 6;
+    --color-primary: 253, 195, 89;
+    --color-secondary: 69, 70, 146;
   }
 
   body {
@@ -16,6 +16,9 @@
 @layer utilities {
   .res-image {
     @apply object-cover object-center max-w-full max-h-full;
+  }
+  .scroll0 {
+    @apply scroll-m-1;
   }
 }
 

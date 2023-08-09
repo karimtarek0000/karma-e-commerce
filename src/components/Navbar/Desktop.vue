@@ -22,6 +22,6 @@
 
 <style scoped>
 .login-btn {
-  @apply px-3 py-1 text-white rounded-md text-14 bg-primaryDarken;
+  @apply px-3 py-1 text-white rounded-md text-14 bg-secondary;
 }
 </style>

@@ -4,5 +4,7 @@
   <main>
     <NavbarDesktop />
     <slot />
+
+    <Footer />
   </main>
 </template>
