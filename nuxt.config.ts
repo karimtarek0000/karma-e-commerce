@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   srcDir: "src/",
   devtools: { enabled: true },
   css: ["~/assets/style/main.css"],
-  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt"],
+  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt"],
 
   // Pinia - state mangement
   pinia: {

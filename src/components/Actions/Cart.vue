@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { LGlargeOrEqual } from "@/composables/useBreakPoints";
 const toggleCartQuickView = ref<boolean>(false);
 </script>
 
 <template>
   <button class="cart" @click="toggleCartQuickView = !toggleCartQuickView">
-    <span>10</span>
+    <span>1</span>
     <ShareRenderSVG iconName="cart" />
-    <ActionsCartQuickView v-show="toggleCartQuickView" />
+    <ActionsCartQuickView v-if="LGlargeOrEqual" v-show="toggleCartQuickView" />
   </button>
 </template>
 

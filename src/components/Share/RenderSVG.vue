@@ -6,7 +6,7 @@ const { iconName, sizes } = defineProps<{
 </script>
 
 <template>
-  <svg :class="[`w-[25px] h-[25px] ${sizes}`]">
+  <svg :class="[`w-[1.5625rem] h-[1.5625rem] ${sizes}`]">
     <use :xlink:href="`icons/sprite.svg#${iconName}`">
       <title>{{ iconName }}</title>
     </use>
