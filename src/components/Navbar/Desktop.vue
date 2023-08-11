@@ -13,7 +13,10 @@
         <!-- Actions -->
         <div class="flex items-center">
           <ActionsCart />
-          <!-- <NuxtLink class="login-btn" to="/"> login </NuxtLink> -->
+          <!-- <div class="space-x-2">
+            <NuxtLink class="btn login" to="/">Login</NuxtLink>
+            <NuxtLink class="btn signup" to="/">Signup</NuxtLink>
+          </div> -->
         </div>
       </div>
     </div>
@@ -21,7 +24,13 @@
 </template>
 
 <style scoped>
-.login-btn {
-  @apply px-3 py-1 text-white rounded-md text-14 bg-secondary;
+.btn {
+  @apply px-4 py-2 rounded-md text-14;
+}
+.login {
+  @apply bg-secondary text-white;
+}
+.signup {
+  @apply text-black border border-secondary hover:bg-secondary hover:text-white transition-colors duration-200;
 }
 </style>

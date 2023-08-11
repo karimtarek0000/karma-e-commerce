@@ -29,6 +29,7 @@ export default defineNuxtConfig({
       lg: 1024,
       xl: 1280,
     },
+    optimize: true,
   },
   postcss: {
     plugins: {
