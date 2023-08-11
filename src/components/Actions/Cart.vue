@@ -4,11 +4,13 @@ const toggleCartQuickView = ref<boolean>(false);
 </script>
 
 <template>
-  <button class="cart" @click="toggleCartQuickView = !toggleCartQuickView">
-    <span>1</span>
-    <ShareRenderSVG iconName="cart" />
+  <div class="cart">
+    <button @click="toggleCartQuickView = !toggleCartQuickView">
+      <span>1</span>
+      <ShareRenderSVG iconName="cart" />
+    </button>
     <ActionsCartQuickView v-if="isDesktop" v-show="toggleCartQuickView" />
-  </button>
+  </div>
 </template>
 
 <style scoped>

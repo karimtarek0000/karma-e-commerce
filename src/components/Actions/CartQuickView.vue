@@ -16,10 +16,14 @@
             <h3 class="max-w-full text-black truncate text-14">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur, incidunt.
             </h3>
-            <p class="flex items-center justify-center mt-4 gap-x-3 text-14">
-              Price: <span class="font-bold">$1000</span>
-            </p>
-            <span>del</span>
+            <div class="flex items-center justify-between pb-3 mt-4 border-b">
+              <p class="flex items-center justify-center gap-x-3 text-14">
+                Price: <span class="font-bold">$1000</span>
+              </p>
+              <button>
+                <ShareRenderSVG iconName="del" sizes="w-[18px]" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
