@@ -2,19 +2,46 @@
 
 <template>
   <div class="container">
-    <section class="pt-12 pb-24 overflow-hidden bg-blueGray-100 rounded-b-10xl">
+    <section class="pt-12 pb-24 overflow-hidden">
       <div class="container px-4 mx-auto">
-        <div class="flex flex-wrap -mx-4">
-          <div class="w-full px-4"></div>
-          <div class="w-full px-4 mb-16 lg:w-1/2 lg:mb-0"></div>
+        <div class="flex -mx-4 max-lg:flex-col gap-9">
+          <!-- Col 1 -->
+          <div class="flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 lg:mb-0">
+            <!-- Thumbnails images -->
+            <div class="flex justify-between md:flex-col">
+              <div
+                class="w-[100px] h-[100px] p-1 rounded-md border border-secondary/50 cursor-pointer overflow-hidden"
+                v-for="index in 5"
+                :key="index"
+              >
+                <nuxt-img
+                  src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                  class="object-cover w-full h-full max-w-full max-h-full"
+                  width="100px"
+                  height="100px"
+                  preload
+                />
+              </div>
+            </div>
+            <!-- Big image -->
+            <div class="overflow-hidden rounded-md">
+              <nuxt-img
+                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                class="object-cover w-full h-full max-w-full max-h-full"
+                width="100px"
+                height="100px"
+                preload
+              />
+            </div>
+          </div>
 
           <!-- Col 2 -->
-          <div class="w-full px-4 lg:w-1/2">
-            <div class="max-w-md mb-6">
+          <div class="px-4">
+            <div class="mb-6 lg:max-w-md max-md:text-center">
               <span class="text-xs tracking-wider text-gray-400">PRODUCT #3299803</span>
               <h2 class="mt-6 mb-4 text-2xl font-bold lg:text-3xl">Apple iPhone 12 Pro (128GB)</h2>
-              <p class="flex items-center mb-6 text-2xl text-secondary">
-                <span class="mr-2 font-medium">$</span>
+              <p class="flex items-center mb-6 text-2xl max-md:justify-center text-secondary">
+                <span class="mr-2">$</span>
                 <span>44.90</span>
               </p>
               <p class="text-lg text-gray-400">
@@ -23,13 +50,15 @@
                 similique fugiat suscipit est, accusamus fugit eum?
               </p>
             </div>
-            <div class="flex items-center mb-6">
+
+            <!-- Rating -->
+            <div class="flex items-center mb-6 max-md:justify-center">
               <div class="inline-flex mr-4">rating</div>
               <span class="text-gray-400 text-md">4.59</span>
             </div>
 
             <!-- Quantity -->
-            <div class="flex items-center mt-10 mb-20">
+            <div class="flex items-center mt-10 mb-20 max-md:justify-center">
               <h4>Qty:</h4>
             </div>
 
