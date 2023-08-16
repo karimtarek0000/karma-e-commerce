@@ -50,10 +50,14 @@ definePageMeta({
     </div>
 
     <!-- Saler or Payer -->
-    <select class="rounded-md lg:col-span-full sm:col-span-3 form-select">
-      <option value="saler">Saler</option>
-      <option selected value="payer">Payer</option>
-    </select>
+    <div class="col-span-full">
+      <label for="type" class="block text-sm font-medium text-gray-700">Select client type</label>
+
+      <select class="w-full mt-1 rounded-md form-select" id="type">
+        <option value="saler">Saler</option>
+        <option selected value="payer">Payer</option>
+      </select>
+    </div>
 
     <!-- Password -->
     <div class="col-span-6 sm:col-span-3">
