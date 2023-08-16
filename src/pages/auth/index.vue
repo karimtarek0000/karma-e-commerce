@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <form class="grid grid-cols-6 gap-6 mt-8">
+  <form class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-6">
     <!-- Name -->
     <div class="col-span-full">
       <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
@@ -22,7 +22,7 @@ definePageMeta({
     </div>
 
     <!-- Email -->
-    <div class="col-span-6">
+    <div class="col-span-full md:col-span-6">
       <label for="Email" class="block text-sm font-medium text-gray-700">Email</label>
 
       <input
@@ -36,7 +36,7 @@ definePageMeta({
     </div>
 
     <!-- Phone -->
-    <div class="col-span-6">
+    <div class="col-span-full md:col-span-6">
       <label for="Phone" class="block text-sm font-medium text-gray-700">Phone</label>
 
       <input
@@ -60,7 +60,7 @@ definePageMeta({
     </div>
 
     <!-- Password -->
-    <div class="col-span-6 sm:col-span-3">
+    <div class="col-span-full md:col-span-3">
       <label for="Password" class="block text-sm font-medium text-gray-700"> Password </label>
 
       <input
@@ -74,7 +74,7 @@ definePageMeta({
     </div>
 
     <!-- Confirm password -->
-    <div class="col-span-6 sm:col-span-3">
+    <div class="col-span-full md:col-span-3">
       <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
         Password Confirmation
       </label>
@@ -103,14 +103,15 @@ definePageMeta({
       </label>
     </div>
 
-    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+    <!-- Actions -->
+    <div class="text-center col-span-full">
       <button
-        class="inline-block px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
+        class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
       >
         Create an account
       </button>
 
-      <p class="mt-4 text-sm text-gray-500 sm:mt-0">
+      <p class="mt-4 text-sm text-gray-500">
         Already have an account?
         <a href="#" class="text-gray-700 underline">Log in</a>.
       </p>
