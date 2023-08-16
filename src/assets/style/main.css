@@ -21,8 +21,3 @@
     @apply scroll-m-1;
   }
 }
-
-/* Reset */
-input {
-  all: unset;
-}
