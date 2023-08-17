@@ -6,7 +6,14 @@ export default defineNuxtConfig({
   //   "/": { swr: 3600 }, // Revalidate after each 1 hour
   // },
   css: ["~/assets/style/main.css"],
-  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "@nuxtjs/device"],
+  modules: [
+    "@nuxtjs/google-fonts",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "@nuxt/image",
+    "@nuxtjs/device",
+    "@formkit/nuxt",
+  ],
   // Pinia - state mangement
   pinia: {
     autoImports: ["defineStore", "acceptHMRUpdate"],
