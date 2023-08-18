@@ -26,9 +26,7 @@
         </div>
       </section>
 
-      <main
-        class="flex flex-col items-center justify-center py-8 lg:col-span-7 lg:py-12 xl:col-span-6"
-      >
+      <main class="flex flex-col items-center justify-center py-8 lg:py-12 lg:col-span-6">
         <Logo />
         <slot />
       </main>
