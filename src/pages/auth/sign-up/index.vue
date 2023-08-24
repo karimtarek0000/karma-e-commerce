@@ -21,7 +21,6 @@ const submitHandler = async (data: any) => {
   <FormKit
     type="form"
     form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-6"
-    form-message=""
     :actions="false"
     :value="form"
     @submit="submitHandler"
