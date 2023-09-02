@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useBtnHideOrShowPassword } from "@/composables/forms";
-import { useAPI } from "@/composables/http";
+import { useAuth } from "@/store/auth";
+
+//
+const { setUserDataWhenLoggedIn } = useAuth();
+const { $http } = useNuxtApp();
 
 // --------- Data -----------
 const form = reactive({
@@ -18,8 +22,18 @@ definePageMeta({
 // --------- Functions -----------
 const submitHandler = async (userData: { email: string; password: string }) => {
   try {
-    await useAPI("/auth/sign-in", { method: "POST", body: userData, credentials: "include" });
-    router.replace("/");
+    await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData, credentials: "include" }));
+    setUserDataWhenLoggedIn({ name: "karim" });
+    // router.replace("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const checkToken = async () => {
+  try {
+    const { data } = await useLazyAsyncData(() => $http("/order", { method: "POST", body: {} }));
+    // router.replace("/");
   } catch (error) {
     console.log(error);
   }
@@ -83,4 +97,6 @@ const submitHandler = async (userData: { email: string; password: string }) => {
       </div>
     </template>
   </FormKit>
+
+  <button @click="checkToken">Check token</button>
 </template>
