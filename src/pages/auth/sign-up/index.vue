@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { useBtnHideOrShowPassword } from "@/composables/forms";
+// --------- Data -----------
 const form = reactive({
   name: "",
   email: "",
   password: "",
 });
+const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 
+// --------- Define -----------
 definePageMeta({
   layout: "auth",
 });
+
+// --------- Functions -----------
 
 const submitHandler = async (data: any) => {
   console.log("Submit", data);
@@ -20,6 +26,7 @@ const submitHandler = async (data: any) => {
     form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-[repeat(6,minmax(0,60px))]"
     :actions="false"
     :value="form"
+    :config="{ validationVisibility: 'dirty' }"
     @submit="submitHandler"
   >
     <template #default="{ state: { valid, loading } }">
@@ -43,9 +50,9 @@ const submitHandler = async (data: any) => {
       </div>
 
       <!-- Password -->
-      <div class="col-span-full md:col-span-3">
+      <div class="relative col-span-full md:col-span-3">
         <FormKit
-          type="password"
+          :type="showPassword ? 'text' : 'password'"
           id="Password"
           name="password"
           placeholder="Password"
@@ -56,6 +63,11 @@ const submitHandler = async (data: any) => {
             matches: 'You must enter password like: kaKA@#123',
           }"
         />
+
+        <!-- To show or hide password -->
+        <button @click="showPasswordToggle" type="button" class="absolute top-[34px] end-2">
+          <ShareRenderSVG :iconName="showPassword ? 'visible-password' : 'un-password'" />
+        </button>
       </div>
 
       <!-- Confirm password -->
@@ -87,11 +99,9 @@ const submitHandler = async (data: any) => {
 
         <p class="mt-4 text-sm text-gray-500">
           Already have an account?
-          <a href="#" class="text-gray-700 underline">Log in</a>.
+          <NuxtLink to="/auth" class="text-gray-700 underline">Log in</NuxtLink>
         </p>
       </div>
     </template>
   </FormKit>
 </template>
-
-<style lang="scss" scoped></style>
