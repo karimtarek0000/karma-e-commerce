@@ -13,6 +13,7 @@ export const content = [
   "./src/pages/**/*.vue",
   "./src/plugins/**/*.{js,ts}",
   "./nuxt.config.{js,ts}",
+  "./src/tailwind-theme.ts",
   "./src/App.vue",
 ];
 export const theme = {
@@ -40,8 +41,4 @@ export const theme = {
     center: true,
   },
 };
-export const plugins = [
-  require("tailwind-scrollbar"),
-  require("@tailwindcss/forms"),
-  require("@formkit/themes/tailwindcss"),
-];
+export const plugins = [require("tailwind-scrollbar"), require("@tailwindcss/forms"), require("@formkit/themes/tailwindcss")];

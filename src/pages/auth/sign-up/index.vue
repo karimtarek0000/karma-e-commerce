@@ -2,10 +2,7 @@
 const form = reactive({
   name: "",
   email: "",
-  phone: "",
-  clientType: "",
   password: "",
-  confirmPassword: "",
 });
 
 definePageMeta({
@@ -20,7 +17,7 @@ const submitHandler = async (data: any) => {
 <template>
   <FormKit
     type="form"
-    form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-6"
+    form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-[repeat(6,minmax(0,60px))]"
     :actions="false"
     :value="form"
     @submit="submitHandler"
@@ -42,76 +39,41 @@ const submitHandler = async (data: any) => {
 
       <!-- Email -->
       <div class="col-span-full md:col-span-6">
+        <FormKit type="email" id="Email" name="email" label="Email" placeholder="Enter your email" validation="required|email" autocomplete="off" />
+      </div>
+
+      <!-- Password -->
+      <div class="col-span-full md:col-span-3">
         <FormKit
-          type="email"
-          id="Email"
-          name="email"
-          label="Email"
-          placeholder="Enter your email"
+          type="password"
+          id="Password"
+          name="password"
+          placeholder="Password"
+          label="Password"
+          autocomplete="off"
+          :validation="[['required'], ['matches', /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[@$%#]{1,})[a-zA-Z\d@$%#]{8,}/]]"
+          :validation-messages="{
+            matches: 'You must enter password like: kaKA@#123',
+          }"
+        />
+      </div>
+
+      <!-- Confirm password -->
+      <div class="col-span-full md:col-span-3">
+        <FormKit
+          type="password"
+          id="confirmPassword"
+          name="password_confirm"
+          label="Confirm Password"
+          placeholder="Confirm Password"
+          validation="required|confirm"
           autocomplete="off"
         />
       </div>
-
-      <!-- Phone -->
-      <div class="col-span-full md:col-span-6">
-        <FormKit
-          type="text"
-          id="Phone"
-          label="Phone"
-          name="phone"
-          placeholder="Enter your phone"
-          autocomplete="off"
-        />
-      </div>
-
-      <!-- Saler or Payer -->
-      <div class="col-span-full">
-        <FormKit
-          type="select"
-          label="Select client type"
-          name="clientType"
-          :options="['Saler', 'Payer']"
-        />
-      </div>
-
-      <!-- Password and confirm password -->
-      <FormKit type="group">
-        <!-- Password -->
-        <div class="col-span-full md:col-span-3">
-          <FormKit
-            type="password"
-            id="Password"
-            name="password"
-            placeholder="Password"
-            label="Password"
-            autocomplete="off"
-          />
-        </div>
-
-        <!-- Confirm password -->
-        <div class="col-span-full md:col-span-3">
-          <FormKit
-            type="password"
-            id="confirmPassword"
-            name="password_confirm"
-            label="Confirm Password"
-            placeholder="Confirm Password"
-            validation="required|confirm"
-            autocomplete="off"
-          />
-        </div>
-      </FormKit>
 
       <!-- Terms and condition -->
       <div class="flex col-span-6">
-        <FormKit
-          type="checkbox"
-          label="Agree terms and conditions"
-          name="terms"
-          :value="false"
-          validation="accepted"
-          validation-visibility="dirty"
-        />
+        <FormKit type="checkbox" label="Agree terms and conditions" name="terms" :value="false" validation="accepted" validation-visibility="dirty" />
       </div>
 
       <!-- Actions -->
