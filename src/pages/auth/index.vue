@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useBtnHideOrShowPassword } from "@/composables/forms";
+import { useAPI } from "@/composables/http";
 
 // --------- Data -----------
 const form = reactive({
@@ -7,6 +8,7 @@ const form = reactive({
   password: "",
 });
 const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
+const router = useRouter();
 
 // --------- Define -----------
 definePageMeta({
@@ -14,8 +16,13 @@ definePageMeta({
 });
 
 // --------- Functions -----------
-const submitHandler = async (data: any) => {
-  console.log("Submit", data);
+const submitHandler = async (userData: { email: string; password: string }) => {
+  try {
+    await useAPI("/auth/sign-in", { method: "POST", body: userData, credentials: "include" });
+    router.replace("/");
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 
@@ -43,7 +50,7 @@ const submitHandler = async (data: any) => {
           placeholder="Password"
           label="Password"
           autocomplete="off"
-          :validation="[['required'], ['matches', /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[@$%#]{1,})[a-zA-Z\d@$%#]{8,}/]]"
+          validation="required"
           :validation-messages="{
             matches: 'You must enter password like: kaKA@#123',
           }"
@@ -63,9 +70,10 @@ const submitHandler = async (data: any) => {
 
         <button
           :disabled="loading || !valid"
-          class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
+          class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          {{ loading ? "Loading..." : "Login" }}
+          <div v-show="loading" class="w-5 h-5 border-t-2 rounded-full border-t-white animate-spin"></div>
+          Login
         </button>
 
         <p class="mt-4 text-sm text-gray-500">
