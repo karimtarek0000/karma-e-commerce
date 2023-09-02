@@ -57,6 +57,10 @@ const submitHandler = async (data: any) => {
 
       <!-- Actions -->
       <div class="text-center col-span-full">
+        <div class="flex justify-end mb-4">
+          <NuxtLink to="/auth/forget-password" class="text-gray-700 underline text-end">forget password?</NuxtLink>
+        </div>
+
         <button
           :disabled="loading || !valid"
           class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
@@ -66,7 +70,7 @@ const submitHandler = async (data: any) => {
 
         <p class="mt-4 text-sm text-gray-500">
           Not have an account?
-          <NuxtLink to="/auth/sign-up" href="#" class="text-gray-700 underline">Create new account</NuxtLink>.
+          <NuxtLink to="/auth/sign-up" class="text-gray-700 underline">Create new account</NuxtLink>
         </p>
       </div>
     </template>
