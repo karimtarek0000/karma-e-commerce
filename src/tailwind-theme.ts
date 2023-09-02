@@ -1,5 +1,5 @@
 const shared = {
-  label: "text-sm font-medium text-red-600",
+  label: "text-sm font-medium text-black",
   input: "w-full mt-1 text-sm bg-white rounded-md shadow-sm focus:border-secondary border-secondary",
   message: "text-red-800 font-bold mt-[5px] text-14",
 };
