@@ -1,6 +1,6 @@
 import { useAuth } from "@/store/auth";
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware((to, from) => {
   const accessToken = useCookie("accessToken");
   const { setUserDataWhenLoggedIn } = useAuth();
 
