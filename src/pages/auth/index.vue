@@ -19,16 +19,7 @@ definePageMeta({
 const submitHandler = async (userData: { email: string; password: string }) => {
   try {
     await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
-    // router.replace("/");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const checkToken = async () => {
-  try {
-    const { data } = await useLazyAsyncData(() => $http("/order", { method: "POST", body: {} }));
-    // console.log(data.value);
+    router.replace("/");
   } catch (error) {
     console.log(error);
   }
@@ -92,6 +83,4 @@ const checkToken = async () => {
       </div>
     </template>
   </FormKit>
-
-  <button @click="checkToken">Check token</button>
 </template>

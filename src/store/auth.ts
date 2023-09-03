@@ -14,9 +14,16 @@ export const useAuth = defineStore("auth", {
       this.user = { _id, name, email, role };
       this.loggedIn = true;
     },
-    logout() {
-      this.loggedIn = false;
-      this.user = {};
+    async logout() {
+      const { $http } = useNuxtApp();
+      try {
+        await useLazyAsyncData(() => $http("/auth/logout"));
+        const accessToken = useCookie("accessToken");
+        this.loggedIn = false;
+        this.user = {};
+        accessToken.value = null;
+        navigateTo("/auth");
+      } catch (error) {}
     },
   },
   hydrate(state, initialState) {

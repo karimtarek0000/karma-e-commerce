@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAuth } from "@/store/auth";
+const { logout } = useAuth();
+</script>
 
 <template>
   <nav class="bg-primary">
@@ -12,6 +15,7 @@
 
         <!-- Actions -->
         <div class="flex items-center">
+          <button @click="logout" class="mx-2 btn signup" to="/">Logout</button>
           <ActionsCart />
           <!-- <div class="space-x-2">
             <NuxtLink class="btn login" to="/">Login</NuxtLink>

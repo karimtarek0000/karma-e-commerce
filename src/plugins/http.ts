@@ -3,7 +3,7 @@ import { useAuth } from "@/store/auth";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const accessToken = useCookie("accessToken");
-  const { setUserDataWhenLoggedIn } = useAuth();
+  const { setUserDataWhenLoggedIn, logout } = useAuth();
 
   const fetchOptions: FetchOptions = {
     baseURL: nuxtApp.$config.public.BASE_URL,
@@ -30,8 +30,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
           return apiFetcher(request, options);
         } catch (error) {
-          accessToken.value = "";
-          navigateTo("/auth");
+          logout();
         }
       }
     },
