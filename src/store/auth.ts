@@ -1,13 +1,21 @@
+import jwt_decode from "jwt-decode";
+import { UserData } from "types";
+
 export const useAuth = defineStore("auth", {
   state: () => ({
-    user: null,
+    user: {},
     loggedIn: false,
   }),
   // getters: {},
   actions: {
-    setUserDataWhenLoggedIn(payload: any) {
-      this.user = payload;
+    setUserDataWhenLoggedIn(token: string) {
+      const { _id, name, email, role } = jwt_decode(token) as UserData;
+
+      this.user = { _id, name, email, role };
       this.loggedIn = true;
+    },
+    logout() {
+      this.loggedIn = false;
     },
   },
   hydrate(state, initialState) {

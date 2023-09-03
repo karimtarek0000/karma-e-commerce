@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import { useBtnHideOrShowPassword } from "@/composables/forms";
-import { useAuth } from "@/store/auth";
-
-//
-const { setUserDataWhenLoggedIn } = useAuth();
 const { $http } = useNuxtApp();
 
 // --------- Data -----------
@@ -22,8 +18,7 @@ definePageMeta({
 // --------- Functions -----------
 const submitHandler = async (userData: { email: string; password: string }) => {
   try {
-    await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData, credentials: "include" }));
-    setUserDataWhenLoggedIn({ name: "karim" });
+    await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
     // router.replace("/");
   } catch (error) {
     console.log(error);

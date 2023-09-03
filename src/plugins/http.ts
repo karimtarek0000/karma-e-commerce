@@ -1,10 +1,13 @@
 import { $fetch, FetchContext, FetchOptions, Headers } from "ofetch";
+import { useAuth } from "@/store/auth";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const accessToken = useCookie("accessToken");
+  const { setUserDataWhenLoggedIn } = useAuth();
 
   const fetchOptions: FetchOptions = {
     baseURL: nuxtApp.$config.public.BASE_URL,
+    credentials: "include",
 
     onRequest(ctx: FetchContext): Promise<void> | void {
       ctx.options.headers = new Headers({
@@ -15,12 +18,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       const res = response._data;
       if (res?.message === "Login successfully") {
         accessToken.value = res?.user?.accessToken;
+        setUserDataWhenLoggedIn(accessToken.value as string);
       }
     },
     async onResponseError({ request, response, options }): Promise<any> {
       if (response.status === 401) {
         try {
-          const data = await apiFetcher("/auth/refresh-token", { credentials: "include" });
+          const data = await apiFetcher("/auth/refresh-token");
 
           accessToken.value = data.accessToken;
 
