@@ -1,7 +1,15 @@
 import { useAuth } from "@/store/auth";
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   //const auth = useAuth();
+  // const { $http } = useNuxtApp();
+
+  // const { data } = await useLazyAsyncData(() => $http("/auth/refresh-token"));
+  // const { data, error } = await useLazyAsyncData(() => $http("/auth/refresh-token", { credentials: "include" }));
+  // try {
+  //   const { data, error } = await useFetch("http://localhost:3000/auth/refresh-token");
+  //   console.log(data, error);
+  // } catch (error) {}
 
   // if (to.params.id === '1') {
   //   return abortNavigation()

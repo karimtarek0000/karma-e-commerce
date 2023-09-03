@@ -28,7 +28,7 @@ const submitHandler = async (userData: { email: string; password: string }) => {
 const checkToken = async () => {
   try {
     const { data } = await useLazyAsyncData(() => $http("/order", { method: "POST", body: {} }));
-    // router.replace("/");
+    // console.log(data.value);
   } catch (error) {
     console.log(error);
   }

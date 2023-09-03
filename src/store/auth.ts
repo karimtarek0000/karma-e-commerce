@@ -16,6 +16,7 @@ export const useAuth = defineStore("auth", {
     },
     logout() {
       this.loggedIn = false;
+      this.user = {};
     },
   },
   hydrate(state, initialState) {
