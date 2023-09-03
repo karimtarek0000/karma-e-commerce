@@ -22,7 +22,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     },
     async onResponseError({ request, response, options }): Promise<any> {
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 403) {
         try {
           const data = await apiFetcher("/auth/refresh-token");
 
