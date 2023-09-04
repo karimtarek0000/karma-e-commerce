@@ -7,9 +7,9 @@ export default defineNuxtConfig({
       BASE_URL: "",
     },
   },
-  // routeRules: {
-  //   "/": { swr: 3600 }, // Revalidate after each 1 hour
-  // },
+  routeRules: {
+    "/": { swr: 3600 }, // Revalidate after each 1 hour
+  },
   imports: {
     dirs: ["./stores"],
   },

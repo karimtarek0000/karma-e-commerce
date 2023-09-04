@@ -4,3 +4,11 @@ export type UserData = {
   email: string;
   role: "User" | "Admin" | "SuperAdmin";
 };
+
+export type Gategory = {
+  _id: string;
+  image: string;
+  name: string;
+  slug: string;
+  subCategories: Gategory[];
+};

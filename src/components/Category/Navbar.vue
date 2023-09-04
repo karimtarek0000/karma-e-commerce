@@ -1,35 +1,18 @@
 <script setup lang="ts">
+import { Gategory } from "types";
+const { $http } = useNuxtApp();
 const router = useRouter();
-const categoryName = ref<string>("");
-const items = reactive([
-  {
-    name: "electronics",
-    path: "",
-  },
-  {
-    name: "men",
-    path: "",
-  },
-  {
-    name: "women",
-    path: "",
-  },
-  {
-    name: "mobiles",
-    path: "",
-  },
-  {
-    name: "computers",
-    path: "",
-  },
-]);
 
-const overCategoryHandler = (item: any): void => {
-  // TODO: send item name to the server
-  categoryName.value = item.name;
+// ----------------- From API ---------------------
+const { data: categories } = await useLazyAsyncData(() => $http("/categories"));
+const allCategories = reactive<Gategory[]>(categories.value.categories);
+const setCategory = ref<Gategory>(allCategories[0]);
+
+// ------------ Functions ------------
+const overCategoryHandler = (category: Gategory): void => {
+  setCategory.value = category;
 };
 const clickCategoryHandler = (item: any): void => {
-  // TODO: Go to the page to view specific category
   // router.push('/')
 };
 </script>
@@ -40,17 +23,17 @@ const clickCategoryHandler = (item: any): void => {
       <div class="wrapper">
         <div class="links">
           <button
-            v-for="item in items"
-            :key="item.name"
+            v-for="category in allCategories"
+            :key="category.name"
             class="font-bold link"
-            @mouseover="overCategoryHandler(item)"
-            @click="clickCategoryHandler(item)"
+            @mouseover="overCategoryHandler(category)"
+            @click="clickCategoryHandler(category)"
           >
-            {{ item.name }}
+            {{ category.name }}
           </button>
 
-          <!-- View the category after the user over on it -->
-          <CategoryView :categoryName="categoryName" />
+          <!-- View the category after the user hover on it -->
+          <CategoryView :category="setCategory" />
         </div>
         <NuxtLink class="capitalize text-14" to="/">All categories</NuxtLink>
       </div>

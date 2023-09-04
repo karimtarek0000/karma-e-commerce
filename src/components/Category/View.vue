@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { Gategory } from "types";
+
 defineProps<{
-  categoryName: string;
+  category: Gategory;
 }>();
 
 // TODO: will remove this later
@@ -12,15 +14,13 @@ const links = [1, 2, 3, 4, 5, 6, 7];
     <div class="flex">
       <!-- Col 1 -->
       <div class="basis-[60%] shrink-0 p-2">
-        <h2 class="category-name">{{ categoryName }}</h2>
+        <h2 class="category-name">{{ category.name }}</h2>
         <hr />
         <h3 class="category-title">categories</h3>
 
         <!-- Links -->
         <div class="flex flex-col items-start mt-4 gap-y-1">
-          <NuxtLink class="hover:text-blue-700" v-for="link in links" :key="link" to="/"
-            >Apple</NuxtLink
-          >
+          <NuxtLink class="hover:text-blue-700" v-for="link in links" :key="link" to="/">Apple</NuxtLink>
         </div>
       </div>
 
