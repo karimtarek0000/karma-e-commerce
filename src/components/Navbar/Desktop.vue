@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAuth } from "@/store/auth";
 const { logout } = useAuth();
 </script>
 
@@ -38,3 +37,4 @@ const { logout } = useAuth();
   @apply text-black border border-secondary hover:bg-secondary hover:text-white transition-colors duration-200;
 }
 </style>
+stores/auth

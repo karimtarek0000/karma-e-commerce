@@ -10,6 +10,10 @@ export default defineNuxtConfig({
   // routeRules: {
   //   "/": { swr: 3600 }, // Revalidate after each 1 hour
   // },
+  imports: {
+    dirs: ["./stores"],
+  },
+  plugins: ["~/plugins/piniaPlugin.ts"],
   css: ["~/assets/style/main.css"],
   modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "@nuxtjs/device", "@formkit/nuxt"],
   // Pinia - state mangement

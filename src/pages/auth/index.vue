@@ -17,11 +17,9 @@ definePageMeta({
 
 // --------- Functions -----------
 const submitHandler = async (userData: { email: string; password: string }) => {
-  try {
-    await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
+  const { error } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
+  if (!error.value) {
     router.replace("/");
-  } catch (error) {
-    console.log(error);
   }
 };
 </script>

@@ -1,5 +1,4 @@
 import { $fetch, FetchContext, FetchOptions, Headers } from "ofetch";
-import { useAuth } from "@/store/auth";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const accessToken = useCookie("accessToken");
