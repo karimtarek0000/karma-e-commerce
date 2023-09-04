@@ -1,36 +1,33 @@
 <script setup lang="ts">
 import { Gategory } from "types";
 
-defineProps<{
-  category: Gategory;
-}>();
-
-// TODO: will remove this later
-const links = [1, 2, 3, 4, 5, 6, 7];
+defineProps<{ category: Gategory }>();
 </script>
 
 <template>
   <div class="view view-category">
-    <div class="flex">
+    <div class="flex h-full">
       <!-- Col 1 -->
       <div class="basis-[60%] shrink-0 p-2">
         <h2 class="category-name">{{ category.name }}</h2>
         <hr />
-        <h3 class="category-title">categories</h3>
+        <h3 class="category-title">Sub Categories</h3>
 
         <!-- Links -->
         <div class="flex flex-col items-start mt-4 gap-y-1">
-          <NuxtLink class="hover:text-blue-700" v-for="link in links" :key="link" to="/">Apple</NuxtLink>
+          <NuxtLink
+            v-for="subCategory in category?.subCategories"
+            :key="subCategory._id"
+            :to="`/sub-category/${subCategory.slug}`"
+            class="capitalize hover:text-blue-700"
+            >{{ subCategory.name.replace("men ", "") }}</NuxtLink
+          >
         </div>
       </div>
 
       <!-- Col 2 -->
       <div class="overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-          alt=""
-          class="res-image"
-        />
+        <nuxt-img :src="category?.image?.secure_url" :alt="category?.name" class="res-image" />
       </div>
     </div>
   </div>
@@ -45,6 +42,6 @@ const links = [1, 2, 3, 4, 5, 6, 7];
   @apply mb-1 font-bold capitalize text-18;
 }
 .category-title {
-  @apply mt-1 uppercase text-14;
+  @apply mt-1 uppercase text-14 font-bold;
 }
 </style>

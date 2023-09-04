@@ -7,7 +7,7 @@ export type UserData = {
 
 export type Gategory = {
   _id: string;
-  image: string;
+  image: { secure_url: string };
   name: string;
   slug: string;
   subCategories: Gategory[];

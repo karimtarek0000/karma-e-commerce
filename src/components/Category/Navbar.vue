@@ -5,7 +5,7 @@ const router = useRouter();
 
 // ----------------- From API ---------------------
 const { data: categories } = await useLazyAsyncData(() => $http("/categories"));
-const allCategories = reactive<Gategory[]>(categories.value.categories);
+const allCategories = reactive<Gategory[]>(categories.value?.categories);
 const setCategory = ref<Gategory>(allCategories[0]);
 
 // ------------ Functions ------------
