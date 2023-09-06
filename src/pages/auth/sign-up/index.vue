@@ -20,8 +20,7 @@ definePageMeta({
 });
 
 // --------- Functions -----------
-
-const submitHandler = async (data: any) => {
+const submitHandler = async (data: UserDataSignUp): Promise<void> => {
   const { name, email, phoneNumber, password, role } = data;
   const userData = { name, email, phoneNumber, password, role };
 

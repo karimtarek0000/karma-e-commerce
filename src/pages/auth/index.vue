@@ -16,7 +16,7 @@ definePageMeta({
 });
 
 // --------- Functions -----------
-const submitHandler = async (userData: { email: string; password: string }) => {
+const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
   const { error } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
   if (!error.value) {
     router.replace("/");
