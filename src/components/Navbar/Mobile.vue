@@ -42,6 +42,8 @@ const links = ref([
       <hr />
       <NavbarDropDown :showBtn="false" />
     </aside>
+    <!-- Backdrop -->
+    <div @click="toggleItemHandler" v-show="itemStatus" class="absolute z-20 w-full h-full backdrop-blur bg-black/60"></div>
   </Teleport>
 </template>
 
@@ -53,7 +55,7 @@ const links = ref([
   @apply flex flex-col items-center px-2 py-2 text-14 gap-y-1 grow;
 }
 .sidemenu {
-  @apply overflow-hidden absolute top-0 w-[200px] z-20 transition-all duration-500 shadow-lg end-[-200px] h-screen p-2 bg-white;
+  @apply overflow-hidden absolute top-0 w-[200px] z-30 transition-all duration-500 shadow-lg end-[-200px] h-screen p-2 bg-white;
 }
 
 .sidemenu-active {
