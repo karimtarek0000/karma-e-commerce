@@ -12,3 +12,8 @@ export type Gategory = {
   slug: string;
   subCategories: Gategory[];
 };
+
+export type AuthState = {
+  user: UserData;
+  loggedIn: boolean;
+};

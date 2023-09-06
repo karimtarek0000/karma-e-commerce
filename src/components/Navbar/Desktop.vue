@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { logout } = useAuth();
+const { isDesktop } = useDevice();
+const { isLoggedIn } = useAuth();
 </script>
 
 <template>
@@ -13,13 +14,10 @@ const { logout } = useAuth();
         <Search />
 
         <!-- Actions -->
-        <div class="flex items-center">
-          <button @click="logout" class="mx-2 btn signup" to="/">Logout</button>
+        <div class="flex items-center gap-x-3">
+          <NavbarDropDown v-if="isDesktop && isLoggedIn" />
+          <NuxtLink v-if="!isLoggedIn" class="btn login" to="/auth">Login</NuxtLink>
           <ActionsCart />
-          <!-- <div class="space-x-2">
-            <NuxtLink class="btn login" to="/">Login</NuxtLink>
-            <NuxtLink class="btn signup" to="/">Signup</NuxtLink>
-          </div> -->
         </div>
       </div>
     </div>

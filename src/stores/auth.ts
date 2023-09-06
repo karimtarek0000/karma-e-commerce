@@ -1,12 +1,16 @@
 import jwt_decode from "jwt-decode";
-import { UserData } from "types";
+import { AuthState, UserData } from "types";
 
 export const useAuth = defineStore("auth", {
-  state: () => ({
-    user: {},
+  state: (): AuthState => ({
+    user: {} as UserData,
     loggedIn: false,
   }),
-  // getters: {},
+  getters: {
+    isLoggedIn(state) {
+      return state.loggedIn;
+    },
+  },
   actions: {
     setUserDataWhenLoggedIn(token: string) {
       const { _id, name, email, role } = jwt_decode(token) as UserData;

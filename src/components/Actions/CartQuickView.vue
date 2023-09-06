@@ -13,13 +13,9 @@
           />
 
           <div class="max-w-full overflow-hidden">
-            <h3 class="max-w-full text-black truncate text-14">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur, incidunt.
-            </h3>
+            <h3 class="max-w-full text-black truncate text-14">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur, incidunt.</h3>
             <div class="flex items-center justify-between pb-3 mt-4 border-b">
-              <p class="flex items-center justify-center gap-x-3 text-14">
-                Price: <span class="font-bold">$1000</span>
-              </p>
+              <p class="flex items-center justify-center gap-x-3 text-14">Price: <span class="font-bold">$1000</span></p>
               <button>
                 <ShareRenderSVG iconName="del" sizes="w-[18px]" />
               </button>
@@ -30,9 +26,7 @@
 
       <!-- Actions -->
       <div class="space-y-2 text-center">
-        <NuxtLink to="/" class="view-cart-btn"
-          >View my cart <span class="font-bold">(3)</span></NuxtLink
-        >
+        <NuxtLink to="/cart" class="view-cart-btn">View my cart <span class="font-bold">(3)</span></NuxtLink>
         <NuxtLink to="/" class="checkout-btn">Checkout</NuxtLink>
       </div>
     </div>
