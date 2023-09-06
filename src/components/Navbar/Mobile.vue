@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const sideMenuStatus = ref<boolean>(false);
+const { itemStatus, toggleItemHandler } = useToggle();
 const links = ref([
   {
     name: "home",
@@ -17,27 +17,24 @@ const links = ref([
     icon: "cart",
   },
 ]);
-
-// ------------ Functions ------------
-const toggleSideMenu = (): boolean => (sideMenuStatus.value = !sideMenuStatus.value);
 </script>
 
 <template>
-  <div class="relative h-screen overflow-hidden bg-red-400">
+  <div class="relative h-screen overflow-hidden">
     <nav class="navbar">
       <NuxtLink v-for="link in links" :key="link.name" :to="link.path" class="link">
         <ShareRenderSVG :iconName="link.icon" sizes="w-[20px]" />
         {{ link.name }}
       </NuxtLink>
       <!-- For open side menu -->
-      <button type="button" @click="toggleSideMenu" class="link">
+      <button type="button" @click="toggleItemHandler" class="link">
         <ShareRenderSVG iconName="profile" sizes="w-[20px]" />
         settings
       </button>
     </nav>
     <!-- Side menu -->
-    <aside :class="['sidemenu', { 'sidemenu-active': sideMenuStatus }]">
-      <button @click="toggleSideMenu" type="button" class="text-2xl">&times;</button>
+    <aside :class="['sidemenu', { 'sidemenu-active': itemStatus }]">
+      <button @click="toggleItemHandler" type="button" class="text-2xl">&times;</button>
     </aside>
   </div>
 </template>

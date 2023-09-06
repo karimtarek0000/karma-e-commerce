@@ -1,20 +1,17 @@
 <script setup lang="ts">
-const toggleDropdownStatus = ref<boolean>(false);
+const { itemStatus, toggleItemHandler } = useToggle();
 const { logout, user } = useAuth();
-
-// ------------- Functions ---------------
-const toggleDropdownHandler = (): boolean => (toggleDropdownStatus.value = !toggleDropdownStatus.value);
 </script>
 
 <template>
   <div class="relative">
     <!-- Button toggle dropdown -->
-    <button @click="toggleDropdownHandler" class="flex justify-between px-2 bg-white rounded-md gap-x-4">
+    <button @click="toggleItemHandler" class="flex justify-between px-2 bg-white rounded-md gap-x-4">
       {{ user?.name }}
       <ShareRenderSVG iconName="arrow-down" sizes="w-[13px]" />
     </button>
     <!-- Dropdown -->
-    <ul class="dropdown" v-show="toggleDropdownStatus">
+    <ul class="dropdown" v-show="itemStatus">
       <NuxtLink class="dropdown-links" to="/cart">
         <ShareRenderSVG iconName="cart" class="w-[15px]" />
         my cart
