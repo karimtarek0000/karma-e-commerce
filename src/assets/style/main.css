@@ -9,6 +9,7 @@
   }
 
   body {
+    overflow-x: hidden;
     font-family: "Roboto", "sans-serif";
   }
 }
@@ -20,4 +21,8 @@
   .scroll0 {
     @apply scroll-m-1;
   }
+}
+
+.router-link-active {
+  @apply bg-gray-200;
 }
