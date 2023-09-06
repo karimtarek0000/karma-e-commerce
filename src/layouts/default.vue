@@ -3,7 +3,7 @@ const { isDesktop } = useDevice();
 </script>
 
 <template>
-  <!-- <NavbarDesktop /> -->
+  <NavbarDesktop />
   <main>
     <slot />
   </main>

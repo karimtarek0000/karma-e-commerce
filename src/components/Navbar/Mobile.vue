@@ -37,13 +37,13 @@ const links = ref([
     <aside :class="['sidemenu', { 'sidemenu-active': itemStatus }]">
       <div class="flex items-center justify-between">
         <button @click="toggleItemHandler" type="button" class="text-2xl">&times;</button>
-        <span class="mx-4">{{ user?.name || "karim" }}</span>
+        <span class="mx-4">{{ user?.name }}</span>
       </div>
       <hr />
       <NavbarDropDown :showBtn="false" />
     </aside>
     <!-- Backdrop -->
-    <div @click="toggleItemHandler" v-show="itemStatus" class="absolute z-20 w-full h-full backdrop-blur bg-black/60"></div>
+    <div @click="toggleItemHandler" v-show="itemStatus" class="backdrop"></div>
   </Teleport>
 </template>
 
@@ -62,7 +62,13 @@ const links = ref([
   @apply end-0;
 }
 
+.backdrop {
+  @apply absolute z-20 w-full h-full backdrop-blur bg-black/60;
+}
 :deep(.dropdown) {
   @apply w-full;
+}
+.router-link-active {
+  @apply bg-gray-200;
 }
 </style>
