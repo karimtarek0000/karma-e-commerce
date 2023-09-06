@@ -70,7 +70,7 @@ const submitHandler = async (userData: { email: string; password: string }) => {
           :disabled="loading || !valid"
           class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          <div v-show="loading" class="w-5 h-5 border-t-2 rounded-full border-t-white animate-spin"></div>
+          <ShareLoader v-show="loading" />
           Login
         </button>
 

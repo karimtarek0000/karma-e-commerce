@@ -9,7 +9,7 @@
   }
 
   body {
-    overflow-x: hidden;
+    @apply overflow-x-hidden scrollbar scrollbar-w-1 scrollbar-thumb-primary scrollbar-track-white;
     font-family: "Roboto", "sans-serif";
   }
 

@@ -94,7 +94,8 @@ const submitHandler = async (data: any) => {
           :disabled="loading || !valid"
           class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          {{ loading ? "Loading..." : "Create an account" }}
+          <ShareLoader v-show="loading" />
+          Create an account
         </button>
 
         <p class="mt-4 text-sm text-gray-500">

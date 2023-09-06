@@ -41,4 +41,4 @@ export const theme = {
     center: true,
   },
 };
-export const plugins = [require("tailwind-scrollbar"), require("@tailwindcss/forms"), require("@formkit/themes/tailwindcss")];
+export const plugins = [require("tailwind-scrollbar")({ nocompatible: true }), require("@tailwindcss/forms"), require("@formkit/themes/tailwindcss")];
