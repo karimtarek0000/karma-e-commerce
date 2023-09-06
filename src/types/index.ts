@@ -1,8 +1,13 @@
 export type UserData = {
-  _id: string;
+  _id?: string;
   name: string;
   email: string;
   role: "User" | "Admin" | "SuperAdmin";
+};
+
+export type UserDataSignUp = UserData & {
+  password: string;
+  phoneNumber: string;
 };
 
 export type Gategory = {

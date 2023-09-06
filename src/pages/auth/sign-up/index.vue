@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useBtnHideOrShowPassword } from "@/composables/forms";
+import { UserDataSignUp } from "types";
+const { $http } = useNuxtApp();
+
 // --------- Data -----------
-const form = reactive({
+const form = reactive<UserDataSignUp>({
   name: "",
   email: "",
+  phoneNumber: "",
   password: "",
+  role: "User",
 });
+const router = useRouter();
 const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 
 // --------- Define -----------
@@ -16,7 +22,14 @@ definePageMeta({
 // --------- Functions -----------
 
 const submitHandler = async (data: any) => {
-  console.log("Submit", data);
+  const { name, email, phoneNumber, password, role } = data;
+  const userData = { name, email, phoneNumber, password, role };
+
+  const { error } = await useLazyAsyncData(() => $http("/auth", { method: "POST", body: userData }));
+
+  if (!error.value) {
+    router.replace("/auth");
+  }
 };
 </script>
 
@@ -47,6 +60,22 @@ const submitHandler = async (data: any) => {
       <!-- Email -->
       <div class="col-span-full md:col-span-6">
         <FormKit type="email" id="Email" name="email" label="Email" placeholder="Enter your email" validation="required|email" autocomplete="off" />
+      </div>
+
+      <!-- Phonenumber -->
+      <div class="col-span-full md:col-span-6">
+        <FormKit
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          label="Phone Number"
+          placeholder="Enter your phone"
+          :validation="[['required'], ['matches', /^0(11|12|10)[0-9]{8}$/]]"
+          :validation-messages="{
+            matches: 'Phone number must be 11 digits',
+          }"
+          autocomplete="off"
+        />
       </div>
 
       <!-- Password -->
@@ -92,9 +121,9 @@ const submitHandler = async (data: any) => {
       <div class="text-center col-span-full">
         <button
           :disabled="loading || !valid"
-          class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
+          class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          <ShareLoader v-show="loading" />
+          <ShareLoader v-if="loading" />
           Create an account
         </button>
 

@@ -49,9 +49,6 @@ const submitHandler = async (userData: { email: string; password: string }) => {
           label="Password"
           autocomplete="off"
           validation="required"
-          :validation-messages="{
-            matches: 'You must enter password like: kaKA@#123',
-          }"
         />
 
         <!-- To show or hide password -->
@@ -70,7 +67,7 @@ const submitHandler = async (userData: { email: string; password: string }) => {
           :disabled="loading || !valid"
           class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          <ShareLoader v-show="loading" />
+          <ShareLoader v-if="loading" />
           Login
         </button>
 
