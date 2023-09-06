@@ -1,9 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const debounce = useDebounce();
+const { $http } = useNuxtApp();
+
+// ---------------- Data -----------------
+const search = ref<string>("");
+const { data, error, execute } = useLazyAsyncData(() => $http(`/products?search=${search.value}`), { immediate: false });
+
+// ---------------- Functions -----------------
+const searchHandler = () => {
+  execute();
+  if (!error.value) {
+    // console.log("Data: ", data.value);
+  }
+};
+
+// ---------------- Watches -----------------
+watch(search, () => debounce(searchHandler, 2000));
+</script>
 
 <template>
   <form class="relative me-auto">
     <!-- Search input -->
-    <input class="input" type="text" placeholder="What are you looking for ?" />
+    <input v-model="search" class="input" type="text" placeholder="What are you looking for ?" />
     <div class="absolute top-2/4 -translate-y-2/4 end-3">
       <ShareRenderSVG iconName="search" sizes="w-[1.22rem]" />
     </div>
