@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { itemStatus, toggleItemHandler } = useToggle();
+const { user, isLoggedIn } = useAuth();
 const links = ref([
   {
     name: "home",
@@ -26,7 +27,7 @@ const links = ref([
       {{ link.name }}
     </NuxtLink>
     <!-- For open side menu -->
-    <button type="button" @click="toggleItemHandler" class="link">
+    <button v-if="isLoggedIn" type="button" @click="toggleItemHandler" class="link">
       <ShareRenderSVG iconName="profile" sizes="w-[20px]" />
       settings
     </button>
@@ -34,7 +35,12 @@ const links = ref([
   <!-- Side menu -->
   <Teleport to="body">
     <aside :class="['sidemenu', { 'sidemenu-active': itemStatus }]">
-      <button @click="toggleItemHandler" type="button" class="text-2xl">&times;</button>
+      <div class="flex items-center justify-between">
+        <button @click="toggleItemHandler" type="button" class="text-2xl">&times;</button>
+        <span class="mx-4">{{ user?.name || "karim" }}</span>
+      </div>
+      <hr />
+      <NavbarDropDown :showBtn="false" />
     </aside>
   </Teleport>
 </template>
@@ -52,5 +58,9 @@ const links = ref([
 
 .sidemenu-active {
   @apply end-0;
+}
+
+:deep(.dropdown) {
+  @apply w-full;
 }
 </style>
