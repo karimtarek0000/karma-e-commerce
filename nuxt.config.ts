@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["./stores"],
   },
-  plugins: ["~/plugins/piniaPlugin.ts"],
+  plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
   css: ["~/assets/style/main.css"],
   modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "@nuxtjs/device", "@formkit/nuxt"],
   // Pinia - state mangement
