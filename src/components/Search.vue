@@ -9,19 +9,22 @@ const pageNumber = ref<number>(1);
 const {
   data: products,
   error,
+  pending: loader,
   execute,
 } = useLazyAsyncData(() => $http(`/products?search=${search.value}&page=${pageNumber.value}&size=5`), { immediate: false });
 const searchProductsList = ref<Product[]>([]);
 
 // ---------------- Functions -----------------
-const searchHandler = (): void => {
-  execute();
-  if (!error.value) {
-    // console.log("Data: ", data.value);
+const searchHandler = async () => {
+  if (search.value) {
+    await execute();
+    if (!error.value) {
+      searchProductsList.value = products.value.products;
+    }
   }
 };
 
-const searchPaginationHandler = async () => {
+const searchPaginationHandler = async (): Promise<void> => {
   pageNumber.value += 1;
   await execute();
   if (!error.value) {
@@ -30,7 +33,13 @@ const searchPaginationHandler = async () => {
 };
 
 // ---------------- Watches -----------------
-watch(search, () => debounce(searchHandler, 2000));
+watch(search, (newValue) => {
+  searchProductsList.value = [];
+  if (newValue !== "") {
+    loader.value = true;
+  }
+  debounce(searchHandler, 2000);
+});
 </script>
 
 <template>
@@ -42,16 +51,21 @@ watch(search, () => debounce(searchHandler, 2000));
     </div>
 
     <!-- Search list -->
-    <div v-scroll="searchPaginationHandler" id="list" v-show="true" class="h-full search-list">
+    <div v-scroll="searchPaginationHandler" v-show="search" class="h-full search-list">
       <!-- Loader -->
-      <div v-show="false" class="flex items-center justify-center h-full">
+      <div v-show="loader" class="flex items-center justify-center h-full">
         <ShareLoader class="!border-t-primary !w-7 !h-7" />
       </div>
 
       <!-- Data -->
-      <NuxtLink to="/" class="flex items-start px-1 py-2 gap-x-2" v-for="index in 10" :key="index">
-        <nuxt-img sizes="sm:50px lg:70px" width="70px" height="70px" src="/logo/logo.svg" class="res-image" />
-        <h5 class="text-center truncate text-14">apple</h5>
+      <NuxtLink
+        v-for="product in searchProductsList"
+        :key="product?._id"
+        :to="`/product-details/${product?.slug}`"
+        class="flex items-center px-1 py-2 gap-x-2"
+      >
+        <nuxt-img sizes="sm:50px lg:70px" width="70px" height="70px" :src="product?.images[0]?.secure_url" class="res-image" :alt="product?.title" />
+        <h5 class="font-bold capitalize truncate text-14">{{ product?.title }}</h5>
       </NuxtLink>
     </div>
   </form>
