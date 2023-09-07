@@ -6,8 +6,12 @@ import { Product } from "@/types";
 // ---------------- Data -----------------
 const search = ref<string>("");
 const pageNumber = ref<number>(1);
-const query = `/products?search=${search.value}&page=${pageNumber.value}`;
-const { data: products, error, pending: loader, execute } = useLazyAsyncData(() => $http(query), { immediate: false });
+const {
+  data: products,
+  error,
+  pending: loader,
+  execute,
+} = useLazyAsyncData(() => $http(`/products?search=${search.value}&page=${pageNumber.value}`), { immediate: false });
 const searchProductsList = ref<Product[]>([]);
 
 // ---------------- Functions -----------------
@@ -33,6 +37,7 @@ const searchPaginationHandler = async (): Promise<void> => {
 
 // ---------------- Watches -----------------
 watch(search, (newValue) => {
+  pageNumber.value = 1;
   searchProductsList.value = [];
   if (newValue !== "") {
     loader.value = true;
