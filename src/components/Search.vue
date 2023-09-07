@@ -35,6 +35,8 @@ const searchPaginationHandler = async (): Promise<void> => {
   }
 };
 
+const clearInput = (): string => (search.value = "");
+
 // ---------------- Watches -----------------
 watch(search, (newValue) => {
   pageNumber.value = 1;
@@ -51,8 +53,9 @@ watch(search, (newValue) => {
     <!-- Search input -->
     <input v-model="search" class="input" type="text" placeholder="What are you looking for ?" />
     <div class="absolute top-2/4 -translate-y-2/4 end-3">
-      <ShareRenderSVG v-show="!search || !loader" iconName="search" sizes="w-[1.22rem]" />
+      <ShareRenderSVG v-show="!search" iconName="search" sizes="w-[1.22rem]" />
       <ShareLoader v-show="loader && search" class="!border-t-primary !w-7 !h-7" />
+      <button @click="clearInput" v-show="search && !loader" type="button" class="text-2xl">&times;</button>
     </div>
 
     <!-- Search list -->
