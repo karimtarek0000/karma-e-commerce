@@ -1,16 +1,31 @@
 <script setup lang="ts">
 const debounce = useDebounce();
 const { $http } = useNuxtApp();
+import { Product } from "@/types";
 
 // ---------------- Data -----------------
 const search = ref<string>("");
-const { data, error, execute } = useLazyAsyncData(() => $http(`/products?search=${search.value}`), { immediate: false });
+const pageNumber = ref<number>(1);
+const {
+  data: products,
+  error,
+  execute,
+} = useLazyAsyncData(() => $http(`/products?search=${search.value}&page=${pageNumber.value}&size=5`), { immediate: false });
+const searchProductsList = ref<Product[]>([]);
 
 // ---------------- Functions -----------------
-const searchHandler = () => {
+const searchHandler = (): void => {
   execute();
   if (!error.value) {
     // console.log("Data: ", data.value);
+  }
+};
+
+const searchPaginationHandler = async () => {
+  pageNumber.value += 1;
+  await execute();
+  if (!error.value) {
+    searchProductsList.value.push(...products.value.products);
   }
 };
 
@@ -27,14 +42,14 @@ watch(search, () => debounce(searchHandler, 2000));
     </div>
 
     <!-- Search list -->
-    <div v-show="false" class="h-full search-list">
+    <div v-scroll="searchPaginationHandler" id="list" v-show="true" class="h-full search-list">
       <!-- Loader -->
       <div v-show="false" class="flex items-center justify-center h-full">
         <ShareLoader class="!border-t-primary !w-7 !h-7" />
       </div>
 
       <!-- Data -->
-      <NuxtLink to="/" class="flex items-start px-1 py-2 gap-x-2">
+      <NuxtLink to="/" class="flex items-start px-1 py-2 gap-x-2" v-for="index in 10" :key="index">
         <nuxt-img sizes="sm:50px lg:70px" width="70px" height="70px" src="/logo/logo.svg" class="res-image" />
         <h5 class="text-center truncate text-14">apple</h5>
       </NuxtLink>
