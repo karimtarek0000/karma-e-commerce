@@ -18,6 +18,28 @@ export type Gategory = {
   subCategories: Gategory[];
 };
 
+export type Product = {
+  _id: string;
+  title: string;
+  description: string;
+  slug: string;
+  price: number;
+  discount: number;
+  priceAfterDiscount: number;
+  stock: number;
+  colors: string[];
+  sizes: string[];
+  images: [
+    {
+      public_id: string;
+      secure_url: string;
+    }
+  ];
+  categoryId: string;
+  subCategoryId: string;
+  brandId: string;
+};
+
 export type AuthState = {
   user: UserData;
   loggedIn: boolean;
