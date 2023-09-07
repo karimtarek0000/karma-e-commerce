@@ -49,7 +49,7 @@ watch(search, (newValue) => {
 </script>
 
 <template>
-  <form class="relative me-auto">
+  <form class="relative max-lg:w-full me-auto">
     <!-- Search input -->
     <input v-model="search" class="input" type="text" placeholder="What are you looking for ?" />
     <div class="absolute top-2/4 -translate-y-2/4 end-3">
@@ -89,7 +89,7 @@ watch(search, (newValue) => {
 
 <style scoped>
 .input {
-  @apply px-2 py-3 leading-[0] border-0 shrink min-w-[31.25rem] text-black bg-white rounded-md text-14;
+  @apply px-2 py-3 leading-[0] border-0 shrink max-lg:min-w-full min-w-[31.25rem] text-black bg-white rounded-md text-14;
 }
 .search-list-wrapper {
   @apply absolute block overflow-hidden top-[100%] w-full h-[170px] shadow-md rounded-md mt-2 bg-white;

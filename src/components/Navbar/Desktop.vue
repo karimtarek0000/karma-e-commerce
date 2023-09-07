@@ -6,18 +6,18 @@ const { isLoggedIn } = useAuth();
 <template>
   <nav class="bg-primary">
     <div class="container py-4">
-      <div class="flex items-center">
+      <div class="flex flex-wrap items-center px-2">
         <!-- Logo -->
         <Logo class="shrink-0" />
 
         <!-- Search -->
-        <Search />
+        <Search class="max-lg:order-last max-lg:mt-3" />
 
         <!-- Actions -->
-        <div class="flex items-center gap-x-3">
+        <div class="flex items-center gap-x-3 max-lg:ms-auto">
           <NavbarDropDown v-if="isDesktop && isLoggedIn" />
           <NuxtLink v-if="!isLoggedIn" class="btn login" to="/auth">Login</NuxtLink>
-          <ActionsCart />
+          <ActionsCart v-if="isDesktop" />
         </div>
       </div>
     </div>
