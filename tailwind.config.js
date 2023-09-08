@@ -30,6 +30,7 @@ export const theme = {
       12: "0.75rem",
       14: "0.875rem",
       18: "1.125rem",
+      22: "1.375rem",
     },
     fontWeight: {
       regular: 400,

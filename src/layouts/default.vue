@@ -3,8 +3,12 @@ const { isDesktop } = useDevice();
 </script>
 
 <template>
-  <NavbarDesktop />
-  <main>
+  <header>
+    <NavbarDesktop />
+    <CategoryNavbar v-if="isDesktop" />
+    <CategoryNavbarMobile v-if="!isDesktop" />
+  </header>
+  <main class="container">
     <slot />
   </main>
   <!-- <Footer /> -->

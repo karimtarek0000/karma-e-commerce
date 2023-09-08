@@ -11,7 +11,7 @@ const {
   error,
   pending: loader,
   execute,
-} = useLazyAsyncData(() => $http(`/products?search=${search.value}&page=${pageNumber.value}`), { immediate: false });
+} = await useLazyAsyncData(() => $http(`/products?search=${search.value}&page=${pageNumber.value}`), { immediate: false });
 const searchProductsList = ref<Product[]>([]);
 
 // ---------------- Functions -----------------
@@ -92,7 +92,7 @@ watch(search, (newValue) => {
   @apply px-2 py-3 leading-[0] border-0 shrink max-lg:min-w-full min-w-[31.25rem] text-black bg-white rounded-md text-14;
 }
 .search-list-wrapper {
-  @apply absolute block overflow-hidden top-[100%] w-full h-[170px] shadow-md rounded-md mt-2 bg-white;
+  @apply absolute z-50 block overflow-hidden top-[100%] w-full h-[170px] shadow-md rounded-md mt-2 bg-white;
 }
 
 .search-list {
