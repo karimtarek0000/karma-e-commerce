@@ -25,6 +25,9 @@ const links = ref([
     <NuxtLink v-for="link in links" :key="link.name" :to="link.path" class="link">
       <ShareRenderSVG :iconName="link.icon" sizes="w-[20px]" />
       {{ link.name }}
+
+      <!-- Cart count - Show counter if this cart link -->
+      <ActionsCartCounter v-if="link.name === 'cart'" class="!end-5" :num="1" />
     </NuxtLink>
     <!-- For open side menu -->
     <button v-if="isLoggedIn" type="button" @click="toggleItemHandler" class="link">
@@ -52,7 +55,7 @@ const links = ref([
   @apply fixed bottom-0 shadow-[0_-6px_6px_rgba(0,0,0,0.1)] flex items-center w-full capitalize bg-white justify-stretch;
 }
 .link {
-  @apply flex flex-col items-center px-2 py-2 text-14 gap-y-1 grow;
+  @apply relative flex flex-col items-center px-2 py-2 text-14 gap-y-1 grow;
 }
 .sidemenu {
   @apply overflow-hidden absolute top-0 w-[200px] z-30 transition-all duration-500 shadow-lg end-[-200px] h-screen p-2 bg-white;
