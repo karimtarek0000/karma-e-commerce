@@ -11,7 +11,16 @@ const {
   error,
   pending: loader,
   execute,
-} = await useLazyAsyncData(() => $http(`/products?search=${search.value}&page=${pageNumber.value}`), { immediate: false });
+} = await useAsyncData(
+  () =>
+    $http("/products", {
+      query: {
+        search: search.value,
+        page: pageNumber.value,
+      },
+    }),
+  { immediate: false }
+);
 const searchProductsList = ref<Product[]>([]);
 
 // ---------------- Functions -----------------
