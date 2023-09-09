@@ -38,7 +38,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
     <!-- Aside all actions -->
     <aside class="px-4 py-4 bg-black/5">
       <!-- Name of category -->
-      <h4 class="name-category">{{ categories.categories[0].name }}</h4>
+      <h4 class="name-category">{{ categories?.categories[0]?.name }}</h4>
 
       <!-- All sub categories -->
       <ul class="mt-3 ms-3">
