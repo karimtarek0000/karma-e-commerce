@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Gategory } from "types";
 const { $http } = useNuxtApp();
-const { push } = useRouter();
+const { replace } = useRouter();
 
 // ----------------- From API ---------------------
 const { data: categories } = await useLazyAsyncData(() => $http("/categories"));
@@ -24,7 +24,7 @@ const overCategoryHandler = (category: Gategory): void => {
             :key="category.name"
             class="font-bold link"
             @mouseover="overCategoryHandler(category)"
-            @click="push(`/all-categories/${category?._id}`)"
+            @click="replace(`/all-categories/${category?._id}`)"
           >
             {{ category.name }}
           </button>

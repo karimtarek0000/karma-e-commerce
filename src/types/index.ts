@@ -10,12 +10,20 @@ export type UserDataSignUp = UserData & {
   phoneNumber: string;
 };
 
+export type SubGategory = {
+  _id: string;
+  image: { secure_url: string };
+  name: string;
+  slug: string;
+  brands: SubGategory[];
+};
+
 export type Gategory = {
   _id: string;
   image: { secure_url: string };
   name: string;
   slug: string;
-  subCategories: Gategory[];
+  subCategories: SubGategory[];
 };
 
 export type Product = {
