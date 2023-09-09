@@ -47,7 +47,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
             <span class="wrapper-icon">
               <ShareRenderSVG v-show="subCategory?._id === subCategoryId" iconName="check" />
             </span>
-            {{ subCategory?.name }}
+            {{ subCategory?.name?.replace("men ", "") }}
           </button>
 
           <!-- All brands -->
