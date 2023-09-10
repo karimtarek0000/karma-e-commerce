@@ -67,8 +67,8 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
       </ul>
     </aside>
 
-    <div class="grid grid-cols-1 px-2 my-2 sm:grid-cols-2" v-if="!isDesktop">
-      <div>
+    <div class="flex flex-wrap items-center gap-3 px-1 my-2" v-if="!isDesktop">
+      <div class="max-sm:w-full grow">
         <h4 class="mb-2">Sub category</h4>
         <VueMultiselect
           v-model="setSubCategory"
@@ -84,7 +84,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
         </VueMultiselect>
       </div>
 
-      <div v-if="setSubCategory">
+      <div class="grow" v-if="setSubCategory">
         <h4 class="mb-2">Brand</h4>
         <VueMultiselect
           v-model="setBrand"
