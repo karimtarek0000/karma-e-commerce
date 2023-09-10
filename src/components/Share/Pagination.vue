@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { query } = useRoute();
 const { push } = useRouter();
-import { watch } from "vue";
+
 // ------------------ Props and Emits --------------------
 const props = withDefaults(
   defineProps<{
