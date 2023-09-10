@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VueMultiselect from "vue-multiselect";
 import { SubGategory } from "types";
 const { isDesktop } = useDevice();
 const { $http } = useNuxtApp();
@@ -6,6 +7,7 @@ const {
   params: { id },
 } = useRoute();
 
+// ----------------------- API --------------------
 const { data: categories, error: categoryError } = await useAsyncData(() =>
   $http("/categories", {
     query: { _id: id },
@@ -15,12 +17,12 @@ const subCategories: SubGategory[] = categories.value.categories[0].subCategorie
 
 // ----------- Data ------------
 const setSubCategory = ref<SubGategory>();
-const brandId = ref<string>("");
+const setBrand = ref<any>();
 
 // ----------- Function ------------
 const pickSubCategoryHandler = (_subCategory: SubGategory) => {
   setSubCategory.value = _subCategory;
-  brandId.value = "";
+  setBrand.value = null;
 };
 
 const listBrandClassess = (_subCategoryId: string): [string, object] => {
@@ -34,8 +36,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
 </script>
 
 <template>
-  <div class="desktop-wrapper" v-if="!categoryError">
-    <!-- Desktop -->
+  <div class="wrapper" v-if="!categoryError">
     <!-- Aside all actions -->
     <aside class="px-4 py-4 bg-black/5" v-if="isDesktop">
       <!-- Name of category -->
@@ -54,9 +55,9 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
           <!-- All brands -->
           <ul :class="listBrandClassess(subCategory?._id)">
             <li v-for="brand in subCategory?.brands" :key="brand?._id" class="mb-3">
-              <button @click="brandId = brand?._id" class="btn !font-normal" type="button">
+              <button @click="setBrand = brand" class="btn !font-normal" type="button">
                 <span class="wrapper-icon">
-                  <ShareRenderSVG v-show="brand?._id === brandId" iconName="check" />
+                  <ShareRenderSVG v-show="setBrand?._id === brand?._id" iconName="check" />
                 </span>
                 {{ brand?.name }}
               </button>
@@ -65,6 +66,40 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
         </li>
       </ul>
     </aside>
+
+    <div class="grid grid-cols-1 px-2 my-2 sm:grid-cols-2" v-if="!isDesktop">
+      <div>
+        <h4 class="mb-2">Sub category</h4>
+        <VueMultiselect
+          v-model="setSubCategory"
+          :options="subCategories"
+          :searchable="false"
+          :allow-empty="false"
+          deselect-label=""
+          placeholder="Select sub category"
+          label="name"
+          track-by="name"
+          selectLabel=""
+        >
+        </VueMultiselect>
+      </div>
+
+      <div v-if="setSubCategory">
+        <h4 class="mb-2">Brand</h4>
+        <VueMultiselect
+          v-model="setBrand"
+          :options="setSubCategory?.brands"
+          :searchable="false"
+          :allow-empty="false"
+          deselect-label=""
+          placeholder="Select brand"
+          label="name"
+          track-by="name"
+          selectLabel=""
+        >
+        </VueMultiselect>
+      </div>
+    </div>
 
     <!-- All products and pagination -->
     <div class="max-h-screen overflow-auto scrollbar-none">
@@ -83,7 +118,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
 </template>
 
 <style scoped>
-.desktop-wrapper {
+.wrapper {
   @apply grid grid-cols-1 xl:grid-cols-[18.75rem_1fr] gap-x-5 min-h-screen;
 }
 .name-category {
@@ -99,6 +134,6 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
   @apply max-h-[500px];
 }
 .cards-grid {
-  @apply max-lg:px-2 grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4;
+  @apply max-xl:px-2 grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4;
 }
 </style>

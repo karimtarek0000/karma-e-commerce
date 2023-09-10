@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     dirs: ["./stores"],
   },
   plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
-  css: ["~/assets/style/main.css"],
+  css: ["~/assets/style/main.css", "vue-multiselect/dist/vue-multiselect.css"],
   modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "@nuxtjs/device", "@formkit/nuxt"],
   // Pinia - state mangement
   pinia: {

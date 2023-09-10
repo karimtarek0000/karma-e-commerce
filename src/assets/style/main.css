@@ -27,3 +27,11 @@
     @apply scroll-m-1;
   }
 }
+
+/* Change muliselection */
+.multiselect__option--highlight {
+  @apply !bg-secondary;
+}
+.multiselect__option--selected.multiselect__option--highlight {
+  @apply !bg-secondary;
+}
