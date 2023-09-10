@@ -67,6 +67,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
       </ul>
     </aside>
 
+    <!-- Selection for subcategories and brands for other devices -->
     <div class="flex flex-wrap items-center gap-3 px-1 my-2" v-if="!isDesktop">
       <div class="max-sm:w-full grow">
         <h4 class="mb-2">Sub category</h4>
