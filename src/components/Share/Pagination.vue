@@ -1,8 +1,9 @@
 <script setup lang="ts">
 const { query } = useRoute();
 const { push } = useRouter();
+import { watch } from "vue";
 // ------------------ Props and Emits --------------------
-const { currentPage, pageRang, total, perPage } = withDefaults(
+const props = withDefaults(
   defineProps<{
     currentPage: string | number;
     pageRang: number;
@@ -15,19 +16,20 @@ const { currentPage, pageRang, total, perPage } = withDefaults(
     perPage: 5,
   }
 );
+const { currentPage, pageRang, total, perPage } = toRefs(props);
 const emit = defineEmits(["changePage"]);
 
 // ------------------- Data --------------------
-const getPageRang = ref<number>(pageRang);
-const getCurrentPage = ref<number | string>((query.page as string) || (currentPage as string));
+const getPageRang = ref<number>(pageRang.value);
+const getCurrentPage = ref<number | string>((query.page as string) || (currentPage.value as string));
 
 // ------------------- Computed --------------------
-// CONVERT CURRENT TO NUMBER
+// Convert current to number
 const convertCurrentToNumber = computed(() => +getCurrentPage.value);
 
 // Total pages
 const totalPages = computed((): number => {
-  return Math.ceil(total / perPage);
+  return Math.ceil(total.value / perPage.value);
 });
 
 // Ranges start and end
@@ -66,7 +68,7 @@ const statusPrev = computed((): boolean => {
 });
 
 // ------------------- Watches --------------------
-watch(currentPage, (value: string): void => {
+watch(currentPage, (value) => {
   getCurrentPage.value = value;
   push({ query: { page: value } });
 });
@@ -84,7 +86,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>page: {{ currentPage }}</div>
   <div class="pagination">
     <!-- 1) - PAGINATION BTN PREV -->
     <div v-if="statusPrev" @click="prevBtn" class="pagination__btn pagination__btn--prev">
@@ -124,7 +125,7 @@ onMounted(() => {
 /// Maps
 // 1
 $background_pagination: (
-  pagi: #30a08b,
+  pagi: #454692,
   nextAndPrev: #f5f5f5,
 );
 

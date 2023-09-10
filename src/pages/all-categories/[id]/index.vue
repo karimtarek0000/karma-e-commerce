@@ -117,7 +117,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
       </div>
 
       <!-- Pagination -->
-      <Pagination @changePage="page = $event" :pageRang="3" :total="200" :currentPage="page" :perPage="10" />
+      <SharePagination @changePage="page = $event" :total="200" :currentPage="page" :perPage="10" />
     </div>
   </div>
 </template>
