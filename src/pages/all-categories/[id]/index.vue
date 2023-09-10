@@ -16,6 +16,7 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
 const subCategories: SubGategory[] = categories.value.categories[0].subCategories;
 
 // ----------- Data ------------
+const page = ref<number>(2);
 const setSubCategory = ref<SubGategory>();
 const setBrand = ref<any>();
 
@@ -114,6 +115,9 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
         <!-- Card -->
         <ProductCard v-for="index in 12" :key="index" />
       </div>
+
+      <!-- Pagination -->
+      <Pagination @changePage="page = $event" :pageRang="3" :total="200" :currentPage="page" :perPage="10" />
     </div>
   </div>
 </template>
