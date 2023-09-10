@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { SubGategory } from "types";
+const { isDesktop } = useDevice();
 const { $http } = useNuxtApp();
 const {
   params: { id },
@@ -13,12 +14,12 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
 const subCategories: SubGategory[] = categories.value.categories[0].subCategories;
 
 // ----------- Data ------------
-const subCategoryId = ref<string>("");
+const setSubCategory = ref<SubGategory>();
 const brandId = ref<string>("");
 
 // ----------- Function ------------
-const pickSubCategoryHandler = (_subCategoryId: string) => {
-  subCategoryId.value = _subCategoryId;
+const pickSubCategoryHandler = (_subCategory: SubGategory) => {
+  setSubCategory.value = _subCategory;
   brandId.value = "";
 };
 
@@ -26,26 +27,26 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
   return [
     "mt-3 overflow-hidden transition-all duration-500 ease-in-out ms-7 max-h-0",
     {
-      "brands-list-active": _subCategoryId === subCategoryId.value,
+      "brands-list-active": _subCategoryId === setSubCategory.value?._id,
     },
   ];
 };
 </script>
 
 <template>
-  <!-- Desktop -->
   <div class="desktop-wrapper" v-if="!categoryError">
+    <!-- Desktop -->
     <!-- Aside all actions -->
-    <aside class="px-4 py-4 bg-black/5">
+    <aside class="px-4 py-4 bg-black/5" v-if="isDesktop">
       <!-- Name of category -->
       <h4 class="name-category">{{ categories?.categories[0]?.name }}</h4>
 
       <!-- All sub categories -->
       <ul class="mt-3 ms-3">
         <li v-for="subCategory in subCategories" :key="subCategory?._id">
-          <button @click="pickSubCategoryHandler(subCategory?._id)" class="btn" type="button">
+          <button @click="pickSubCategoryHandler(subCategory)" class="btn" type="button">
             <span class="wrapper-icon">
-              <ShareRenderSVG v-show="subCategory?._id === subCategoryId" iconName="check" />
+              <ShareRenderSVG v-show="subCategory?._id === setSubCategory?._id" iconName="check" />
             </span>
             {{ subCategory?.name?.replace("men ", "") }}
           </button>
@@ -66,13 +67,24 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
     </aside>
 
     <!-- All products and pagination -->
-    <div class="bg-black/5">products</div>
+    <div class="max-h-screen overflow-auto scrollbar-none">
+      <!-- Sub category image -->
+      <div class="h-[15.625rem] w-[100%] flex justify-center" v-if="setSubCategory?.image">
+        <nuxt-img sizes="sm:50vw lg:100vw" :src="setSubCategory?.image?.secure_url" class="res-image" :alt="setSubCategory?.name" />
+      </div>
+
+      <!-- Cards grid -->
+      <div class="cards-grid">
+        <!-- Card -->
+        <ProductCard v-for="index in 12" :key="index" />
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .desktop-wrapper {
-  @apply grid grid-cols-[18.75rem_1fr] gap-x-5 min-h-screen;
+  @apply grid grid-cols-1 xl:grid-cols-[18.75rem_1fr] gap-x-5 min-h-screen;
 }
 .name-category {
   @apply font-bold text-center py-2 capitalize border-b-[1px] text-secondary text-22 border-b-secondary;
@@ -85,5 +97,8 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
 }
 .brands-list-active {
   @apply max-h-[500px];
+}
+.cards-grid {
+  @apply max-lg:px-2 grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-4;
 }
 </style>
