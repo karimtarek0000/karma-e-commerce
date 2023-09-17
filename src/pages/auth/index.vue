@@ -30,8 +30,6 @@ const successSignInGoogle = async (response: CredentialResponse) => {
   const { error } = await useLazyAsyncData(() => $http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } }));
 
   if (!error.value) {
-    console.log("Done!");
-
     router.replace("/");
   }
 };
