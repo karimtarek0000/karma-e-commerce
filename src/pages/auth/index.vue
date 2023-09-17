@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useBtnHideOrShowPassword } from "@/composables/forms";
+import { useOneTap, type CredentialResponse } from "vue3-google-signin";
 const { $http } = useNuxtApp();
 
 // --------- Data -----------
@@ -16,12 +17,32 @@ definePageMeta({
 });
 
 // --------- Functions -----------
+// Login with email
 const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
   const { error } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
   if (!error.value) {
     router.replace("/");
   }
 };
+
+// Login with Google
+const successSignInGoogle = async (response: CredentialResponse) => {
+  const { error } = await useLazyAsyncData(() => $http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } }));
+
+  if (!error.value) {
+    console.log("Done!");
+
+    router.replace("/");
+  }
+};
+
+const errorSignInGoogle = () => console.log("Error");
+
+const { isReady, login } = useOneTap({
+  disableAutomaticPrompt: true,
+  onSuccess: successSignInGoogle,
+  onError: errorSignInGoogle,
+});
 </script>
 
 <template>
@@ -70,11 +91,20 @@ const submitHandler = async (userData: { email: string; password: string }): Pro
           <ShareLoader v-if="loading" />
           Login
         </button>
-
-        <p class="mt-4 text-sm text-gray-500">
+        <p class="my-4 text-sm text-gray-500">
           Not have an account?
           <NuxtLink to="/auth/sign-up" class="text-gray-700 underline">Create new account</NuxtLink>
         </p>
+        <hr />
+        <button
+          type="button"
+          :disabled="!isReady"
+          @click="login"
+          class="flex items-center justify-center w-full px-12 py-3 mt-4 text-sm transition border rounded-md gap-x-2 text-secondary shrink-0"
+        >
+          <ShareRenderSVG iconName="google" sizes="w-[18px]" />
+          Sign in with Google
+        </button>
       </div>
     </template>
   </FormKit>

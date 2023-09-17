@@ -3,7 +3,7 @@ import { Gategory } from "types";
 const { $http } = useNuxtApp();
 
 // ----------------- From API ---------------------
-const { data: categories } = await useLazyAsyncData(() => $http("/categories"));
+const { data: categories } = await useAsyncData(() => $http("/categories"));
 const allCategories = reactive<Gategory[]>(categories.value?.categories);
 </script>
 

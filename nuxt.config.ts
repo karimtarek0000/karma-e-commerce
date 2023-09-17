@@ -15,7 +15,13 @@ export default defineNuxtConfig({
   },
   plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
   css: ["~/assets/style/main.css", "vue-multiselect/dist/vue-multiselect.css"],
-  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "@nuxtjs/device", "@formkit/nuxt"],
+  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "nuxt-vue3-google-signin", "@nuxtjs/device", "@formkit/nuxt"],
+
+  // Google signin
+  googleSignIn: {
+    clientId: "810539462889-hmj4v9ifvujcrr2f4qa4clgula26ekd1.apps.googleusercontent.com",
+  },
+
   // Pinia - state mangement
   pinia: {
     autoImports: ["defineStore", "acceptHMRUpdate"],
