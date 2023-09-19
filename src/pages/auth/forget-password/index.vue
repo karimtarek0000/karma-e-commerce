@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
+const { $http } = useNuxtApp();
+
 // --------- Data -----------
 const form = reactive({
   email: "",
 });
+const router = useRouter();
+const toast = useToast();
 
 // --------- Define -----------
 definePageMeta({
@@ -10,8 +15,24 @@ definePageMeta({
 });
 
 // --------- Functions -----------
-const submitHandler = async (data: any) => {
-  console.log("Submit", data);
+const submitHandler = async ({ email }: { email: string }) => {
+  const { data, error, pending } = await useLazyAsyncData(() =>
+    $http("/auth/forget-password", {
+      method: "POST",
+      body: {
+        email,
+      },
+    })
+  );
+
+  if (!error.value && !pending.value) {
+    toast.success(`${data.value.message} check your email`);
+    router.replace("/auth");
+  }
+
+  if (error.value) {
+    toast.error(error.value.data.message);
+  }
 };
 </script>
 
@@ -34,9 +55,10 @@ const submitHandler = async (data: any) => {
       <div class="text-center col-span-full">
         <button
           :disabled="loading || !valid"
-          class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
+          class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          {{ loading ? "Loading..." : "Confirm email" }}
+          <ShareLoader v-if="loading" />
+          Confirm email
         </button>
       </div>
     </template>

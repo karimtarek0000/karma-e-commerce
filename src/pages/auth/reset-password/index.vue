@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
+const { $http } = useNuxtApp();
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 
 // --------- Data -----------
 const form = reactive({
-  NewPassword: "",
+  newPassword: "",
 });
+const router = useRouter();
+const { query } = useRoute();
+const toast = useToast();
 const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 
 // --------- Define -----------
@@ -13,8 +18,24 @@ definePageMeta({
 });
 
 // --------- Functions -----------
-const submitHandler = async (data: any) => {
-  console.log("Submit", data);
+const submitHandler = async ({ newPassword }: { newPassword: string }) => {
+  const { data, error, pending } = await useLazyAsyncData(() =>
+    $http(`/auth/reset-password/${query?.token}`, {
+      method: "PATCH",
+      body: {
+        password: newPassword,
+      },
+    })
+  );
+
+  if (!error.value && !pending.value) {
+    toast.success(data.value.message);
+    router.replace("/auth");
+  }
+
+  if (error.value) {
+    toast.error(error.value.data.message);
+  }
 };
 </script>
 
@@ -34,7 +55,7 @@ const submitHandler = async (data: any) => {
           <FormKit
             :type="showPassword ? 'text' : 'password'"
             id="Password"
-            name="NewPassword"
+            name="newPassword"
             placeholder="New Password"
             label="New Password"
             autocomplete="off"
@@ -55,7 +76,7 @@ const submitHandler = async (data: any) => {
           <FormKit
             type="password"
             id="confirmPassword"
-            name="NewPassword_confirm"
+            name="newPassword_confirm"
             label="Confirm Password"
             placeholder="Confirm Password"
             validation="required|confirm"
@@ -68,9 +89,10 @@ const submitHandler = async (data: any) => {
       <div class="text-center col-span-full">
         <button
           :disabled="loading || !valid"
-          class="w-full px-12 py-3 text-sm text-white transition border rounded-md hover:bg-secondary/90 bg-secondary shrink-0"
+          class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          {{ loading ? "Loading..." : "Reset password" }}
+          <ShareLoader v-if="loading" />
+          Reset password
         </button>
       </div>
     </template>
