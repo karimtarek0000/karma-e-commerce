@@ -13,8 +13,12 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["./stores"],
   },
+  build: {
+    // vue-toastification - old commonjs module
+    transpile: ["vue-toastification"],
+  },
   plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
-  css: ["~/assets/style/main.css", "vue-multiselect/dist/vue-multiselect.css"],
+  css: ["~/assets/style/main.css", "~/assets/style/toast.css", "vue-multiselect/dist/vue-multiselect.css"],
   modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "nuxt-vue3-google-signin", "@nuxtjs/device", "@formkit/nuxt"],
 
   // Google signin
