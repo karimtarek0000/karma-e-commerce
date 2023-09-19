@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import { useToast } from "vue-toastification";
 import { AuthState, UserData } from "types";
 
 export const useAuth = defineStore("auth", {
@@ -20,13 +21,16 @@ export const useAuth = defineStore("auth", {
     },
     async logout() {
       const { $http } = useNuxtApp();
-      const { error } = await useLazyAsyncData(() => $http("/auth/logout"));
+      const toast = useToast();
 
-      if (!error.value) {
+      const { error, pending } = await useLazyAsyncData(() => $http("/auth/logout"));
+
+      if (!error.value && !pending.value) {
         const accessToken = useCookie("accessToken");
         this.loggedIn = false;
-        this.user = {};
+        this.user = {} as any;
         accessToken.value = null;
+        toast.success("Logout successfully");
         navigateTo("/auth");
       }
     },

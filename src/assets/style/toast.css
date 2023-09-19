@@ -1,0 +1,4 @@
+/* For custom vue toast */
+.Vue-Toastification__toast--success {
+  @apply !bg-secondary;
+}

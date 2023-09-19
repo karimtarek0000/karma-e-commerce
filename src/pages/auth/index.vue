@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 import { useOneTap, type CredentialResponse } from "vue3-google-signin";
+import { useToast } from "vue-toastification";
 const { $http } = useNuxtApp();
 
 // --------- Data -----------
@@ -10,6 +11,7 @@ const form = reactive({
 });
 const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 const router = useRouter();
+const toast = useToast();
 
 // --------- Define -----------
 definePageMeta({
@@ -19,27 +21,36 @@ definePageMeta({
 // --------- Functions -----------
 // Login with email
 const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
-  const { error } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
-  if (!error.value) {
+  const { error, pending } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
+  if (!error.value && !pending.value) {
+    toast.success("Login successfully");
     router.replace("/");
+  }
+
+  if (error.value) {
+    toast.error(error.value.data.message);
   }
 };
 
 // Login with Google
-const successSignInGoogle = async (response: CredentialResponse) => {
-  const { error } = await useLazyAsyncData(() => $http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } }));
+const successSignInGoogle = async (response: CredentialResponse): Promise<void> => {
+  const { error, pending } = await useLazyAsyncData(() =>
+    $http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } })
+  );
 
-  if (!error.value) {
+  if (!error.value && !pending.value) {
+    toast.success("Login with google successfully");
     router.replace("/");
   }
-};
 
-const errorSignInGoogle = () => console.log("Error");
+  if (error.value) {
+    toast.error(error.value.data.message);
+  }
+};
 
 const { isReady, login } = useOneTap({
   disableAutomaticPrompt: true,
   onSuccess: successSignInGoogle,
-  onError: errorSignInGoogle,
 });
 </script>
 
