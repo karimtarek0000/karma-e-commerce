@@ -6,8 +6,8 @@ const { push } = useRouter();
 const props = withDefaults(
   defineProps<{
     currentPage: string | number;
-    pageRang: number;
-    perPage: number;
+    pageRang?: number;
+    perPage?: number;
     total: number;
   }>(),
   {

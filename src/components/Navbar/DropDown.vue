@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { showBtn } = withDefaults(
   defineProps<{
-    showBtn: boolean;
+    showBtn?: boolean;
   }>(),
   {
     showBtn: true,
