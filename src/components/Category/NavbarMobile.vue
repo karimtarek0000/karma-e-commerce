@@ -9,14 +9,9 @@ const allCategories = reactive<Gategory[]>(categories.value?.categories);
 
 <template>
   <nav class="navbar">
-    <NuxtLink
-      v-for="category in allCategories"
-      :key="category?.name"
-      :to="`/all-categories/${category?.slug}`"
-      class="px-2 py-2 uppercase"
-      type="button"
-      >{{ category?.name }}</NuxtLink
-    >
+    <NuxtLink v-for="category in allCategories" :key="category?._id" :to="`/all-categories/${category?._id}`" class="px-2 py-2 uppercase">{{
+      category?.name
+    }}</NuxtLink>
   </nav>
 </template>
 
