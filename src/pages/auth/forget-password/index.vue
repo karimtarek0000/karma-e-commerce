@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 const { $http } = useNuxtApp();
 
@@ -26,6 +27,7 @@ const submitHandler = async ({ email }: { email: string }) => {
   );
 
   if (!error.value && !pending.value) {
+    reset("forget-password-form");
     toast.success(`${data.value.message} check your email`);
     router.replace("/auth");
   }
@@ -38,6 +40,7 @@ const submitHandler = async ({ email }: { email: string }) => {
 
 <template>
   <FormKit
+    id="forget-password-form"
     type="form"
     form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-[repeat(6,minmax(0,60px))]"
     :actions="false"

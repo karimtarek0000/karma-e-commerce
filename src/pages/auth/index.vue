@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reset } from "@formkit/core";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 import { useOneTap, type CredentialResponse } from "vue3-google-signin";
 import { useToast } from "vue-toastification";
@@ -22,7 +23,9 @@ definePageMeta({
 // Login with email
 const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
   const { error, pending } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
+
   if (!error.value && !pending.value) {
+    reset("signInForm");
     toast.success("Login successfully");
     router.replace("/");
   }
@@ -56,6 +59,7 @@ const { isReady, login } = useOneTap({
 
 <template>
   <FormKit
+    id="signInForm"
     type="form"
     form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-[repeat(6,minmax(0,60px))]"
     :actions="false"

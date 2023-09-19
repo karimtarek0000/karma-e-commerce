@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 const { $http } = useNuxtApp();
 import { useBtnHideOrShowPassword } from "@/composables/forms";
@@ -29,6 +30,7 @@ const submitHandler = async ({ newPassword }: { newPassword: string }) => {
   );
 
   if (!error.value && !pending.value) {
+    reset("reset-password-form");
     toast.success(data.value.message);
     router.replace("/auth");
   }
@@ -41,6 +43,7 @@ const submitHandler = async ({ newPassword }: { newPassword: string }) => {
 
 <template>
   <FormKit
+    id="reset-password-form"
     type="form"
     form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-[repeat(6,minmax(0,60px))]"
     :actions="false"

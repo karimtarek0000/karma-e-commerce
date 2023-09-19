@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { reset } from "@formkit/core";
+import { useToast } from "vue-toastification";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 import { UserDataSignUp } from "types";
 const { $http } = useNuxtApp();
@@ -12,6 +14,7 @@ const form = reactive<UserDataSignUp>({
   role: "User",
 });
 const router = useRouter();
+const toast = useToast();
 const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 
 // --------- Define -----------
@@ -20,20 +23,32 @@ definePageMeta({
 });
 
 // --------- Functions -----------
-const submitHandler = async (data: UserDataSignUp): Promise<void> => {
-  const { name, email, phoneNumber, password, role } = data;
+const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
+  const { name, email, phoneNumber, password, role } = userDataForm;
   const userData = { name, email, phoneNumber, password, role };
 
-  const { error } = await useLazyAsyncData(() => $http("/auth", { method: "POST", body: userData }));
+  const { data, error, pending } = await useLazyAsyncData(() =>
+    $http("/auth", {
+      method: "POST",
+      body: userData,
+    })
+  );
 
-  if (!error.value) {
+  if (!error.value && !pending.value) {
+    reset("sign-up-form");
+    toast.success(data.value.message);
     router.replace("/auth");
+  }
+
+  if (error.value) {
+    toast.error(error.value.data.message);
   }
 };
 </script>
 
 <template>
   <FormKit
+    id="sign-up-form"
     type="form"
     form-class="grid grid-cols-8 gap-6 px-2 mt-8 overflow-hidden md:grid-cols-[repeat(6,minmax(0,60px))]"
     :actions="false"
