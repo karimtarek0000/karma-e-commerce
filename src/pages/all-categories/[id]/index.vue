@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
-import { SubGategory } from "types";
+import { Product, SubGategory } from "types";
 const { isDesktop } = useDevice();
 const { $http } = useNuxtApp();
 const {
   params: { id },
 } = useRoute();
 
+// ----------- Data ------------
+const page = ref<number>(2);
+const setSubCategory = ref<SubGategory | null>();
+const setBrand = ref<any>();
+
 // ----------------------- API --------------------
+// For category
 const { data: categories, error: categoryError } = await useAsyncData(() =>
   $http("/categories", {
     query: { _id: id },
@@ -15,15 +21,40 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
 );
 const subCategories: SubGategory[] = categories.value.categories[0].subCategories;
 
-// ----------- Data ------------
-const page = ref<number>(2);
-const setSubCategory = ref<SubGategory>();
-const setBrand = ref<any>();
+// For products
+const queryForProducts = computed(() => {
+  return setSubCategory.value
+    ? {
+        categoryId: id,
+        size: 8,
+        subCategoryId: setSubCategory.value._id,
+      }
+    : { categoryId: id, size: 8 };
+});
+
+const {
+  data: allProducts,
+  error: productsError,
+  pending: productsLoading,
+  execute,
+} = await useAsyncData(() =>
+  $http("/products", {
+    query: queryForProducts.value,
+  })
+);
+const products = ref<Product[]>(allProducts.value.products);
 
 // ----------- Function ------------
 const pickSubCategoryHandler = (_subCategory: SubGategory) => {
+  // Render all category products if user clicked again on the same subcategory
+  if (setSubCategory.value?._id === _subCategory._id) {
+    setSubCategory.value = null;
+    execute();
+    return;
+  }
   setSubCategory.value = _subCategory;
   setBrand.value = null;
+  execute();
 };
 
 const listBrandClassess = (_subCategoryId: string): [string, object] => {
@@ -34,6 +65,9 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
     },
   ];
 };
+
+// ----------- Watches ------------
+watch(allProducts, (values) => (products.value = values.products));
 </script>
 
 <template>
@@ -113,7 +147,8 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
       <!-- Cards grid -->
       <div class="cards-grid">
         <!-- Card -->
-        <ProductCard v-for="index in 12" :key="index" />
+        <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
+        <ProductCard v-else v-for="product in products" :key="product._id" :product="product" />
       </div>
 
       <!-- Pagination -->
