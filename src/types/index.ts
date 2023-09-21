@@ -18,6 +18,13 @@ export type SubGategory = {
   brands: SubGategory[];
 };
 
+export type Brand = {
+  _id: string;
+  image: { secure_url: string };
+  name: string;
+  slug: string;
+};
+
 export type Gategory = {
   _id: string;
   image: { secure_url: string };

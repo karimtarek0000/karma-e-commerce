@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
-import { Product, SubGategory } from "types";
+import { Brand, Product, SubGategory } from "types";
 const { isDesktop } = useDevice();
 const { $http } = useNuxtApp();
 const {
@@ -11,7 +11,7 @@ const {
 // ----------- Data ------------
 const pageNumber = ref<number>(+query?.page! || 1);
 const setSubCategory = ref<SubGategory | null>();
-const setBrand = ref<any>();
+const setBrand = ref<Brand | null>();
 
 // ----------------------- API --------------------
 // For category
@@ -23,16 +23,6 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
 const subCategories: SubGategory[] = categories.value.categories[0].subCategories;
 
 // For products
-const queryForProducts = computed(() => {
-  const q = { categoryId: id, page: pageNumber.value, size: 8 };
-  return setSubCategory.value
-    ? {
-        ...q,
-        subCategoryId: setSubCategory.value._id,
-      }
-    : { ...q };
-});
-
 const {
   data: allProducts,
   error: productsError,
@@ -41,10 +31,16 @@ const {
 } = await useAsyncData(
   () =>
     $http("/products", {
-      query: queryForProducts.value,
+      query: {
+        categoryId: id,
+        subCategoryId: setSubCategory.value?._id,
+        brandId: setBrand.value?._id,
+        page: pageNumber.value,
+        size: 8,
+      },
     }),
   {
-    watch: [pageNumber, setSubCategory],
+    watch: [pageNumber, setSubCategory, setBrand],
   }
 );
 
@@ -60,8 +56,15 @@ const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
   }
   setSubCategory.value = _subCategory;
   setBrand.value = null;
+  pageNumber.value = 1;
 };
-
+const pickBrandHandler = (brand: Brand): void => {
+  if (setBrand.value?._id === brand._id) {
+    setBrand.value = null;
+    return;
+  }
+  setBrand.value = brand;
+};
 const listBrandClassess = (_subCategoryId: string): [string, object] => {
   return [
     "mt-3 overflow-hidden transition-all duration-500 ease-in-out ms-7 max-h-0",
@@ -98,7 +101,7 @@ watch(allProducts, (values) => {
           <!-- All brands -->
           <ul :class="listBrandClassess(subCategory?._id)">
             <li v-for="brand in subCategory?.brands" :key="brand?._id" class="mb-3">
-              <button @click="setBrand = brand" class="btn !font-normal" type="button">
+              <button @click="pickBrandHandler(brand)" class="btn !font-normal" type="button">
                 <span class="wrapper-icon">
                   <ShareRenderSVG v-show="setBrand?._id === brand?._id" iconName="check" />
                 </span>
