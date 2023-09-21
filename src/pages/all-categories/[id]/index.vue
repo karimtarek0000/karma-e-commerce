@@ -5,10 +5,11 @@ const { isDesktop } = useDevice();
 const { $http } = useNuxtApp();
 const {
   params: { id },
+  query,
 } = useRoute();
 
 // ----------- Data ------------
-const page = ref<number>(2);
+const pageNumber = ref<number>(+query?.page! || 1);
 const setSubCategory = ref<SubGategory | null>();
 const setBrand = ref<any>();
 
@@ -23,13 +24,13 @@ const subCategories: SubGategory[] = categories.value.categories[0].subCategorie
 
 // For products
 const queryForProducts = computed(() => {
+  const q = { categoryId: id, page: pageNumber.value, size: 8 };
   return setSubCategory.value
     ? {
-        categoryId: id,
-        size: 8,
+        ...q,
         subCategoryId: setSubCategory.value._id,
       }
-    : { categoryId: id, size: 8 };
+    : { ...q };
 });
 
 const {
@@ -37,24 +38,28 @@ const {
   error: productsError,
   pending: productsLoading,
   execute,
-} = await useAsyncData(() =>
-  $http("/products", {
-    query: queryForProducts.value,
-  })
+} = await useAsyncData(
+  () =>
+    $http("/products", {
+      query: queryForProducts.value,
+    }),
+  {
+    watch: [pageNumber, setSubCategory],
+  }
 );
-const products = ref<Product[]>(allProducts.value.products);
+
+const products = ref<Product[]>(allProducts.value?.products);
+const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 
 // ----------- Function ------------
-const pickSubCategoryHandler = (_subCategory: SubGategory) => {
+const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
   // Render all category products if user clicked again on the same subcategory
   if (setSubCategory.value?._id === _subCategory._id) {
     setSubCategory.value = null;
-    execute();
     return;
   }
   setSubCategory.value = _subCategory;
   setBrand.value = null;
-  execute();
 };
 
 const listBrandClassess = (_subCategoryId: string): [string, object] => {
@@ -67,7 +72,10 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
 };
 
 // ----------- Watches ------------
-watch(allProducts, (values) => (products.value = values.products));
+watch(allProducts, (values) => {
+  products.value = values.products;
+  metaDataPaginForProducts.value = values.metaData;
+});
 </script>
 
 <template>
@@ -139,6 +147,17 @@ watch(allProducts, (values) => (products.value = values.products));
 
     <!-- All products and pagination -->
     <div class="max-h-screen overflow-auto scrollbar-none">
+      <!-- Pagination -->
+      <ClientOnly>
+        <SharePagination
+          class="mb-5"
+          @changePage="pageNumber = $event"
+          :total="metaDataPaginForProducts?.totalCountProducts"
+          :perPage="metaDataPaginForProducts?.limit"
+          :currentPage="pageNumber"
+        />
+      </ClientOnly>
+
       <!-- Sub category image -->
       <div class="h-[15.625rem] w-[100%] flex justify-center" v-if="setSubCategory?.image">
         <nuxt-img sizes="sm:50vw lg:100vw" :src="setSubCategory?.image?.secure_url" class="res-image" :alt="setSubCategory?.name" />
@@ -150,9 +169,6 @@ watch(allProducts, (values) => (products.value = values.products));
         <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
         <ProductCard v-else v-for="product in products" :key="product._id" :product="product" />
       </div>
-
-      <!-- Pagination -->
-      <SharePagination @changePage="page = $event" :total="200" :currentPage="page" :perPage="10" />
     </div>
   </div>
 </template>

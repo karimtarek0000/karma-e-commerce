@@ -3,7 +3,7 @@ const { isDesktop } = useDevice();
 </script>
 
 <template>
-  <header>
+  <header class="sticky top-0">
     <NavbarDesktop />
     <CategoryNavbar v-if="isDesktop" />
     <CategoryNavbarMobile v-if="!isDesktop" />
