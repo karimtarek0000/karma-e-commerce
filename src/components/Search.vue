@@ -37,7 +37,7 @@ const searchPaginationHandler = async (): Promise<void> => {
   if (searchProductsList.value.length && products.value.products.length) {
     pageNumber.value += 1;
 
-    await execute();
+    execute();
     if (!error.value && !loader.value) {
       searchProductsList.value.push(...products.value.products);
     }
