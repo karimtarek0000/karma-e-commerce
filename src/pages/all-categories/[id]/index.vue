@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
+import { useToast } from "vue-toastification";
+
+// ----------- Composables ------------
 const { isDesktop } = useDevice();
+const auth = useAuth();
 const { $http } = useNuxtApp();
+const toast = useToast();
 const {
+  path,
   params: { id },
   query,
 } = useRoute();
@@ -47,6 +53,16 @@ const products = ref<Product[]>(allProducts.value?.products);
 const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 
 // ----------- Function ------------
+const addToCardHandler = (product: Product): void => {
+  if (!auth.isLoggedIn) {
+    auth.$patch((store) => {
+      store.dataURL = `${path}${query.subCategory ? `?subCategory=${query.subCategory}` : null}`;
+    });
+    navigateTo("/auth");
+    toast.error("You must be logged in first");
+    return;
+  }
+};
 const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
   // Render all category products if user clicked again on the same subcategory
   setBrand.value = null;
@@ -93,6 +109,13 @@ watch(
     immediate: true,
   }
 );
+
+// ----------- Lifecycle ------------
+onMounted(() => {
+  auth.$patch((store) => {
+    store.dataURL = "";
+  });
+});
 </script>
 
 <template>
@@ -185,7 +208,7 @@ watch(
       <div class="cards-grid">
         <!-- Card -->
         <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
-        <ProductCard v-else v-for="product in products" :key="product._id" :product="product" />
+        <ProductCard v-else v-for="product in products" :key="product._id" :product="product" @addToCard="addToCardHandler" />
       </div>
     </div>
   </div>

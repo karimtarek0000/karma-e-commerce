@@ -5,10 +5,11 @@ export const useAuth = defineStore("auth", {
   state: (): AuthState => ({
     user: {} as UserData,
     loggedIn: false,
+    dataURL: "",
   }),
   getters: {
     isLoggedIn(state) {
-      return state.loggedIn;
+      return !!(state.loggedIn && state.user.email);
     },
   },
   actions: {

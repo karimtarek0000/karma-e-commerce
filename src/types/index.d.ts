@@ -54,6 +54,7 @@ declare global {
   type AuthState = {
     user: UserData;
     loggedIn: boolean;
+    dataURL: string;
   };
 }
 

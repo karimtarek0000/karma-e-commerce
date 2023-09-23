@@ -31,7 +31,7 @@ defineProps<{
         <h4 class="line-through" v-if="product.discount">${{ product.discount }}</h4>
       </div>
       <!-- Actions -->
-      <button class="btn-add-cart">
+      <button @click="$emit('addToCard', product)" class="btn-add-cart">
         Add to cart
         <ShareRenderSVG iconName="to-cart" />
       </button>

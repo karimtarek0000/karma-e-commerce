@@ -3,7 +3,10 @@ import { reset } from "@formkit/core";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 import { useOneTap, type CredentialResponse } from "vue3-google-signin";
 import { useToast } from "vue-toastification";
+
+// --------- Composables -----------
 const { $http } = useNuxtApp();
+const { dataURL } = useAuth();
 
 // --------- Data -----------
 const form = reactive({
@@ -13,6 +16,7 @@ const form = reactive({
 const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 const router = useRouter();
 const toast = useToast();
+const url = dataURL !== "" ? dataURL : "/";
 
 // --------- Define -----------
 definePageMeta({
@@ -27,7 +31,7 @@ const submitHandler = async (userData: { email: string; password: string }): Pro
   if (!error.value && !pending.value) {
     reset("signInForm");
     toast.success("Login successfully");
-    router.replace("/");
+    router.replace(url);
   }
 
   if (error.value) {
@@ -43,7 +47,7 @@ const successSignInGoogle = async (response: CredentialResponse): Promise<void> 
 
   if (!error.value && !pending.value) {
     toast.success("Login with google successfully");
-    router.replace("/");
+    router.replace(url);
   }
 
   if (error.value) {
