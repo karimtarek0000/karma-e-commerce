@@ -8,13 +8,19 @@ defineProps<{
 
 <template>
   <div class="card">
+    <!-- Rating -->
+    <div class="absolute flex items-center top-2 start-2 gap-x-1">
+      <ShareRenderSVG iconName="rating" sizes="w-[15px]" />
+      <span class="text-14" v-text="product.reviewRatings" />
+    </div>
+
     <!-- Image -->
     <div class="h-[12.5rem] flex justify-center">
       <nuxt-img :src="product.images[0].secure_url" class="res-image" :alt="product.title" />
     </div>
 
+    <!-- Informations -->
     <div class="info-wrapper">
-      <!-- Informations -->
       <div>
         <h5 class="font-bold truncate text-22">{{ product.title }}</h5>
         <p class="mt-2 truncate text-14">
@@ -37,7 +43,7 @@ defineProps<{
 
 <style scoped>
 .card {
-  @apply border rounded-md overflow-hidden;
+  @apply border rounded-md overflow-hidden relative;
 }
 .info-wrapper {
   @apply px-2 py-1 capitalize;

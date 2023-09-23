@@ -50,6 +50,7 @@ export type Product = {
       secure_url: string;
     }
   ];
+  reviewRatings: number;
   categoryId: string;
   subCategoryId: string;
   brandId: string;
