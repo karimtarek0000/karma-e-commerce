@@ -50,12 +50,12 @@ const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 // ----------- Function ------------
 const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
   // Render all category products if user clicked again on the same subcategory
+  setBrand.value = null;
   if (setSubCategory.value?._id === _subCategory._id) {
     setSubCategory.value = null;
     return;
   }
   setSubCategory.value = _subCategory;
-  setBrand.value = null;
   pageNumber.value = 1;
 };
 const pickBrandHandler = (brand: Brand): void => {
@@ -79,6 +79,21 @@ watch(allProducts, (values) => {
   products.value = values.products;
   metaDataPaginForProducts.value = values.metaData;
 });
+
+watch(
+  () => query.subCategory,
+  (value) => {
+    if (value) {
+      const subCategory = subCategories.find((subCategory) => subCategory._id === value);
+      if (subCategory) {
+        pickSubCategoryHandler(subCategory);
+      }
+    }
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <template>
@@ -154,10 +169,11 @@ watch(allProducts, (values) => {
       <ClientOnly>
         <SharePagination
           class="mb-5"
-          @changePage="pageNumber = $event"
+          v-if="metaDataPaginForProducts?.totalOfPages > 1"
           :total="metaDataPaginForProducts?.totalCountProducts"
           :perPage="metaDataPaginForProducts?.limit"
           :currentPage="pageNumber"
+          @changePage="pageNumber = $event"
         />
       </ClientOnly>
 

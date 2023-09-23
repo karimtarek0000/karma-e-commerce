@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Gategory } from "types";
 const { $http } = useNuxtApp();
-const { replace } = useRouter();
+const { push } = useRouter();
 
 // ----------------- From API ---------------------
 const { data: categories } = await useAsyncData(() => $http("/categories"));
@@ -24,7 +24,7 @@ const overCategoryHandler = (category: Gategory): void => {
             :key="category.name"
             class="font-bold link"
             @mouseover="overCategoryHandler(category)"
-            @click="replace(`/all-categories/${category?._id}`)"
+            @click="push(`/all-categories/${category?._id}`)"
           >
             {{ category.name }}
           </button>
@@ -32,7 +32,7 @@ const overCategoryHandler = (category: Gategory): void => {
           <!-- View the category after the user hover on it -->
           <CategoryView :category="setCategory" />
         </div>
-        <NuxtLink class="capitalize text-14" to="/all-categories">All categories</NuxtLink>
+        <!-- <NuxtLink class="capitalize text-14" to="/all-categories">All categories</NuxtLink> -->
       </div>
     </div>
   </nav>

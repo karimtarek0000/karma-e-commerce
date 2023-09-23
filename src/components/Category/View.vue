@@ -18,7 +18,7 @@ defineProps<{ category: Gategory }>();
           <NuxtLink
             v-for="subCategory in category?.subCategories"
             :key="subCategory._id"
-            :to="`/sub-category/${subCategory.slug}`"
+            :to="`/all-categories/${category?._id}?subCategory=${subCategory?._id}`"
             class="capitalize hover:text-blue-700"
             >{{ subCategory.name.replace("men ", "") }}</NuxtLink
           >
