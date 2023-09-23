@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const debounce = useDebounce();
 const { $http } = useNuxtApp();
-import { Product } from "@/types";
 
 // ---------------- Data -----------------
 const search = ref<string>("");

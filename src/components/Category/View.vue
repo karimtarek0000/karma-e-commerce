@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Gategory } from "types";
-
 defineProps<{ category: Gategory }>();
 </script>
 

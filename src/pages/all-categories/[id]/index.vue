@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
-import { Brand, Product, SubGategory } from "types";
 const { isDesktop } = useDevice();
 const { $http } = useNuxtApp();
 const {

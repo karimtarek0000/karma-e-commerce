@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Gategory } from "types";
 const { $http } = useNuxtApp();
 const { push } = useRouter();
 

@@ -1,6 +1,5 @@
 import jwt_decode from "jwt-decode";
 import { useToast } from "vue-toastification";
-import { AuthState, UserData } from "types";
 
 export const useAuth = defineStore("auth", {
   state: (): AuthState => ({

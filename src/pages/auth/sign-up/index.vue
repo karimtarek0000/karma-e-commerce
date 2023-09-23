@@ -2,7 +2,6 @@
 import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
-import { UserDataSignUp } from "types";
 const { $http } = useNuxtApp();
 
 // --------- Data -----------
