@@ -56,7 +56,7 @@ const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 const addToCardHandler = (product: Product): void => {
   if (!auth.isLoggedIn) {
     auth.$patch((store) => {
-      store.dataURL = `${path}${query.subCategory ? `?subCategory=${query.subCategory}` : null}`;
+      store.dataURL = `${path}${query.subCategory ? `?subCategory=${query.subCategory}` : ""}`;
     });
     navigateTo("/auth");
     toast.error("You must be logged in first");
