@@ -2,7 +2,7 @@
 import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
-const { $http } = useNuxtApp();
+const http = useHttp();
 
 // --------- Data -----------
 const form = reactive<UserDataSignUp>({
@@ -27,7 +27,7 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
   const userData = { name, email, phoneNumber, password, role };
 
   const { data, error, pending } = await useLazyAsyncData(() =>
-    $http("/auth", {
+    http("/auth", {
       method: "POST",
       body: userData,
     })

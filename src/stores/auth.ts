@@ -20,10 +20,10 @@ export const useAuth = defineStore("auth", {
       this.loggedIn = true;
     },
     async logout() {
-      const { $http } = useNuxtApp();
+      const http = useHttp();
       const toast = useToast();
 
-      const { error, pending } = await useLazyAsyncData(() => $http("/auth/logout"));
+      const { error, pending } = await useLazyAsyncData(() => http("/auth/logout"));
 
       if (!error.value && !pending.value) {
         const accessToken = useCookie("accessToken");

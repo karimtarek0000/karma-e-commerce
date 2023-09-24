@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
-const { $http } = useNuxtApp();
+const http = useHttp();
 
 // --------- Data -----------
 const form = reactive({
@@ -18,7 +18,7 @@ definePageMeta({
 // --------- Functions -----------
 const submitHandler = async ({ email }: { email: string }) => {
   const { data, error, pending } = await useLazyAsyncData(() =>
-    $http("/auth/forget-password", {
+    http("/auth/forget-password", {
       method: "POST",
       body: {
         email,

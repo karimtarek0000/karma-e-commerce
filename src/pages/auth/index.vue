@@ -5,7 +5,7 @@ import { useOneTap, type CredentialResponse } from "vue3-google-signin";
 import { useToast } from "vue-toastification";
 
 // --------- Composables -----------
-const { $http } = useNuxtApp();
+const http = useHttp();
 const { dataURL } = useAuth();
 
 // --------- Data -----------
@@ -26,7 +26,7 @@ definePageMeta({
 // --------- Functions -----------
 // Login with email
 const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
-  const { error, pending } = await useLazyAsyncData(() => $http("/auth/sign-in", { method: "POST", body: userData }));
+  const { error, pending } = await useLazyAsyncData(() => http("/auth/sign-in", { method: "POST", body: userData }));
 
   if (!error.value && !pending.value) {
     reset("signInForm");
@@ -42,7 +42,7 @@ const submitHandler = async (userData: { email: string; password: string }): Pro
 // Login with Google
 const successSignInGoogle = async (response: CredentialResponse): Promise<void> => {
   const { error, pending } = await useLazyAsyncData(() =>
-    $http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } })
+    http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } })
   );
 
   if (!error.value && !pending.value) {

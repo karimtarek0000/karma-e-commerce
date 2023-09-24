@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const debounce = useDebounce();
-const { $http } = useNuxtApp();
+const http = useHttp();
 
 // ---------------- Data -----------------
 const search = ref<string>("");
@@ -12,7 +12,7 @@ const {
   execute,
 } = await useAsyncData(
   () =>
-    $http("/products", {
+    http("/products", {
       query: {
         search: search.value,
         page: pageNumber.value,

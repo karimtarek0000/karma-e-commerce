@@ -5,7 +5,7 @@ import { useToast } from "vue-toastification";
 // ----------- Composables ------------
 const { isDesktop } = useDevice();
 const auth = useAuth();
-const { $http } = useNuxtApp();
+const http = useHttp();
 const toast = useToast();
 const {
   path,
@@ -21,7 +21,7 @@ const setBrand = ref<Brand | null>();
 // ----------------------- API --------------------
 // For category
 const { data: categories, error: categoryError } = await useAsyncData(() =>
-  $http("/categories", {
+  http("/categories", {
     query: { _id: id },
   })
 );
@@ -35,7 +35,7 @@ const {
   execute,
 } = await useAsyncData(
   () =>
-    $http("/products", {
+    http("/products", {
       query: {
         categoryId: id,
         subCategoryId: setSubCategory.value?._id,

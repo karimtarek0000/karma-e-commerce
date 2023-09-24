@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { $http } = useNuxtApp();
+const http = useHttp();
 
 // ----------------- From API ---------------------
-const { data: categories } = await useAsyncData(() => $http("/categories"));
+const { data: categories } = await useAsyncData(() => http("/categories"));
 const allCategories = reactive<Gategory[]>(categories.value?.categories);
 </script>
 

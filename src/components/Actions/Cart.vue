@@ -1,14 +1,12 @@
 <script setup lang="ts">
 // ----------- Composables ------------
-const { $http } = useNuxtApp();
+const http = useHttp();
 
 // ----------- Data ------------
 const toggleCartQuickView = ref<boolean>(false);
 
 // ----------- API ------------
-const { data: cart, error, pending } = await useAsyncData<{ cart: Cart }>(() => $http("/cart"), { server: false, pick: ["cart"] });
-
-console.log(cart.value);
+const { data: cart, error, pending } = await useLazyAsyncData<{ cart: Cart }>(() => http("/cart"), { server: false, pick: ["cart"] });
 </script>
 
 <template>

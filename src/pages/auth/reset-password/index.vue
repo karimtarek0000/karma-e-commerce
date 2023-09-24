@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
-const { $http } = useNuxtApp();
+const http = useHttp();
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 
 // --------- Data -----------
@@ -21,7 +21,7 @@ definePageMeta({
 // --------- Functions -----------
 const submitHandler = async ({ newPassword }: { newPassword: string }) => {
   const { data, error, pending } = await useLazyAsyncData(() =>
-    $http(`/auth/reset-password/${query?.token}`, {
+    http(`/auth/reset-password/${query?.token}`, {
       method: "PATCH",
       body: {
         password: newPassword,
