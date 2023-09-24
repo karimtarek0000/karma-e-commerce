@@ -56,6 +56,16 @@ declare global {
     loggedIn: boolean;
     dataURL: string;
   };
+  type Cart = {
+    _id: string;
+    userId: string;
+    products: { productId: Product; quantity: number }[];
+    subTotal: number;
+  };
+  type CartProducts = {
+    productId: Product;
+    quantity: number;
+  };
 }
 
 export {};

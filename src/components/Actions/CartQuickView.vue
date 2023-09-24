@@ -1,21 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  products: CartProducts[];
+}>();
+</script>
 
 <template>
   <div class="cart-view" aria-modal="true" role="dialog" tabindex="-1">
-    <div class="space-y-2">
+    <!-- List of products and actions -->
+    <div v-if="products?.length" class="space-y-2">
       <!-- List of products -->
       <div class="cart-view-list">
-        <div v-for="index in 5" :key="index" class="flex items-center gap-1">
-          <img
-            src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
-            alt=""
-            class="object-cover w-16 h-16 rounded shrink-0"
-          />
+        <div v-for="product in products" :key="product.productId._id" class="flex items-center gap-1">
+          <!-- Image -->
+          <nuxt-img :src="product.productId.images[0].secure_url" class="object-cover w-10 h-16 rounded shrink-0" />
 
-          <div class="max-w-full overflow-hidden">
-            <h3 class="max-w-full text-black truncate text-14">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur, incidunt.</h3>
-            <div class="flex items-center justify-between pb-3 mt-4 border-b">
-              <p class="flex items-center justify-center gap-x-3 text-14">Price: <span class="font-bold">$1000</span></p>
+          <div class="w-full max-w-full overflow-hidden">
+            <h3 class="max-w-full mb-2 font-bold text-black truncate text-14" v-text="product.productId.title" />
+            <div class="flex items-center justify-between border-b">
+              <p class="flex items-center justify-center gap-x-3 text-14">
+                Price: <span class="font-bold">${{ product.productId.priceAfterDiscount }}</span>
+              </p>
+
+              <!-- For delete product from cart -->
               <button>
                 <ShareRenderSVG iconName="del" sizes="w-[18px]" />
               </button>
@@ -29,6 +35,12 @@
         <NuxtLink to="/cart" class="view-cart-btn">View my cart <span class="font-bold">(3)</span></NuxtLink>
         <NuxtLink to="/" class="checkout-btn">Checkout</NuxtLink>
       </div>
+    </div>
+
+    <!-- If not products exist -->
+    <div v-else class="flex flex-col items-center gap-2 text-center capitalize">
+      <p>No products found</p>
+      <ShareRenderSVG iconName="cart" />
     </div>
   </div>
 </template>

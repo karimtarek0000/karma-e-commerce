@@ -1,18 +1,20 @@
-import { $fetch, FetchContext, FetchOptions, Headers } from "ofetch";
+import { FetchContext, Headers, ofetch } from "ofetch";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const accessToken = useCookie("accessToken");
   const { setUserDataWhenLoggedIn, logout } = useAuth();
 
-  const fetchOptions: FetchOptions = {
+  const apiFetcher = ofetch.create({
     baseURL: nuxtApp.$config.public.BASE_URL,
     credentials: "include",
+    retry: 1,
 
     onRequest(ctx: FetchContext): Promise<void> | void {
       ctx.options.headers = new Headers({
         Authorization: `Bearer ${accessToken.value}`,
       });
     },
+
     async onResponse({ response }) {
       const res = response._data;
       if (res?.message === "Login successfully") {
@@ -20,22 +22,24 @@ export default defineNuxtPlugin((nuxtApp) => {
         setUserDataWhenLoggedIn(accessToken.value as string);
       }
     },
+
     async onResponseError({ request, response, options }): Promise<any> {
       if (response.status === 401 || response.status === 403) {
         try {
           const data = await apiFetcher("/auth/refresh-token");
-
           accessToken.value = data.accessToken;
 
-          return apiFetcher(request, options);
+          const res = await apiFetcher(request, options);
+
+          response = res;
+
+          return response;
         } catch (error) {
           logout();
         }
       }
     },
-  };
-
-  const apiFetcher = $fetch.create(fetchOptions);
+  });
 
   return {
     provide: {
