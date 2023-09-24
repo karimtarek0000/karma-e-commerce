@@ -7,7 +7,7 @@ const auth = useAuth();
 const toggleCartQuickView = ref<boolean>(false);
 
 // ----------- API ------------
-const { data: cart, error, pending, execute } = await useLazyAsyncData<{ cart: Cart }>(() => http("/cart"), { server: false, pick: ["cart"] });
+const { data: cart, execute } = await useLazyAsyncData<{ cart: Cart }>(() => http("/cart"), { server: false, pick: ["cart"] });
 
 // ----------- Computed ------------
 const productsLength = computed((): number => cart.value?.cart?.products?.length as number);
@@ -31,7 +31,7 @@ watch(
     </button>
 
     <!-- Show all products if exist -->
-    <ActionsCartQuickView v-show="toggleCartQuickView" :products="cart?.cart.products as []" />
+    <ActionsCartQuickView :total="(cart?.cart?.subTotal as number)" v-show="toggleCartQuickView" :products="cart?.cart.products as []" />
   </div>
 </template>
 

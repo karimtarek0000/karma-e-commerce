@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   products: CartProducts[];
+  total: number;
 }>();
 </script>
 
@@ -18,7 +19,7 @@ defineProps<{
             <h3 class="max-w-full mb-2 font-bold text-black truncate text-14" v-text="product.productId.title" />
             <div class="flex items-center justify-between border-b">
               <p class="flex items-center justify-center gap-x-3 text-14">
-                Price: <span class="font-bold">${{ product.productId.priceAfterDiscount }}</span>
+                Price: <span class="font-bold">${{ product.productId.priceAfterDiscount.toLocaleString() }}</span>
               </p>
 
               <!-- For delete product from cart -->
@@ -32,7 +33,10 @@ defineProps<{
 
       <!-- Actions -->
       <div class="space-y-2 text-center">
-        <NuxtLink to="/cart" class="view-cart-btn">View my cart <span class="font-bold">(3)</span></NuxtLink>
+        <h6><span class="font-bold">Total</span>: ${{ total.toLocaleString() }}</h6>
+        <NuxtLink to="/cart" class="view-cart-btn"
+          >View my cart <span class="font-bold">({{ products?.length }})</span></NuxtLink
+        >
         <NuxtLink to="/" class="checkout-btn">Checkout</NuxtLink>
       </div>
     </div>
