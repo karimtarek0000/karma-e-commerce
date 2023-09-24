@@ -6,10 +6,14 @@ export const useAuth = defineStore("auth", {
     user: {} as UserData,
     loggedIn: false,
     dataURL: "",
+    addInCart: false,
   }),
   getters: {
     isLoggedIn(state) {
       return !!(state.loggedIn && state.user.email);
+    },
+    addInCartStatus(state) {
+      return state.addInCart;
     },
   },
   actions: {
@@ -18,6 +22,9 @@ export const useAuth = defineStore("auth", {
 
       this.user = { _id, name, email, role };
       this.loggedIn = true;
+    },
+    changeAddInCartStatus(status: boolean) {
+      this.addInCart = status;
     },
     async logout() {
       const http = useHttp();

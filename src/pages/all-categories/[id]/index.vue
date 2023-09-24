@@ -17,6 +17,7 @@ const {
 const pageNumber = ref<number>(+query?.page! || 1);
 const setSubCategory = ref<SubGategory | null>();
 const setBrand = ref<Brand | null>();
+const pickProduct = ref<Product>();
 
 // ----------------------- API --------------------
 // For category
@@ -25,9 +26,9 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
     query: { _id: id },
   })
 );
-const subCategories: SubGategory[] = categories.value.categories[0].subCategories;
+const subCategories: SubGategory[] = categories?.value?.categories[0]?.subCategories;
 
-// For products
+// For get products
 const {
   data: allProducts,
   error: productsError,
@@ -49,11 +50,28 @@ const {
   }
 );
 
+// For add product in cart
+const {
+  pending: cartLoader,
+  error: cartError,
+  execute: cartExcute,
+} = await useAsyncData(
+  () =>
+    http("/cart", {
+      method: "POST",
+      body: {
+        productId: pickProduct.value?._id,
+        quantity: 1,
+      },
+    }),
+  { immediate: false }
+);
+
 const products = ref<Product[]>(allProducts.value?.products);
 const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 
 // ----------- Function ------------
-const addToCardHandler = (product: Product): void => {
+const addToCardHandler = async (product: Product) => {
   if (!auth.isLoggedIn) {
     auth.$patch((store) => {
       store.dataURL = `${path}${query.subCategory ? `?subCategory=${query.subCategory}` : ""}`;
@@ -61,6 +79,17 @@ const addToCardHandler = (product: Product): void => {
     navigateTo("/auth");
     toast.error("You must be logged in first");
     return;
+  }
+
+  // ------- Add product into card ----------
+  pickProduct.value = product;
+  await cartExcute();
+  if (!cartLoader.value && !cartError.value) {
+    toast.success(`Product ${product.title} added in cart successfully`);
+    auth.changeAddInCartStatus(true);
+  }
+  if (!cartLoader.value && cartError.value) {
+    toast.success(cartError.value.message);
   }
 };
 const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
@@ -208,7 +237,15 @@ onMounted(() => {
       <div class="cards-grid">
         <!-- Card -->
         <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
-        <ProductCard v-else v-for="product in products" :key="product._id" :product="product" @addToCard="addToCardHandler" />
+        <ProductCard
+          v-else
+          v-for="product in products"
+          :key="product._id"
+          :product="product"
+          :loader="cartLoader"
+          :productId="(pickProduct?._id as string)"
+          @addToCart="addToCardHandler"
+        />
       </div>
     </div>
   </div>

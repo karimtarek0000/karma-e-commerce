@@ -1,7 +1,13 @@
 <script setup lang="ts">
-defineProps<{
+// -------------------- Define ----------------------
+const props = defineProps<{
   product: Product;
+  loader: boolean;
+  productId: string;
 }>();
+
+// -------------------- Computed ----------------------
+const loadingBtnCart = computed(() => props.product._id === props.productId && props.loader);
 </script>
 
 <template>
@@ -31,7 +37,8 @@ defineProps<{
         <h4 class="line-through" v-if="product.discount">${{ product.discount }}</h4>
       </div>
       <!-- Actions -->
-      <button @click="$emit('addToCard', product)" class="btn-add-cart">
+      <button :disabled="loadingBtnCart" @click="$emit('addToCart', product)" class="btn-add-cart">
+        <ShareLoader v-if="loadingBtnCart" />
         Add to cart
         <ShareRenderSVG iconName="to-cart" />
       </button>
