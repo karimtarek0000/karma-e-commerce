@@ -21,7 +21,7 @@ const {
   error: deleteError,
   execute: deleteExcute,
   status,
-} = await useAsyncData<{ cart: Cart }>(() => http(`/cart/${productId.value}`, { method: "DELETE" }), {
+} = await useAsyncData<{ cart: Cart }>("deleteCart", () => http(`/cart/${productId.value}`, { method: "DELETE" }), {
   server: false,
   pick: ["cart"],
   immediate: false,
@@ -62,14 +62,14 @@ watch(
   <div class="cart">
     <!-- Toggle to open and close cart -->
     <button @click="toggleCartQuickView = !toggleCartQuickView">
-      <ActionsCartCounter v-show="!!productsLength" :num="productsLength" />
+      <ActionsCartCounter v-show="!!productsLength" :num="productsLength || 0" />
       <ShareRenderSVG iconName="cart" />
     </button>
 
     <!-- Show all products if exist -->
     <ActionsCartQuickView
       :total="(cart?.cart?.subTotal as number) || 0"
-      :products="cart?.cart.products as []"
+      :products="cart?.cart.products ?? []"
       :productId="productId"
       :statusLoader="status"
       v-show="toggleCartQuickView"

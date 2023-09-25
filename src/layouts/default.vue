@@ -11,6 +11,6 @@ const { isDesktop } = useDevice();
   <main class="container">
     <slot />
   </main>
-  <!-- <Footer /> -->
+  <Footer />
   <NavbarMobile v-if="!isDesktop" />
 </template>
