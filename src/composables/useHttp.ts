@@ -55,7 +55,7 @@ export const useHttp = () => {
         const response = await fetcher.raw(request, options);
         return response._data;
       }
-      return error.response;
+      return Promise.reject(error.response._data);
     }
   };
 };

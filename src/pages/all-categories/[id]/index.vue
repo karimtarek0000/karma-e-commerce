@@ -84,12 +84,14 @@ const addToCardHandler = async (product: Product) => {
   // ------- Add product into card ----------
   pickProduct.value = product;
   await cartExcute();
+
   if (!cartLoader.value && !cartError.value) {
     toast.success(`Product ${product.title} added in cart successfully`);
     auth.changeAddInCartStatus(true);
   }
-  if (!cartLoader.value && cartError.value) {
-    toast.success(cartError.value.message);
+
+  if (cartError.value) {
+    toast.error(cartError.value.message);
   }
 };
 const pickSubCategoryHandler = (_subCategory: SubGategory): void => {

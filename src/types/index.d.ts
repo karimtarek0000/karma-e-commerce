@@ -63,7 +63,7 @@ declare global {
     products: { productId: Product; quantity: number }[];
     subTotal: number;
   };
-  type CartProducts = {
+  type CartProduct = {
     productId: Product;
     quantity: number;
   };

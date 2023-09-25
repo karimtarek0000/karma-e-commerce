@@ -38,7 +38,7 @@ const loadingBtnCart = computed(() => props.product._id === props.productId && p
       </div>
       <!-- Actions -->
       <button :disabled="loadingBtnCart" @click="$emit('addToCart', product)" class="btn-add-cart">
-        <ShareLoader v-if="loadingBtnCart" />
+        <ShareLoader v-show="loadingBtnCart" />
         Add to cart
         <ShareRenderSVG iconName="to-cart" />
       </button>

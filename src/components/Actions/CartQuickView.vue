@@ -1,7 +1,11 @@
 <script setup lang="ts">
-defineProps<{
-  products: CartProducts[];
+import { AsyncDataRequestStatus } from "nuxt/dist/app/composables/asyncData";
+
+const props = defineProps<{
+  products: CartProduct[];
   total: number;
+  productId: string;
+  statusLoader: AsyncDataRequestStatus;
 }>();
 </script>
 
@@ -23,8 +27,12 @@ defineProps<{
               </p>
 
               <!-- For delete product from cart -->
-              <button>
-                <ShareRenderSVG iconName="del" sizes="w-[18px]" />
+              <button @click="$emit('deleteProduct', product)">
+                <ShareRenderSVG v-show="product.productId._id !== productId" iconName="del" sizes="w-[18px]" />
+                <ShareLoader
+                  class="w-[25px] h-[25px] border-t-secondary"
+                  v-show="statusLoader === 'pending' && product.productId._id === productId"
+                />
               </button>
             </div>
           </div>
