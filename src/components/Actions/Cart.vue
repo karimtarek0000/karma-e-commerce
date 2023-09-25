@@ -12,7 +12,7 @@ const productId = ref<string>("");
 
 // ----------- API ------------
 // Get cart
-const { data: cart, execute } = await useAsyncData<{ cart: Cart }>(() => http("/cart"), { server: false, pick: ["cart"] });
+const { data: cart, execute } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), { server: false, pick: ["cart"] });
 
 // Delete product from cart
 const {

@@ -30,7 +30,7 @@ defineProps<{
               <button @click="$emit('deleteProduct', product)">
                 <ShareRenderSVG v-show="product.productId._id !== productId" iconName="del" sizes="w-[18px]" />
                 <ShareLoader
-                  class="w-[25px] h-[25px] border-t-secondary"
+                  class="w-[25px] h-[25px] !border-t-secondary"
                   v-show="statusLoader === 'pending' && product.productId._id === productId"
                 />
               </button>
