@@ -68,7 +68,7 @@ watch(
 
     <!-- Show all products if exist -->
     <ActionsCartQuickView
-      :total="(cart?.cart?.subTotal as number)"
+      :total="(cart?.cart?.subTotal as number) || 0"
       :products="cart?.cart.products as []"
       :productId="productId"
       :statusLoader="status"

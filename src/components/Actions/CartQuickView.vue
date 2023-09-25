@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AsyncDataRequestStatus } from "nuxt/dist/app/composables/asyncData";
 
-const props = defineProps<{
+defineProps<{
   products: CartProduct[];
   total: number;
   productId: string;
