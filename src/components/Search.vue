@@ -36,7 +36,7 @@ const searchPaginationHandler = async (): Promise<void> => {
   if (searchProductsList.value.length && products.value.products.length) {
     pageNumber.value += 1;
 
-    execute();
+    await execute();
     if (!error.value && !loader.value) {
       searchProductsList.value.push(...products.value.products);
     }
@@ -63,7 +63,9 @@ watch(search, (newValue) => {
     <div class="absolute top-2/4 -translate-y-2/4 end-3">
       <ShareRenderSVG v-show="!search" iconName="search" sizes="w-[1.22rem]" />
       <ShareLoader v-show="loader && search" class="!border-t-primary !w-7 !h-7" />
-      <button @click="clearInput" v-show="search && !loader" type="button" class="text-2xl">&times;</button>
+      <button @click="clearInput" v-show="search && !loader" type="button" class="text-2xl">
+        &times;
+      </button>
     </div>
 
     <!-- Search list -->
@@ -76,12 +78,15 @@ watch(search, (newValue) => {
           :to="`/product-details/${product?.slug}`"
           class="flex items-center px-1 py-2 gap-x-2"
         >
-          <nuxt-img
-            sizes="sm:50px lg:70px"
-            width="70px"
-            height="70px"
-            :src="product?.images[0]?.secure_url"
+          <NuxtImg
+            :src="replaceCloudinaryURL(product?.images[0]?.secure_url)"
+            provider="cloudinary"
+            preset="cloudinary"
             class="res-image"
+            width="70px"
+            height="80px"
+            loading="lazy"
+            fit="thumbnail"
             :alt="product?.title"
           />
           <h5 class="font-bold capitalize truncate text-14">{{ product?.title }}</h5>

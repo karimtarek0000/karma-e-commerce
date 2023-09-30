@@ -31,7 +31,6 @@ const overCategoryHandler = (category: Gategory): void => {
           <!-- View the category after the user hover on it -->
           <CategoryView :category="setCategory" />
         </div>
-        <!-- <NuxtLink class="capitalize text-14" to="/all-categories">All categories</NuxtLink> -->
       </div>
     </div>
   </nav>
