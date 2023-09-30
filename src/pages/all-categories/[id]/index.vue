@@ -152,6 +152,20 @@ onMounted(() => {
     store.dataURL = "";
   });
 });
+
+// ----------- Handling Errors ------------
+if (!categories?.value?.categories.length) {
+  throw showError({
+    statusCode: 404,
+    message: "This id not found",
+  });
+}
+if (categoryError.value || productsError.value) {
+  throw showError({
+    statusCode: categoryError.value?.statusCode || productsError.value?.statusCode,
+    message: categoryError.value?.message || productsError.value?.message,
+  });
+}
 </script>
 
 <template>
