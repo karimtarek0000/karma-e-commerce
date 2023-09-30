@@ -20,7 +20,17 @@ const loadingBtnCart = computed(() => props.product._id === props.productId && p
 
     <!-- Image -->
     <div class="h-[12.5rem] flex justify-center">
-      <nuxt-img :src="product.images[0].secure_url" class="res-image" :alt="product.title" />
+      <NuxtImg
+        :src="replaceCloudinaryURL(product.images[0].secure_url)"
+        provider="cloudinary"
+        preset="cloudinary"
+        width="147"
+        height="200"
+        loading="lazy"
+        class="res-image"
+        fit="thumbnail"
+        :alt="product.title"
+      />
     </div>
 
     <!-- Informations -->

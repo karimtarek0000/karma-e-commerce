@@ -231,8 +231,19 @@ onMounted(() => {
       </ClientOnly>
 
       <!-- Sub category image -->
-      <div class="h-[15.625rem] w-[100%] flex justify-center" v-if="setSubCategory?.image">
-        <nuxt-img sizes="sm:50vw lg:100vw" :src="setSubCategory?.image?.secure_url" class="res-image" :alt="setSubCategory?.name" />
+      <div
+        class="h-[15.625rem] w-[100%] flex justify-center overflow-hidden"
+        v-if="setSubCategory?.image"
+      >
+        <NuxtImg
+          :src="replaceCloudinaryURL(setSubCategory?.image?.secure_url)"
+          provider="cloudinary"
+          preset="cloudinary"
+          class="res-image"
+          sizes="sm:70vw lg:90vw xl:100vw"
+          fit="cover"
+          :alt="setSubCategory?.name"
+        />
       </div>
 
       <!-- Cards grid -->
@@ -245,7 +256,7 @@ onMounted(() => {
           :key="product._id"
           :product="product"
           :loader="cartLoader"
-          :productId="(pickProduct?._id as string)"
+          :productId="(pickProduct?._id as string) || ''"
           @addToCart="addToCardHandler"
         />
       </div>

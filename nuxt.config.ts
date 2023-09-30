@@ -18,8 +18,20 @@ export default defineNuxtConfig({
     transpile: ["vue-toastification"],
   },
   plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
-  css: ["~/assets/style/main.css", "~/assets/style/toast.css", "vue-multiselect/dist/vue-multiselect.css"],
-  modules: ["@nuxtjs/google-fonts", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/image", "nuxt-vue3-google-signin", "@nuxtjs/device", "@formkit/nuxt"],
+  css: [
+    "~/assets/style/main.css",
+    "~/assets/style/toast.css",
+    "vue-multiselect/dist/vue-multiselect.css",
+  ],
+  modules: [
+    "@nuxtjs/google-fonts",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "@nuxt/image",
+    "nuxt-vue3-google-signin",
+    "@nuxtjs/device",
+    "@formkit/nuxt",
+  ],
 
   // Google signin
   googleSignIn: {
@@ -41,15 +53,27 @@ export default defineNuxtConfig({
   },
   // Image/nuxt
   image: {
-    // The screen sizes predefined by `@nuxt/image`:
     screens: {
       sm: 640,
       md: 768,
       lg: 1024,
       xl: 1280,
     },
+    quality: 80,
+    format: ["webp"],
     optimize: true,
+    cloudinary: {
+      baseURL: "https://res.cloudinary.com/dmtlew6gk/image/upload/",
+    },
+    presets: {
+      cloudinary: {
+        modifiers: {
+          format: "webp",
+        },
+      },
+    },
   },
+  // Tailwind
   postcss: {
     plugins: {
       tailwindcss: {},
