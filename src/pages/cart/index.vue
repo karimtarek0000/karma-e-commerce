@@ -89,15 +89,20 @@ const showLoader = (status: string, id: string) => {
     <div class="card" v-for="product in cart?.cart?.products" :key="product.productId?._id">
       <!-- Image -->
       <div class="h-[12.5rem] flex justify-center">
-        <nuxt-img
-          :src="product.productId?.images[0].secure_url"
+        <NuxtImg
+          :src="replaceCloudinaryURL(product.productId?.images[0].secure_url)"
+          provider="cloudinary"
+          preset="cloudinary"
           class="res-image"
+          loading="lazy"
+          sizes="sm:50vw lg:80vw xl:100vw"
+          fit="cover"
           :alt="product.productId?.title"
         />
       </div>
 
       <!-- Info -->
-      <div class="space-y-2">
+      <div class="space-y-2 max-md:text-center">
         <h3 class="text-2xl font-bold">{{ product.productId?.title }}</h3>
         <p>{{ product.productId?.description }}</p>
 
@@ -110,7 +115,7 @@ const showLoader = (status: string, id: string) => {
       </div>
 
       <!-- Actions -->
-      <div class="flex flex-col items-center px-3 justify-self-end gap-y-5">
+      <div class="flex flex-col items-center px-3 max-md:mb-2 lg:justify-self-end gap-y-5">
         <!-- Input to add quantity -->
         <div class="max-w-[100px] min-w-[100px] min-h-[45px] flex items-center justify-center">
           <ShareLoader

@@ -14,20 +14,46 @@ defineProps<{
     <div v-if="products?.length" class="space-y-2">
       <!-- List of products -->
       <div class="cart-view-list">
-        <div v-for="product in products" :key="product.productId._id" class="flex items-center gap-1">
+        <!-- Product card -->
+        <div
+          v-for="product in products"
+          :key="product.productId._id"
+          class="flex items-center gap-1"
+        >
           <!-- Image -->
-          <nuxt-img :src="product.productId.images[0].secure_url" class="object-cover w-10 h-16 rounded shrink-0" />
+          <NuxtImg
+            :src="replaceCloudinaryURL(product.productId.images[0].secure_url)"
+            provider="cloudinary"
+            preset="cloudinary"
+            loading="lazy"
+            width="40"
+            height="64"
+            class="object-cover w-10 h-16 rounded shrink-0"
+            fit="thumbnail"
+            :alt="product.productId?.title"
+          />
 
+          <!-- Info -->
           <div class="w-full max-w-full overflow-hidden">
-            <h3 class="max-w-full mb-2 font-bold text-black truncate text-14" v-text="product.productId.title" />
+            <h3
+              class="max-w-full mb-2 font-bold text-black truncate text-14"
+              v-text="product.productId.title"
+            />
             <div class="flex items-center justify-between border-b">
               <p class="flex items-center justify-center gap-x-3 text-14">
-                Price: <span class="font-bold">${{ product.productId.priceAfterDiscount.toLocaleString() }}</span>
+                Price:
+                <span class="font-bold"
+                  >${{ product.productId.priceAfterDiscount.toLocaleString() }}</span
+                >
               </p>
 
               <!-- For delete product from cart -->
               <button @click="$emit('deleteProduct', product)">
-                <ShareRenderSVG v-show="product.productId._id !== productId" iconName="del" sizes="w-[18px]" />
+                <ShareRenderSVG
+                  v-show="product.productId._id !== productId"
+                  iconName="del"
+                  sizes="w-[18px]"
+                />
                 <ShareLoader
                   class="w-[25px] h-[25px] !border-t-secondary"
                   v-show="statusLoader === 'pending' && product.productId._id === productId"
