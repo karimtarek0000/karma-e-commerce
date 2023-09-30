@@ -1,8 +1,16 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div class="card">
-    <div class="animate-spin h-[12.5rem]"></div>
+  <div class="card animate-pulse">
+    <div class="h-[12.5rem] bg-slate-700/20" />
+
+    <div class="flex flex-col gap-2 px-2 py-1 mt-2">
+      <div class="h-7 bg-slate-700/20" />
+      <div class="h-5 mb-3 bg-slate-700/20" />
+
+      <div class="flex items-center gap-3 max-md:justify-center">
+        <div class="h-4 w-[100px] bg-slate-700/20" />
+        <div class="h-4 w-[100px] bg-slate-700/20" />
+      </div>
+    </div>
   </div>
 </template>
 

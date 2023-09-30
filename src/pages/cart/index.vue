@@ -11,10 +11,14 @@ const quantity = ref<number>(0);
 
 // ----------------- API ------------------
 // Get Cart
-const { data: cart } = await useLazyAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
-  server: false,
-  pick: ["cart"],
-});
+const { data: cart, pending: cartLoader } = await useLazyAsyncData<{ cart: Cart }>(
+  "cart",
+  () => http("/cart"),
+  {
+    server: false,
+    pick: ["cart"],
+  }
+);
 
 // Update cart
 const {
@@ -91,6 +95,7 @@ const showLoader = (status: string, id: string) => {
   <div class="wrapper">
     <!-- Card -->
     <CartProduct
+      v-if="!cartLoader"
       v-for="product in cart?.cart?.products"
       :key="product.productId?._id"
       v-bind="{
@@ -101,7 +106,8 @@ const showLoader = (status: string, id: string) => {
         changeQuantityHandler,
       }"
       @deleteProduct="deleteProductFromCartHandler"
-    ></CartProduct>
+    />
+    <LoadersCartProduct v-else v-for="index in 1" :key="index" />
   </div>
 </template>
 
