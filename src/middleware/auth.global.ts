@@ -9,4 +9,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (accessToken.value && to.path.includes("/auth")) {
     return navigateTo("/");
   }
+
+  if (!accessToken.value && to.path === "/cart") {
+    return navigateTo("/auth");
+  }
 });
