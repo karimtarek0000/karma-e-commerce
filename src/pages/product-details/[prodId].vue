@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Product details",
+});
+</script>
 
 <template>
   <div class="container">
@@ -45,8 +50,9 @@
                 <span>44.90</span>
               </p>
               <p class="text-lg text-gray-400">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi dolorum error enim nostrum quia porro labore natus maxime, nobis
-                vel odit sit necessitatibus similique fugiat suscipit est, accusamus fugit eum?
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi dolorum error
+                enim nostrum quia porro labore natus maxime, nobis vel odit sit necessitatibus
+                similique fugiat suscipit est, accusamus fugit eum?
               </p>
             </div>
 

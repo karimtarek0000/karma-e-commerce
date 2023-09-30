@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useToast } from "vue-toastification";
 
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Cart",
+});
+
 // ----------- Composables ------------
 const http = useHttp();
 const toast = useToast();

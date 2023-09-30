@@ -4,6 +4,11 @@ import { useToast } from "vue-toastification";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 const http = useHttp();
 
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Sign up",
+});
+
 // --------- Data -----------
 const form = reactive<UserDataSignUp>({
   name: "",
@@ -72,7 +77,15 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
 
       <!-- Email -->
       <div class="col-span-full md:col-span-6">
-        <FormKit type="email" id="Email" name="email" label="Email" placeholder="Enter your email" validation="required|email" autocomplete="off" />
+        <FormKit
+          type="email"
+          id="Email"
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+          validation="required|email"
+          autocomplete="off"
+        />
       </div>
 
       <!-- Phonenumber -->
@@ -100,7 +113,13 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
           placeholder="Password"
           label="Password"
           autocomplete="off"
-          :validation="[['required'], ['matches', /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[@$%#]{1,})[a-zA-Z\d@$%#]{8,}/]]"
+          :validation="[
+            ['required'],
+            [
+              'matches',
+              /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[@$%#]{1,})[a-zA-Z\d@$%#]{8,}/,
+            ],
+          ]"
           :validation-messages="{
             matches: 'You must enter password like: kaKA@#123',
           }"
@@ -127,7 +146,14 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
 
       <!-- Terms and condition -->
       <div class="flex col-span-6">
-        <FormKit type="checkbox" label="Agree terms and conditions" name="terms" :value="false" validation="accepted" validation-visibility="dirty" />
+        <FormKit
+          type="checkbox"
+          label="Agree terms and conditions"
+          name="terms"
+          :value="false"
+          validation="accepted"
+          validation-visibility="dirty"
+        />
       </div>
 
       <!-- Actions -->

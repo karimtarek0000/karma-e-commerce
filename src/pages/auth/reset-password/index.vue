@@ -4,6 +4,11 @@ import { useToast } from "vue-toastification";
 const http = useHttp();
 import { useBtnHideOrShowPassword } from "@/composables/forms";
 
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Reset Password",
+});
+
 // --------- Data -----------
 const form = reactive({
   newPassword: "",
@@ -62,7 +67,13 @@ const submitHandler = async ({ newPassword }: { newPassword: string }) => {
             placeholder="New Password"
             label="New Password"
             autocomplete="off"
-            :validation="[['required'], ['matches', /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[@$%#]{1,})[a-zA-Z\d@$%#]{8,}/]]"
+            :validation="[
+              ['required'],
+              [
+                'matches',
+                /(?=.*[a-z]{2,})(?=.*[A-Z]{2,})(?=.*[0-9]{3,})(?=.*[@$%#]{1,})[a-zA-Z\d@$%#]{8,}/,
+              ],
+            ]"
             :validation-messages="{
               matches: 'You must enter password like: kaKA@#123',
             }"

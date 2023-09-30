@@ -4,6 +4,11 @@ import { useBtnHideOrShowPassword } from "@/composables/forms";
 import { useOneTap, type CredentialResponse } from "vue3-google-signin";
 import { useToast } from "vue-toastification";
 
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Sign in",
+});
+
 // --------- Composables -----------
 const http = useHttp();
 const { dataURL } = useAuth();
@@ -26,7 +31,9 @@ definePageMeta({
 // --------- Functions -----------
 // Login with email
 const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
-  const { error, pending } = await useLazyAsyncData(() => http("/auth/sign-in", { method: "POST", body: userData }));
+  const { error, pending } = await useLazyAsyncData(() =>
+    http("/auth/sign-in", { method: "POST", body: userData })
+  );
 
   if (!error.value && !pending.value) {
     reset("signInForm");
@@ -74,7 +81,15 @@ const { isReady, login } = useOneTap({
     <template #default="{ state: { valid, loading } }">
       <!-- Email -->
       <div class="col-span-full md:col-span-6">
-        <FormKit type="email" id="Email" name="email" label="Email" placeholder="Enter your email" validation="required|email" autocomplete="off" />
+        <FormKit
+          type="email"
+          id="Email"
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+          validation="required|email"
+          autocomplete="off"
+        />
       </div>
 
       <!-- Password -->
@@ -98,7 +113,9 @@ const { isReady, login } = useOneTap({
       <!-- Actions -->
       <div class="text-center col-span-full">
         <div class="flex justify-end mb-4">
-          <NuxtLink to="/auth/forget-password" class="text-gray-700 underline text-end">forget password?</NuxtLink>
+          <NuxtLink to="/auth/forget-password" class="text-gray-700 underline text-end"
+            >forget password?</NuxtLink
+          >
         </div>
 
         <button

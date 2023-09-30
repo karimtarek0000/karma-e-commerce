@@ -70,6 +70,11 @@ const {
 const products = ref<Product[]>(allProducts.value?.products);
 const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 
+// ----------- Meta ------------
+useSeoMeta({
+  title: `${categories.value?.categories[0]?.name} - category`,
+});
+
 // ----------- Function ------------
 const addToCardHandler = async (product: Product) => {
   if (!auth.isLoggedIn) {

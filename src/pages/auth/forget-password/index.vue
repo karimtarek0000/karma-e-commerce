@@ -3,6 +3,11 @@ import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 const http = useHttp();
 
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Forget Password",
+});
+
 // --------- Data -----------
 const form = reactive({
   email: "",
@@ -51,7 +56,15 @@ const submitHandler = async ({ email }: { email: string }) => {
     <template #default="{ state: { valid, loading } }">
       <!-- Email -->
       <div class="col-span-full md:col-span-6">
-        <FormKit type="email" id="Email" name="email" label="Email" placeholder="Enter your email" validation="required|email" autocomplete="off" />
+        <FormKit
+          type="email"
+          id="Email"
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+          validation="required|email"
+          autocomplete="off"
+        />
       </div>
 
       <!-- Actions -->
