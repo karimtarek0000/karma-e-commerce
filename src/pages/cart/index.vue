@@ -112,7 +112,9 @@ const showLoader = (status: string, id: string) => {
       }"
       @deleteProduct="deleteProductFromCartHandler"
     />
-    <LoadersCartProduct v-else v-for="index in 1" :key="index" />
+
+    <!-- Loader -->
+    <LoadersCartProduct v-else />
 
     <!-- If no any product -->
     <div v-if="emptyStatus" class="max-w-[15.5rem] mx-auto py-4 text-center">
