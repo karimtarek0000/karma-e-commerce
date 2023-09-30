@@ -11,14 +11,14 @@ const quantity = ref<number>(0);
 
 // ----------------- API ------------------
 // Get Cart
-const { data: cart, pending: cartLoader } = await useLazyAsyncData<{ cart: Cart }>(
-  "cart",
-  () => http("/cart"),
-  {
-    server: false,
-    pick: ["cart"],
-  }
-);
+const {
+  data: cart,
+  pending: cartLoader,
+  error: cartError,
+} = await useLazyAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
+  server: false,
+  pick: ["cart"],
+});
 
 // Update cart
 const {
@@ -52,6 +52,11 @@ const {
       method: "DELETE",
     }),
   { immediate: false }
+);
+
+// ----------------- Computed -------------------
+const emptyStatus = computed(
+  (): boolean => !cartLoader.value && !cartError.value && !cart.value?.cart?.products.length
 );
 
 // ----------------- Functions -------------------
@@ -108,6 +113,17 @@ const showLoader = (status: string, id: string) => {
       @deleteProduct="deleteProductFromCartHandler"
     />
     <LoadersCartProduct v-else v-for="index in 1" :key="index" />
+
+    <!-- If no any product -->
+    <div v-if="emptyStatus" class="max-w-[15.5rem] mx-auto py-4 text-center">
+      <NuxtImg src="/cartempty.svg" class="res-image" fit="cover" />
+      <h3 class="font-bold">Cart not exist any product yet!</h3>
+      <NuxtLink
+        to="/"
+        class="block px-2 py-3 mt-4 text-white rounded-md hover:bg-secondary/95 bg-secondary"
+        >Go to home page</NuxtLink
+      >
+    </div>
   </div>
 </template>
 
