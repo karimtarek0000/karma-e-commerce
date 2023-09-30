@@ -1,0 +1,79 @@
+<script setup lang="ts">
+import { AsyncDataRequestStatus } from "nuxt/dist/app/composables/asyncData";
+
+defineProps<{
+  product: CartProduct;
+  addToCartStatus: AsyncDataRequestStatus;
+  deleteProductCartStatus: AsyncDataRequestStatus;
+  showLoader: (status: string, id: string) => {};
+  changeQuantityHandler: (e: any, product: CartProduct) => {};
+}>();
+</script>
+
+<template>
+  <div class="card">
+    <!-- Image -->
+    <div class="h-[12.5rem] flex justify-center">
+      <NuxtImg
+        :src="replaceCloudinaryURL(product.productId?.images[0].secure_url)"
+        provider="cloudinary"
+        preset="cloudinary"
+        class="res-image"
+        loading="lazy"
+        sizes="sm:50vw lg:80vw xl:100vw"
+        fit="cover"
+        :alt="product.productId?.title"
+      />
+    </div>
+
+    <!-- Info -->
+    <div class="space-y-2 max-md:text-center">
+      <h3 class="text-2xl font-bold">{{ product.productId?.title }}</h3>
+      <p>{{ product.productId?.description }}</p>
+
+      <div class="space-x-2 text-18">
+        <span>{{ product.productId.priceAfterDiscount }}</span>
+        <span class="line-through" v-if="product.productId?.discount">{{
+          product.productId?.discount
+        }}</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col items-center px-3 max-md:mb-2 lg:justify-self-end gap-y-5">
+      <!-- Input to add quantity -->
+      <div class="max-w-[100px] min-w-[100px] min-h-[45px] flex items-center justify-center">
+        <ShareLoader
+          v-if="showLoader(addToCartStatus, product.productId._id)"
+          class="!border-t-secondary"
+        />
+        <input
+          v-else
+          class="w-full rounded-md"
+          type="number"
+          :value="product?.quantity"
+          min="0"
+          @change="changeQuantityHandler($event, product)"
+        />
+      </div>
+
+      <!-- Delete product from cart -->
+      <button
+        class="flex items-center gap-x-2"
+        @click="$emit('deleteProduct', product.productId?._id)"
+      >
+        <ShareLoader
+          v-if="showLoader(deleteProductCartStatus, product.productId._id)"
+          class="!border-t-secondary !h-6"
+        />
+        <ShareRenderSVG v-else iconName="del" />
+      </button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.card {
+  @apply grid grid-cols-1 md:grid-cols-[9.375rem_1fr_12.5rem] border rounded-md gap-4 items-center;
+}
+</style>
