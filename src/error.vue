@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps({
-  error: Object,
-});
+defineProps({ error: Object });
 
 const clearErrorHandler = () => clearError({ redirect: "/" });
 </script>
