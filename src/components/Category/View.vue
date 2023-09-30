@@ -25,7 +25,16 @@ defineProps<{ category: Gategory }>();
 
       <!-- Col 2 -->
       <div class="overflow-hidden">
-        <nuxt-img :src="category?.image?.secure_url" format="webp" :alt="category?.name" class="res-image" />
+        <NuxtImg
+          :src="replaceCloudinaryURL(category?.image?.secure_url)"
+          provider="cloudinary"
+          preset="cloudinary"
+          class="res-image"
+          width="512"
+          height="500"
+          fit="cover"
+          :alt="category?.name"
+        />
       </div>
     </div>
   </div>
