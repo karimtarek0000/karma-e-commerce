@@ -77,7 +77,7 @@ useSeoMeta({
 });
 
 // ----------- Computed ------------
-const cartProductsIds = computed(() =>
+const cartProductsIds = computed((): string[] =>
   cart.value?.cart?.products?.map((product: CartProduct) => product.productId._id)
 );
 
