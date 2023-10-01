@@ -14,6 +14,7 @@ export const content = [
   "./src/plugins/**/*.{js,ts}",
   "./nuxt.config.{js,ts}",
   "./src/tailwind-theme.ts",
+  "./src/error.vue",
   "./src/App.vue",
 ];
 
@@ -43,6 +44,7 @@ export const theme = {
     center: true,
   },
 };
+
 export const plugins = [
   require("tailwind-scrollbar")({ nocompatible: true }),
   require("@tailwindcss/forms"),
