@@ -55,7 +55,6 @@ declare global {
     user: UserData;
     loggedIn: boolean;
     dataURL: string;
-    addInCart: boolean;
   };
   type Cart = {
     _id: string;
