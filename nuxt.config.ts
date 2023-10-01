@@ -1,7 +1,15 @@
+import { $fetch } from "ofetch";
+
+const products = async () => {
+  const res = await $fetch(`${process.env.NUXT_PUBLIC_BASE_URL}/products?size=10`);
+  return res.products.map((product: Product) => `/product-details/${product._id}`);
+};
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   srcDir: "src/",
   devtools: { enabled: true },
+
   // For Head site
   app: {
     head: {
@@ -25,9 +33,20 @@ export default defineNuxtConfig({
       BASE_URL: "",
     },
   },
-  // routeRules: {
-  //   "/": { swr: 3600 }, // Revalidate after each 1 hour
-  // },
+
+  // Render modes
+  routeRules: {
+    "/product-details/**": { swr: 3600 },
+  },
+  hooks: {
+    async "nitro:config"(nitroConfig: any) {
+      if (nitroConfig.dev) return;
+
+      const ids = await products();
+      nitroConfig.prerender.routes.push(...ids);
+    },
+  },
+
   imports: {
     dirs: ["./stores"],
   },
