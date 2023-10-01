@@ -38,7 +38,12 @@ export const useAuth = defineStore("auth", {
         this.user = {} as any;
         accessToken.value = null;
         toast.success("Logout successfully");
+        await refreshNuxtData("cart");
         navigateTo("/auth");
+      }
+
+      if (error.value) {
+        toast.error(error.value.message);
       }
     },
   },

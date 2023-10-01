@@ -49,14 +49,14 @@ const loadingBtnCart = computed(() => props.product._id === props.productId && p
       </div>
       <!-- Actions -->
       <button
-        :disabled="loadingBtnCart || productCartIds.includes(product._id)"
+        :disabled="loadingBtnCart || productCartIds?.includes(product._id)"
         @click="$emit('addToCart', product)"
         class="btn-add-cart"
       >
         <ShareLoader v-show="loadingBtnCart" />
-        {{ productCartIds.includes(product._id) ? "in cart" : "Add to cart" }}
+        {{ productCartIds?.includes(product._id) ? "in cart" : "Add to cart" }}
         <ShareRenderSVG
-          :iconName="productCartIds.includes(product._id) ? 'added-to-cart' : 'to-cart'"
+          :iconName="productCartIds?.includes(product._id) ? 'added-to-cart' : 'to-cart'"
         />
       </button>
     </div>
