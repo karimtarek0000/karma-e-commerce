@@ -16,6 +16,7 @@ export const content = [
   "./src/tailwind-theme.ts",
   "./src/App.vue",
 ];
+
 export const theme = {
   extend: {
     backgroundColor: {
@@ -42,4 +43,8 @@ export const theme = {
     center: true,
   },
 };
-export const plugins = [require("tailwind-scrollbar")({ nocompatible: true }), require("@tailwindcss/forms"), require("@formkit/themes/tailwindcss")];
+export const plugins = [
+  require("tailwind-scrollbar")({ nocompatible: true }),
+  require("@tailwindcss/forms"),
+  require("@formkit/themes/tailwindcss"),
+];

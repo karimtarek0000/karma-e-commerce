@@ -3,6 +3,7 @@ import VueMultiselect from "vue-multiselect";
 import { useToast } from "vue-toastification";
 
 // ----------- Composables ------------
+const { data: cart } = useNuxtData("cart");
 const { isDesktop } = useDevice();
 const auth = useAuth();
 const http = useHttp();
@@ -74,6 +75,11 @@ const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 useSeoMeta({
   title: `${categories.value?.categories[0]?.name} - category`,
 });
+
+// ----------- Computed ------------
+const cartProductsIds = computed(() =>
+  cart.value?.cart?.products?.map((product: CartProduct) => product.productId._id)
+);
 
 // ----------- Function ------------
 const addToCardHandler = async (product: Product) => {
@@ -275,6 +281,7 @@ if (categoryError.value || productsError.value) {
           :key="product._id"
           :product="product"
           :loader="cartLoader"
+          :productCartIds="cartProductsIds"
           :productId="(pickProduct?._id as string) || ''"
           @addToCart="addToCardHandler"
         />

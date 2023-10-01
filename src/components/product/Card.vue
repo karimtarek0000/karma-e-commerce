@@ -4,6 +4,7 @@ const props = defineProps<{
   product: Product;
   loader: boolean;
   productId: string;
+  productCartIds: string[];
 }>();
 
 // -------------------- Computed ----------------------
@@ -47,10 +48,16 @@ const loadingBtnCart = computed(() => props.product._id === props.productId && p
         <h4 class="line-through" v-if="product.discount">${{ product.discount }}</h4>
       </div>
       <!-- Actions -->
-      <button :disabled="loadingBtnCart" @click="$emit('addToCart', product)" class="btn-add-cart">
+      <button
+        :disabled="loadingBtnCart || productCartIds.includes(product._id)"
+        @click="$emit('addToCart', product)"
+        class="btn-add-cart"
+      >
         <ShareLoader v-show="loadingBtnCart" />
-        Add to cart
-        <ShareRenderSVG iconName="to-cart" />
+        {{ productCartIds.includes(product._id) ? "in cart" : "Add to cart" }}
+        <ShareRenderSVG
+          :iconName="productCartIds.includes(product._id) ? 'added-to-cart' : 'to-cart'"
+        />
       </button>
     </div>
   </div>
@@ -64,6 +71,6 @@ const loadingBtnCart = computed(() => props.product._id === props.productId && p
   @apply px-2 py-1 capitalize;
 }
 .btn-add-cart {
-  @apply flex items-center justify-center gap-2 w-full p-2 mt-3 mb-1 hover:bg-opacity-95 text-white rounded-md bg-secondary;
+  @apply flex items-center justify-center gap-2 w-full p-2 mt-3 mb-1 hover:bg-opacity-95 text-white rounded-md bg-secondary disabled:bg-secondary/80;
 }
 </style>

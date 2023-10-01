@@ -12,7 +12,9 @@ const productId = ref<string>("");
 
 // ----------- API ------------
 // Get cart
-const { data: cart, execute } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), { server: false, pick: ["cart"] });
+const { data: cart, execute } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
+  pick: ["cart"],
+});
 
 // Delete product from cart
 const {
@@ -21,11 +23,15 @@ const {
   error: deleteError,
   execute: deleteExcute,
   status,
-} = await useAsyncData<{ cart: Cart }>("deleteCart", () => http(`/cart/${productId.value}`, { method: "DELETE" }), {
-  server: false,
-  pick: ["cart"],
-  immediate: false,
-});
+} = await useAsyncData<{ cart: Cart }>(
+  "deleteCart",
+  () => http(`/cart/${productId.value}`, { method: "DELETE" }),
+  {
+    server: false,
+    pick: ["cart"],
+    immediate: false,
+  }
+);
 
 // ----------- Computed ------------
 const productsLength = computed((): number => cart.value?.cart?.products?.length as number);
