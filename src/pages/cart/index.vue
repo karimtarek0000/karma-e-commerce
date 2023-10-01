@@ -16,14 +16,14 @@ const quantity = ref<number>(0);
 
 // ----------------- API ------------------
 // Get Cart
-const {
-  data: cart,
-  pending: cartLoader,
-  error: cartError,
-} = await useLazyAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
-  server: false,
-  pick: ["cart"],
-});
+// const {
+//   data: cart,
+//   pending: cartLoader,
+//   error: cartError,
+// } = await useLazyAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
+//   server: false,
+//   pick: ["cart"],
+// });
 
 // Update cart
 const {
@@ -72,6 +72,7 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
 
   if (quantity.value) {
     await addToCartExecute();
+    await refreshNuxtData("cart");
 
     if (!addToCartLoader.value && !addToCartError.value) {
       toast.success(`Quantity updated successfully`);
@@ -103,6 +104,10 @@ const showLoader = (status: string, id: string) => {
 
 <template>
   <div class="wrapper">
+    <h3 v-if="!emptyStatus" class="px-2 text-white rounded-md text-22 bg-secondary w-fit">
+      Total: <strong> {{ cart?.cart.subTotal || 0 }}</strong>
+    </h3>
+
     <!-- Card -->
     <CartProduct
       v-if="!cartLoader"

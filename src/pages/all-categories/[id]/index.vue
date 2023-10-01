@@ -97,8 +97,8 @@ const addToCardHandler = async (product: Product) => {
   await cartExcute();
 
   if (!cartLoader.value && !cartError.value) {
+    await refreshNuxtData("cart");
     toast.success(`Product ${product.title} added in cart successfully`);
-    auth.changeAddInCartStatus(true);
   }
 
   if (cartError.value) {

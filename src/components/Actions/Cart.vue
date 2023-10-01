@@ -12,7 +12,7 @@ const productId = ref<string>("");
 
 // ----------- API ------------
 // Get cart
-const { data: cart, execute } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
+const { data: cart } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
   pick: ["cart"],
 });
 
@@ -53,15 +53,6 @@ const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
 
   productId.value = "";
 };
-
-// ----------- Watches ------------
-watch(
-  () => auth.addInCartStatus,
-  () => {
-    execute();
-    auth.changeAddInCartStatus(false);
-  }
-);
 </script>
 
 <template>
