@@ -7,6 +7,7 @@ useSeoMeta({
 });
 
 // ----------- Composables ------------
+const { data: cart } = useNuxtData("cart");
 const http = useHttp();
 const toast = useToast();
 
@@ -15,16 +16,6 @@ const productId = ref<string>();
 const quantity = ref<number>(0);
 
 // ----------------- API ------------------
-// Get Cart
-// const {
-//   data: cart,
-//   pending: cartLoader,
-//   error: cartError,
-// } = await useLazyAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
-//   server: false,
-//   pick: ["cart"],
-// });
-
 // Update cart
 const {
   pending: addToCartLoader,
@@ -60,9 +51,7 @@ const {
 );
 
 // ----------------- Computed -------------------
-const emptyStatus = computed(
-  (): boolean => !cartLoader.value && !cartError.value && !cart.value?.cart?.products.length
-);
+const cartProducts = computed((): CartProduct[] => cart.value?.cart?.products);
 
 // ----------------- Functions -------------------
 const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void> => {
@@ -72,9 +61,9 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
 
   if (quantity.value) {
     await addToCartExecute();
-    await refreshNuxtData("cart");
 
     if (!addToCartLoader.value && !addToCartError.value) {
+      await refreshNuxtData("cart");
       toast.success(`Quantity updated successfully`);
     }
     if (addToCartError.value) {
@@ -104,14 +93,15 @@ const showLoader = (status: string, id: string) => {
 
 <template>
   <div class="wrapper">
-    <h3 v-if="!emptyStatus" class="px-2 text-white rounded-md text-22 bg-secondary w-fit">
+    <!-- Total -->
+    <h3 v-if="cartProducts?.length" class="px-2 text-white rounded-md text-22 bg-secondary w-fit">
       Total: <strong> {{ cart?.cart.subTotal || 0 }}</strong>
     </h3>
 
     <!-- Card -->
     <CartProduct
-      v-if="!cartLoader"
-      v-for="product in cart?.cart?.products"
+      v-if="cartProducts?.length"
+      v-for="product in cartProducts"
       :key="product.productId?._id"
       v-bind="{
         product,
@@ -123,11 +113,8 @@ const showLoader = (status: string, id: string) => {
       @deleteProduct="deleteProductFromCartHandler"
     />
 
-    <!-- Loader -->
-    <LoadersCartProduct v-else />
-
     <!-- If no any product -->
-    <div v-if="emptyStatus" class="max-w-[15.5rem] mx-auto py-4 text-center">
+    <div v-if="!cartProducts?.length" class="max-w-[15.5rem] mx-auto py-4 text-center">
       <NuxtImg src="/cartempty.svg" class="res-image" fit="cover" />
       <h3 class="font-bold">Cart not exist any product yet!</h3>
       <NuxtLink
