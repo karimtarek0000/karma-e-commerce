@@ -1,5 +1,6 @@
 import { $fetch } from "ofetch";
 
+// ------------------ For dynamic pages ----------------------
 const products = async () => {
   const res = await $fetch(`${process.env.NUXT_PUBLIC_BASE_URL}/products?size=10`);
   return res.products.map((product: Product) => `/product-details/${product._id}`);
