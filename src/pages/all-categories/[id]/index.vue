@@ -113,7 +113,6 @@ const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
     return;
   }
   setSubCategory.value = _subCategory;
-  pageNumber.value = 1;
 };
 const pickBrandHandler = (brand: Brand): void => {
   if (setBrand.value?._id === brand._id) {
@@ -136,7 +135,6 @@ watch(allProducts, (values) => {
   products.value = values.products;
   metaDataPaginForProducts.value = values.metaData;
 });
-
 watch(
   () => query.subCategory,
   (value) => {
@@ -151,6 +149,12 @@ watch(
     immediate: true,
   }
 );
+watch([setSubCategory, setBrand], () => {
+  pageNumber.value = 1;
+});
+watch(setSubCategory, () => {
+  setBrand.value = null;
+});
 
 // ----------- Lifecycle ------------
 onMounted(() => {
@@ -265,7 +269,7 @@ if (categoryError.value || productsError.value) {
           provider="cloudinary"
           preset="cloudinary"
           class="res-image"
-          sizes="sm:70vw lg:90vw xl:100vw"
+          sizes="sm:80vw lg:90vw xl:100vw"
           fit="cover"
           :alt="setSubCategory?.name"
         />
