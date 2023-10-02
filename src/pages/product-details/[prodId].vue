@@ -2,6 +2,7 @@
 // ----------- Composables ------------
 const http = useHttp();
 const route = useRoute();
+const { handleMouseMove, mainImageRef, viewImageRef } = useZoomImg();
 
 // ----------- API ------------
 const { data: product } = await useAsyncData<{ product: Product }>(
@@ -13,9 +14,6 @@ const { data: product } = await useAsyncData<{ product: Product }>(
 );
 
 // ----------- Data ------------
-const magnification = 0.5;
-const mainImageRef = ref<null>();
-const viewImageRef = ref<any>();
 const imgSelected = ref<{ secure_url: string; public_id: string }>(
   product.value?.product.images[0]!
 );
@@ -24,19 +22,6 @@ const imgSelected = ref<{ secure_url: string; public_id: string }>(
 useSeoMeta({
   title: "Product details",
 });
-
-const handleMouseMove = (event: any) => {
-  const mainImage = mainImageRef.value as any;
-
-  const rect = mainImage.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-
-  const backgroundPosition = `-${x * magnification}px -${y * magnification}px`;
-
-  viewImageRef.value.style.backgroundImage = `url(${mainImage.src})`;
-  viewImageRef.value.style.backgroundPosition = backgroundPosition;
-};
 </script>
 
 <template>
@@ -71,15 +56,15 @@ const handleMouseMove = (event: any) => {
             <!-- Big image -->
             <div class="relative big-img">
               <img
-                :src="imgSelected?.secure_url as string"
-                ref="mainImageRef"
                 class="res-image"
+                ref="mainImageRef"
+                :src="imgSelected?.secure_url as string"
                 :alt="imgSelected?.public_id"
                 @mousemove="handleMouseMove"
                 @touchmove="handleMouseMove"
               />
 
-              <!-- Image zoom -->
+              <!-- zoom image -->
               <div class="parent-magnified-image">
                 <div ref="viewImageRef" class="magnified-image" />
               </div>
@@ -143,6 +128,8 @@ const handleMouseMove = (event: any) => {
 .big-img {
   @apply flex justify-center w-full border-2 rounded-md border-secondary/20;
 }
+
+/* Zoom image */
 .big-img:hover .parent-magnified-image {
   @apply !flex;
 }
@@ -150,7 +137,7 @@ const handleMouseMove = (event: any) => {
   @apply justify-center hidden overflow-hidden absolute top-0 w-full h-full border start-full border-secondary/90;
 }
 .magnified-image {
-  @apply w-full h-full bg-white scale-110;
+  @apply bg-white scale-110 h-full w-full;
   background-size: cover;
   background-repeat: no-repeat;
 }
