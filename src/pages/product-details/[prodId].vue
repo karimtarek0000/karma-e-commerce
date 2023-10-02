@@ -1,4 +1,9 @@
 <script setup lang="ts">
+// ----------- Composables ------------
+const http = useHttp();
+
+const { data: product } = await useAsyncData("products", () => http("/products"));
+
 // ----------- Meta ------------
 useSeoMeta({
   title: "Product details",
