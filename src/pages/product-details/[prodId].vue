@@ -1,63 +1,103 @@
 <script setup lang="ts">
 // ----------- Composables ------------
 const http = useHttp();
+const route = useRoute();
 
-const { data: product } = await useAsyncData("products", () => http("/products"));
+// ----------- API ------------
+const { data: product } = await useAsyncData<{ product: Product }>(
+  "product",
+  () => http(`/products/${route.params.prodId}`),
+  {
+    pick: ["product"],
+  }
+);
+
+// ----------- Data ------------
+const magnification = 0.5;
+const mainImageRef = ref<null>();
+const viewImageRef = ref<any>();
+const imgSelected = ref<{ secure_url: string; public_id: string }>(
+  product.value?.product.images[0]!
+);
 
 // ----------- Meta ------------
 useSeoMeta({
   title: "Product details",
 });
+
+const handleMouseMove = (event: any) => {
+  const mainImage = mainImageRef.value as any;
+
+  const rect = mainImage.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  const backgroundPosition = `-${x * magnification}px -${y * magnification}px`;
+
+  viewImageRef.value.style.backgroundImage = `url(${mainImage.src})`;
+  viewImageRef.value.style.backgroundPosition = backgroundPosition;
+};
 </script>
 
 <template>
   <div class="container">
     <section class="pt-12 pb-24 overflow-hidden">
       <div class="container px-4 mx-auto">
-        <div class="flex -mx-4 max-lg:flex-col gap-9">
+        <div class="flex justify-start -mx-4 max-lg:flex-col gap-9">
           <!-- Col 1 -->
-          <div class="flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 lg:mb-0">
+          <div class="col1">
             <!-- Thumbnails images -->
-            <div class="flex justify-between md:flex-col">
+            <div class="flex justify-start gap-3 md:flex-col">
               <div
-                class="w-[100px] h-[100px] p-1 rounded-md border border-secondary/50 cursor-pointer overflow-hidden"
-                v-for="index in 5"
-                :key="index"
+                v-for="image in product?.product.images"
+                :key="image.public_id"
+                class="thumbnail-img"
+                :class="imgSelected.public_id === image.public_id && '!border-secondary/90'"
+                @click="imgSelected = image"
               >
-                <nuxt-img
-                  src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                  class="object-cover w-full h-full max-w-full max-h-full"
-                  width="100px"
-                  height="100px"
-                  preload
+                <NuxtImg
+                  :src="replaceCloudinaryURL(image.secure_url)"
+                  provider="cloudinary"
+                  preset="cloudinary"
+                  class="res-image"
+                  width="100"
+                  height="122"
+                  fit="thumbnail"
+                  :alt="image.public_id"
                 />
               </div>
             </div>
+
             <!-- Big image -->
-            <div class="overflow-hidden rounded-md">
-              <nuxt-img
-                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                class="object-cover w-full h-full max-w-full max-h-full"
-                width="100px"
-                height="100px"
-                preload
+            <div class="relative big-img">
+              <img
+                :src="imgSelected?.secure_url as string"
+                ref="mainImageRef"
+                class="res-image"
+                :alt="imgSelected?.public_id"
+                @mousemove="handleMouseMove"
+                @touchmove="handleMouseMove"
               />
+
+              <!-- Image zoom -->
+              <div class="parent-magnified-image">
+                <div ref="viewImageRef" class="magnified-image" />
+              </div>
             </div>
           </div>
 
           <!-- Col 2 -->
           <div class="px-4">
             <div class="mb-6 lg:max-w-md max-md:text-center">
-              <span class="text-xs tracking-wider text-gray-400">PRODUCT #3299803</span>
-              <h2 class="mt-6 mb-4 text-2xl font-bold lg:text-3xl">Apple iPhone 12 Pro (128GB)</h2>
+              <h2
+                class="mt-6 mb-4 text-2xl font-bold lg:text-3xl"
+                v-text="product?.product.title"
+              />
+              <p class="mb-3 text-lg text-black" v-text="product?.product.description" />
+
               <p class="flex items-center mb-6 text-2xl max-md:justify-center text-secondary">
                 <span class="mr-2">$</span>
                 <span>44.90</span>
-              </p>
-              <p class="text-lg text-gray-400">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi dolorum error
-                enim nostrum quia porro labore natus maxime, nobis vel odit sit necessitatibus
-                similique fugiat suscipit est, accusamus fugit eum?
               </p>
             </div>
 
@@ -77,11 +117,6 @@ useSeoMeta({
               <div class="w-full px-2 mb-2 md:w-2/3 md:mb-0">
                 <button class="addtocart" href="#">Add to Cart</button>
               </div>
-              <div class="w-full px-2 md:w-1/3">
-                <a class="addtofavorit" href="#">
-                  <span class="mr-2">Wishlist</span>
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -98,5 +133,25 @@ useSeoMeta({
 .addtofavorit {
   @apply flex items-center justify-center w-full px-2 py-4 text-xl leading-8 tracking-tighter text-center bg-white 
   focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50 hover:bg-opacity-60 rounded-xl;
+}
+.col1 {
+  @apply flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 lg:mb-0;
+}
+.thumbnail-img {
+  @apply w-[100px] h-[122px] p-1 overflow-hidden border-2 rounded-md cursor-pointer border-secondary/20;
+}
+.big-img {
+  @apply flex justify-center w-full border-2 rounded-md border-secondary/20;
+}
+.big-img:hover .parent-magnified-image {
+  @apply !flex;
+}
+.parent-magnified-image {
+  @apply justify-center hidden overflow-hidden absolute top-0 w-full h-full border start-full border-secondary/90;
+}
+.magnified-image {
+  @apply w-full h-full bg-white scale-110;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>

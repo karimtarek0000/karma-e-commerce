@@ -279,16 +279,17 @@ if (categoryError.value || productsError.value) {
       <div class="cards-grid">
         <!-- Card -->
         <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
-        <ProductCard
-          v-else
-          v-for="product in products"
-          :key="product._id"
-          :product="product"
-          :loader="cartLoader"
-          :productCartIds="cartProductsIds"
-          :productId="(pickProduct?._id as string) || ''"
-          @addToCart="addToCardHandler"
-        />
+        <template v-else v-for="product in products" :key="product._id">
+          <NuxtLink :to="`/product-details/${product._id}`">
+            <ProductCard
+              :product="product"
+              :loader="cartLoader"
+              :productCartIds="cartProductsIds"
+              :productId="(pickProduct?._id as string) || ''"
+              @addToCart="addToCardHandler"
+            />
+          </NuxtLink>
+        </template>
       </div>
     </div>
   </div>

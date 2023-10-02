@@ -36,17 +36,17 @@ export default defineNuxtConfig({
   },
 
   // Render modes
-  routeRules: {
-    "/product-details/**": { swr: 3600 },
-  },
-  hooks: {
-    async "nitro:config"(nitroConfig: any) {
-      if (nitroConfig.dev) return;
+  // routeRules: {
+  //   "/product-details/**": { swr: 3600 },
+  // },
+  // hooks: {
+  //   async "nitro:config"(nitroConfig: any) {
+  //     if (nitroConfig.dev) return;
 
-      const ids = await products();
-      nitroConfig.prerender.routes.push(...ids);
-    },
-  },
+  //     const ids = await products();
+  //     nitroConfig.prerender.routes.push(...ids);
+  //   },
+  // },
 
   imports: {
     dirs: ["./stores"],

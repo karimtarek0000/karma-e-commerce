@@ -50,7 +50,7 @@ const loadingBtnCart = computed(() => props.product._id === props.productId && p
       <!-- Actions -->
       <button
         :disabled="loadingBtnCart || productCartIds?.includes(product._id)"
-        @click="$emit('addToCart', product)"
+        @click.prevent="$emit('addToCart', product)"
         class="btn-add-cart"
       >
         <ShareLoader v-show="loadingBtnCart" />
