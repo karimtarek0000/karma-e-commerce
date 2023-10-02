@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // ----------- Composables ------------
+const { isDesktop } = useDevice();
 const http = useHttp();
 const {
   params: { prodId },
@@ -59,16 +60,22 @@ useSeoMeta({
             <!-- Big image -->
             <div class="relative big-img">
               <img
+                v-if="isDesktop"
                 class="res-image"
                 ref="mainImageRef"
                 :src="imgSelected?.secure_url as string"
                 :alt="imgSelected?.public_id"
                 @mousemove="handleMouseMove"
-                @touchmove="handleMouseMove"
+              />
+              <img
+                v-else
+                class="res-image"
+                :src="imgSelected?.secure_url as string"
+                :alt="imgSelected?.public_id"
               />
 
               <!-- zoom image -->
-              <div class="parent-magnified-image">
+              <div class="parent-magnified-image" v-if="isDesktop">
                 <div ref="viewImageRef" class="magnified-image" />
               </div>
             </div>
