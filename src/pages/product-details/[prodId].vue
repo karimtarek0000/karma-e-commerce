@@ -1,13 +1,15 @@
 <script setup lang="ts">
 // ----------- Composables ------------
 const http = useHttp();
-const route = useRoute();
+const {
+  params: { prodId },
+} = useRoute();
 const { handleMouseMove, mainImageRef, viewImageRef } = useZoomImg();
 
 // ----------- API ------------
 const { data: product } = await useAsyncData<{ product: Product }>(
   "product",
-  () => http(`/products/${route.params.prodId}`),
+  () => http(`/products/${prodId}`),
   {
     pick: ["product"],
   }
@@ -20,7 +22,8 @@ const imgSelected = ref<{ secure_url: string; public_id: string }>(
 
 // ----------- Meta ------------
 useSeoMeta({
-  title: "Product details",
+  title: `${product.value?.product.title}`,
+  description: `${product.value?.product.description}`,
 });
 </script>
 
@@ -74,26 +77,32 @@ useSeoMeta({
           <!-- Col 2 -->
           <div class="px-4">
             <div class="mb-6 lg:max-w-md max-md:text-center">
+              <!-- Title -->
               <h2
                 class="mt-6 mb-4 text-2xl font-bold lg:text-3xl"
                 v-text="product?.product.title"
               />
+
+              <!-- Discription -->
               <p class="mb-3 text-lg text-black" v-text="product?.product.description" />
 
-              <p class="flex items-center mb-6 text-2xl max-md:justify-center text-secondary">
-                <span class="mr-2">$</span>
-                <span>44.90</span>
+              <!-- Price and discount -->
+              <p class="priceAndDiscount">
+                <span>$ {{ product?.product.priceAfterDiscount }}</span>
+                <span class="line-through" v-if="product?.product.discount">{{
+                  product?.product.discount
+                }}</span>
               </p>
             </div>
 
             <!-- Rating -->
-            <div class="flex items-center mb-6 max-md:justify-center">
-              <div class="inline-flex mr-4">rating</div>
-              <span class="text-gray-400 text-md">4.59</span>
+            <div class="rating">
+              <ShareRenderSVG iconName="rating" />
+              <span class="text-18" v-text="product?.product.reviewRatings" />
             </div>
 
             <!-- Quantity -->
-            <div class="flex items-center mt-10 mb-20 max-md:justify-center">
+            <div class="quantity">
               <h4>Qty:</h4>
             </div>
 
@@ -121,6 +130,15 @@ useSeoMeta({
 }
 .col1 {
   @apply flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 lg:mb-0;
+}
+.priceAndDiscount {
+  @apply flex items-center gap-2 mb-6 text-2xl max-md:justify-center text-secondary;
+}
+.rating {
+  @apply flex items-center gap-2 mb-6 max-md:justify-center;
+}
+.quantity {
+  @apply flex items-center mt-10 mb-20 max-md:justify-center;
 }
 .thumbnail-img {
   @apply w-[100px] h-[122px] p-1 overflow-hidden border-2 rounded-md cursor-pointer border-secondary/20;
