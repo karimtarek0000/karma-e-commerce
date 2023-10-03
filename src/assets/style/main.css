@@ -11,11 +11,12 @@
   body {
     @apply overflow-x-hidden scrollbar scrollbar-w-1 scrollbar-thumb-primary scrollbar-track-white;
     font-family: "Roboto", "sans-serif";
+    overflow-x: hidden;
   }
 
   html,
   body {
-    @apply relative h-screen overflow-x-hidden;
+    @apply relative h-screen;
   }
 }
 
