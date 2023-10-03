@@ -13,27 +13,8 @@ const toast = useToast();
 
 // ----------------- Data -------------------
 const productId = ref<string>();
-const quantity = ref<number>(0);
 
 // ----------------- API ------------------
-// Update cart
-const {
-  pending: addToCartLoader,
-  status: addToCartStatus,
-  error: addToCartError,
-  execute: addToCartExecute,
-} = await useLazyAsyncData(
-  () =>
-    http("/cart", {
-      method: "POST",
-      body: {
-        productId: productId.value,
-        quantity: quantity.value,
-      },
-    }),
-  { immediate: false }
-);
-
 // Delete product from cart
 const {
   data: cartAfterDelete,
@@ -54,25 +35,6 @@ const {
 const cartProducts = computed((): CartProduct[] => cart.value?.cart?.products);
 
 // ----------------- Functions -------------------
-const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void> => {
-  productId.value = product.productId._id;
-  quantity.value = +e.target.value;
-  product.quantity = quantity.value;
-
-  if (quantity.value) {
-    await addToCartExecute();
-
-    if (!addToCartLoader.value && !addToCartError.value) {
-      await refreshNuxtData("cart");
-      toast.success(`Quantity updated successfully`);
-    }
-    if (addToCartError.value) {
-      toast.error(addToCartError.value.message);
-    }
-  } else {
-    toast.error("Must grather than 0");
-  }
-};
 const deleteProductFromCartHandler = async (_productId: string): Promise<void> => {
   productId.value = _productId;
 
@@ -105,13 +67,15 @@ const showLoader = (status: string, id: string) => {
       :key="product.productId?._id"
       v-bind="{
         product,
-        addToCartStatus,
         deleteProductCartStatus,
         showLoader,
-        changeQuantityHandler,
       }"
       @deleteProduct="deleteProductFromCartHandler"
-    />
+    >
+      <template #changeQuantity>
+        <CartQuantity :product="product" />
+      </template>
+    </CartProduct>
 
     <!-- If no any product -->
     <div v-if="!cartProducts?.length" class="max-w-[15.5rem] mx-auto py-4 text-center">

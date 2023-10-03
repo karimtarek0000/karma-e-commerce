@@ -3,10 +3,8 @@ import { AsyncDataRequestStatus } from "nuxt/dist/app/composables/asyncData";
 
 defineProps<{
   product: CartProduct;
-  addToCartStatus: AsyncDataRequestStatus;
   deleteProductCartStatus: AsyncDataRequestStatus;
   showLoader: (status: string, id: string) => {};
-  changeQuantityHandler: (e: any, product: CartProduct) => {};
 }>();
 </script>
 
@@ -42,20 +40,7 @@ defineProps<{
     <!-- Actions -->
     <div class="flex flex-col items-center px-3 max-md:mb-2 lg:justify-self-end gap-y-5">
       <!-- Input to add quantity -->
-      <div class="max-w-[100px] min-w-[100px] min-h-[45px] flex items-center justify-center">
-        <ShareLoader
-          v-if="showLoader(addToCartStatus, product.productId._id)"
-          class="!border-t-secondary"
-        />
-        <input
-          v-else
-          class="w-full rounded-md"
-          type="number"
-          :value="product?.quantity"
-          min="0"
-          @change="changeQuantityHandler($event, product)"
-        />
-      </div>
+      <slot name="changeQuantity" />
 
       <!-- Delete product from cart -->
       <button
