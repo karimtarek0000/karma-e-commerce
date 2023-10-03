@@ -8,7 +8,7 @@ const {
 const { handleMouseMove, mainImageRef, viewImageRef } = useZoomImg();
 
 // ----------- API ------------
-const { data: product, pending } = await useAsyncData<{ product: Product }>(
+const { data: product } = await useAsyncData<{ product: Product }>(
   "product",
   () => http(`/products/${prodId}`),
   {
@@ -106,11 +106,6 @@ useSeoMeta({
             <div class="rating">
               <ShareRenderSVG iconName="rating" />
               <span class="text-18" v-text="product?.product.reviewRatings" />
-            </div>
-
-            <!-- Quantity -->
-            <div class="quantity">
-              <h4>Qty:</h4>
             </div>
 
             <!-- Actions -->
