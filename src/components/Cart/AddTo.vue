@@ -7,7 +7,7 @@ const props = defineProps<{
 }>();
 
 // ----------- Composables ------------
-const { data: cart } = useNuxtData("cart");
+const { productId, productInCartStatus } = isProductInCart(props.product._id);
 const http = useHttp();
 const auth = useAuth();
 const toast = useToast();
@@ -37,9 +37,6 @@ const {
 const loadingBtnCart = computed(
   () => props.product._id === pickProduct.value?._id && cartLoader.value
 );
-const productCartIds = computed((): string[] =>
-  cart.value?.cart?.products?.map((product: CartProduct) => product.productId._id)
-);
 
 // ----------- Function ------------
 const addToCardHandler = async (product: Product) => {
@@ -57,6 +54,7 @@ const addToCardHandler = async (product: Product) => {
   await cartExcute();
 
   if (!cartLoader.value && !cartError.value) {
+    productId.value = product._id;
     await refreshNuxtData("cart");
     toast.success(`Product ${product.title} added in cart successfully`);
     pickProduct.value = null;
@@ -70,16 +68,13 @@ const addToCardHandler = async (product: Product) => {
 
 <template>
   <button
-    v-if="cart"
-    :disabled="loadingBtnCart || productCartIds?.includes(product._id)"
-    @click.prevent="addToCardHandler(product)"
+    :disabled="loadingBtnCart || productInCartStatus"
     class="btn-add-cart"
+    @click.prevent="addToCardHandler(product)"
   >
     <ShareLoader v-show="loadingBtnCart" />
-    {{ productCartIds?.includes(product._id) ? "in cart" : "Add to cart" }}
-    <ShareRenderSVG
-      :iconName="productCartIds?.includes(product._id) ? 'added-to-cart' : 'to-cart'"
-    />
+    {{ productInCartStatus ? "in cart" : "Add to cart" }}
+    <ShareRenderSVG :iconName="productInCartStatus ? 'added-to-cart' : 'to-cart'" />
   </button>
 </template>
 

@@ -29,7 +29,6 @@ const {
   data: allProducts,
   error: productsError,
   pending: productsLoading,
-  execute,
 } = await useAsyncData(
   () =>
     http("/products", {
@@ -129,7 +128,7 @@ if (categoryError.value || productsError.value) {
 </script>
 
 <template>
-  <div class="wrapper" v-if="!categoryError">
+  <div class="wrapper">
     <!-- Aside all actions -->
     <aside class="px-4 py-4 bg-black/5" v-if="isDesktop">
       <!-- Name of category -->

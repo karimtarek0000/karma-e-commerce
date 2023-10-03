@@ -8,7 +8,7 @@ const {
 const { handleMouseMove, mainImageRef, viewImageRef } = useZoomImg();
 
 // ----------- API ------------
-const { data: product } = await useAsyncData<{ product: Product }>(
+const { data: product, pending } = await useAsyncData<{ product: Product }>(
   "product",
   () => http(`/products/${prodId}`),
   {
@@ -116,7 +116,9 @@ useSeoMeta({
             <!-- Actions -->
             <div class="flex flex-wrap mb-12 -mx-2">
               <div class="w-full px-2 mb-2 md:w-2/3 md:mb-0">
-                <CartAddTo :product="(product?.product as Product)" />
+                <ClientOnly>
+                  <CartAddTo :product="(product?.product as Product)" />
+                </ClientOnly>
               </div>
             </div>
           </div>
