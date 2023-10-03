@@ -1,63 +1,21 @@
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
+// ----------- Composables ------------
+const { data: cart } = useNuxtData("cart");
+
+// ----------------- Computed -------------------
+const cartProducts = computed((): CartProduct[] => cart.value?.cart?.products);
 
 // ----------- Meta ------------
 useSeoMeta({
   title: "Cart",
 });
-
-// ----------- Composables ------------
-const { data: cart } = useNuxtData("cart");
-const http = useHttp();
-const toast = useToast();
-
-// ----------------- Data -------------------
-const productId = ref<string>();
-
-// ----------------- API ------------------
-// Delete product from cart
-const {
-  data: cartAfterDelete,
-  pending: deleteProductCartLoader,
-  status: deleteProductCartStatus,
-  error: deleteProductCartError,
-  execute: deleteProductCartExecute,
-} = await useLazyAsyncData(
-  "deleteCart",
-  () =>
-    http(`/cart/${productId.value}`, {
-      method: "DELETE",
-    }),
-  { immediate: false }
-);
-
-// ----------------- Computed -------------------
-const cartProducts = computed((): CartProduct[] => cart.value?.cart?.products);
-
-// ----------------- Functions -------------------
-const deleteProductFromCartHandler = async (_productId: string): Promise<void> => {
-  productId.value = _productId;
-
-  await deleteProductCartExecute();
-
-  if (!deleteProductCartLoader.value && !deleteProductCartError.value) {
-    cart.value.cart = cartAfterDelete?.value?.cart as Cart;
-    toast.success(`Quantity deleted successfully`);
-  }
-  if (deleteProductCartError.value) {
-    toast.error(deleteProductCartError.value.message);
-  }
-};
-const showLoader = (status: string, id: string) => {
-  return status === "pending" && productId.value === id;
-};
 </script>
 
 <template>
   <div class="wrapper">
     <!-- Total -->
     <h3 v-if="cartProducts?.length" class="px-2 text-white rounded-md text-22 bg-secondary w-fit">
-      Total: <strong> {{ cart?.cart.subTotal || 0 }}</strong>
+      Total: <strong> {{ cart?.cart?.subTotal?.toLocaleString() || 0 }}</strong>
     </h3>
 
     <!-- Card -->
@@ -65,15 +23,13 @@ const showLoader = (status: string, id: string) => {
       v-if="cartProducts?.length"
       v-for="product in cartProducts"
       :key="product.productId?._id"
-      v-bind="{
-        product,
-        deleteProductCartStatus,
-        showLoader,
-      }"
-      @deleteProduct="deleteProductFromCartHandler"
+      :product="product"
     >
       <template #changeQuantity>
         <CartQuantity :product="product" />
+      </template>
+      <template #deleteProduct>
+        <CartDeleteProduct :product="product" />
       </template>
     </CartProduct>
 

@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import { AsyncDataRequestStatus } from "nuxt/dist/app/composables/asyncData";
-
-defineProps<{
-  product: CartProduct;
-  deleteProductCartStatus: AsyncDataRequestStatus;
-  showLoader: (status: string, id: string) => {};
-}>();
+defineProps<{ product: CartProduct }>();
 </script>
 
 <template>
@@ -43,16 +37,7 @@ defineProps<{
       <slot name="changeQuantity" />
 
       <!-- Delete product from cart -->
-      <button
-        class="flex items-center gap-x-2"
-        @click="$emit('deleteProduct', product.productId?._id)"
-      >
-        <ShareLoader
-          v-if="showLoader(deleteProductCartStatus, product.productId._id)"
-          class="!border-t-secondary !h-6"
-        />
-        <ShareRenderSVG v-else iconName="del" />
-      </button>
+      <slot name="deleteProduct" />
     </div>
   </div>
 </template>

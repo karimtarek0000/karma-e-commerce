@@ -17,3 +17,7 @@ export const isProductInCart = (initialProductId: string) => {
 
   return { productId, productInCartStatus };
 };
+
+export const showLoader = (status: string, selectedId: string, id: string) => {
+  return status === "pending" && selectedId === id;
+};

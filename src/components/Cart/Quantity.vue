@@ -52,16 +52,13 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
     toast.error("Must grather than 0");
   }
 };
-const showLoader = (status: string, id: string) => {
-  return status === "pending" && productId.value === id;
-};
 </script>
 
 <template>
   <!-- Input to add quantity -->
   <div class="quantitt__wrapper">
     <ShareLoader
-      v-if="showLoader(addToCartStatus, product.productId._id)"
+      v-if="showLoader(addToCartStatus, productId!, product.productId._id)"
       class="!border-t-secondary"
     />
     <input
