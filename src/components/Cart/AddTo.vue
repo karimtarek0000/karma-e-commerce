@@ -6,15 +6,15 @@ const props = defineProps<{
   product: Product;
 }>();
 
-// ----------- Data ------------
-const pickProduct = ref<Product | null>();
-
 // ----------- Composables ------------
 const { data: cart } = useNuxtData("cart");
 const http = useHttp();
 const auth = useAuth();
 const toast = useToast();
 const { path, query } = useRoute();
+
+// ----------- Data ------------
+const pickProduct = ref<Product | null>();
 
 // ----------- API ------------
 const {
@@ -70,7 +70,8 @@ const addToCardHandler = async (product: Product) => {
 
 <template>
   <button
-    :disabled="loadingBtnCart || productCartIds?.includes(product?._id)"
+    v-if="cart"
+    :disabled="loadingBtnCart || productCartIds?.includes(product._id)"
     @click.prevent="addToCardHandler(product)"
     class="btn-add-cart"
   >

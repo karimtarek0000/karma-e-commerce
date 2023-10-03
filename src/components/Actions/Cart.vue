@@ -58,7 +58,7 @@ const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
 <template>
   <div class="cart">
     <!-- Toggle to open and close cart -->
-    <button @click="toggleCartQuickView = !toggleCartQuickView">
+    <button class="max-lg:hidden" @click="toggleCartQuickView = !toggleCartQuickView">
       <ActionsCartCounter v-show="!!productsLength" :num="productsLength || 0" />
       <ShareRenderSVG iconName="cart" />
     </button>

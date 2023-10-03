@@ -151,7 +151,7 @@ useSeoMeta({
   @apply w-[100px] h-[122px] p-1 overflow-hidden border-2 rounded-md cursor-pointer border-secondary/20;
 }
 .big-img {
-  @apply flex justify-center w-full border-2 rounded-md border-secondary/20;
+  @apply flex justify-center w-full max-lg:h-[12.5rem] min-h-[29.75rem] border-2 rounded-md border-secondary/20;
 }
 
 /* Zoom image */
