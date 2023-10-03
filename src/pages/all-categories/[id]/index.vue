@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import VueMultiselect from "vue-multiselect";
-import { useToast } from "vue-toastification";
 
 // ----------- Composables ------------
-const { data: cart } = useNuxtData("cart");
 const { isDesktop } = useDevice();
 const auth = useAuth();
 const http = useHttp();
-const toast = useToast();
 const {
-  path,
   params: { id },
   query,
 } = useRoute();
@@ -18,10 +14,9 @@ const {
 const pageNumber = ref<number>(+query?.page! || 1);
 const setSubCategory = ref<SubGategory | null>();
 const setBrand = ref<Brand | null>();
-const pickProduct = ref<Product>();
 
 // ----------------------- API --------------------
-// For category
+// Category
 const { data: categories, error: categoryError } = await useAsyncData(() =>
   http("/categories", {
     query: { _id: id },
@@ -29,7 +24,7 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
 );
 const subCategories: SubGategory[] = categories?.value?.categories[0]?.subCategories;
 
-// For get products
+// Products
 const {
   data: allProducts,
   error: productsError,
@@ -51,60 +46,10 @@ const {
   }
 );
 
-// For add product in cart
-const {
-  pending: cartLoader,
-  error: cartError,
-  execute: cartExcute,
-} = await useAsyncData(
-  () =>
-    http("/cart", {
-      method: "POST",
-      body: {
-        productId: pickProduct.value?._id,
-        quantity: 1,
-      },
-    }),
-  { immediate: false }
-);
-
 const products = ref<Product[]>(allProducts.value?.products);
 const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 
-// ----------- Meta ------------
-useSeoMeta({
-  title: `${categories.value?.categories[0]?.name} - category`,
-});
-
-// ----------- Computed ------------
-const cartProductsIds = computed((): string[] =>
-  cart.value?.cart?.products?.map((product: CartProduct) => product.productId._id)
-);
-
 // ----------- Function ------------
-const addToCardHandler = async (product: Product) => {
-  if (!auth.isLoggedIn) {
-    auth.$patch((store) => {
-      store.dataURL = `${path}${query.subCategory ? `?subCategory=${query.subCategory}` : ""}`;
-    });
-    navigateTo("/auth");
-    toast.error("You must be logged in first");
-    return;
-  }
-
-  // ------- Add product into card ----------
-  pickProduct.value = product;
-  await cartExcute();
-
-  if (!cartLoader.value && !cartError.value) {
-    await refreshNuxtData("cart");
-    toast.success(`Product ${product.title} added in cart successfully`);
-  }
-
-  if (cartError.value) {
-    toast.error(cartError.value.message);
-  }
-};
 const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
   // Render all category products if user clicked again on the same subcategory
   setBrand.value = null;
@@ -154,6 +99,11 @@ watch([setSubCategory, setBrand], () => {
 });
 watch(setSubCategory, () => {
   setBrand.value = null;
+});
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: `${categories.value?.categories[0]?.name} - category`,
 });
 
 // ----------- Lifecycle ------------
@@ -281,13 +231,9 @@ if (categoryError.value || productsError.value) {
         <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
         <template v-else v-for="product in products" :key="product._id">
           <NuxtLink :to="`/product-details/${product._id}`">
-            <ProductCard
-              :product="product"
-              :loader="cartLoader"
-              :productCartIds="cartProductsIds"
-              :productId="(pickProduct?._id as string) || ''"
-              @addToCart="addToCardHandler"
-            />
+            <ProductCard :product="product">
+              <CartAddTo :product="product" />
+            </ProductCard>
           </NuxtLink>
         </template>
       </div>

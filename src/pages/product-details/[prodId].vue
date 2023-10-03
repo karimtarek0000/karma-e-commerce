@@ -116,7 +116,7 @@ useSeoMeta({
             <!-- Actions -->
             <div class="flex flex-wrap mb-12 -mx-2">
               <div class="w-full px-2 mb-2 md:w-2/3 md:mb-0">
-                <button class="addtocart" href="#">Add to Cart</button>
+                <CartAddTo :product="(product?.product as Product)" />
               </div>
             </div>
           </div>
