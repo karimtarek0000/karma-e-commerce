@@ -47,14 +47,20 @@ const deleteProductFromCartHandler = async (_productId: string): Promise<void> =
 </script>
 
 <template>
-  <button
-    class="flex items-center gap-x-2"
-    @click="deleteProductFromCartHandler(product.productId?._id)"
-  >
+  <button class="delete-product" @click="deleteProductFromCartHandler(product.productId?._id)">
     <ShareLoader
       v-if="showLoader(deleteProductCartStatus, productId!, product.productId._id)"
-      class="!border-t-secondary !h-6"
+      class="delete-product__share-loader"
     />
-    <ShareRenderSVG v-else iconName="del" />
+    <ShareRenderSVG v-else iconName="del" v-bind="$attrs" />
   </button>
 </template>
+
+<style scoped>
+.delete-product {
+  @apply flex items-center gap-x-2;
+}
+.delete-product__share-loader {
+  @apply !border-t-secondary !h-6;
+}
+</style>

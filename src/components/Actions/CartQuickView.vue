@@ -48,17 +48,7 @@ defineProps<{
               </p>
 
               <!-- For delete product from cart -->
-              <button @click="$emit('deleteProduct', product)">
-                <ShareRenderSVG
-                  v-show="product.productId._id !== productId"
-                  iconName="del"
-                  sizes="w-[18px]"
-                />
-                <ShareLoader
-                  class="w-[25px] h-[25px] !border-t-secondary"
-                  v-show="statusLoader === 'pending' && product.productId._id === productId"
-                />
-              </button>
+              <CartDeleteProduct :product="product" sizes="w-[18px]" />
             </div>
           </div>
         </div>
@@ -94,5 +84,8 @@ defineProps<{
 }
 .checkout-btn {
   @apply block px-5 py-3 text-sm text-gray-100 transition bg-secondary rounded hover:bg-secondary/90;
+}
+:deep(.delete-product__share-loader) {
+  @apply w-[25px] h-[25px];
 }
 </style>
