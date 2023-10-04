@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { CartProduct } from "../../../.nuxt/components";
-
 // ----------- Composables ------------
-const { isDesktop } = useDevice();
 const { data: cart } = useNuxtData("cart");
+const { isDesktop } = useDevice();
+const { isLoggedIn } = useAuth();
 const http = useHttp();
 const {
   params: { prodId },
@@ -25,7 +24,7 @@ const imgSelected = ref<{ secure_url: string; public_id: string }>(
 );
 
 // ----------- Computed ------------
-const productFromCart = computed(() => {
+const productFromCart = computed((): CartProduct => {
   return cart.value?.cart.products.find(
     (prod: CartProduct) => prod?.productId?._id === product.value?.product?._id
   );
@@ -119,13 +118,17 @@ useSeoMeta({
             </div>
 
             <!-- Actions -->
-            <div class="flex flex-wrap items-center mb-12 -mx-2">
-              <div class="flex items-center w-full px-2 md:w-2/3 md:mb-0">
+            <div
+              class="flex flex-wrap items-center mb-12 -mx-2 max-lg:justify-center max-lg:gap-y-4"
+            >
+              <!-- Add product in cart -->
+              <div class="flex items-center w-full px-2 md:w-2/3 md:mb-0 max-lg:order-last">
                 <ClientOnly>
                   <CartAddTo class="!mt-0 !mb-0" :product="(product?.product as Product)" />
                 </ClientOnly>
               </div>
-              <ClientOnly>
+              <!-- Change quantity -->
+              <ClientOnly v-if="isLoggedIn" class="max-lg:order-first">
                 <CartQuantity :product="productFromCart" />
               </ClientOnly>
             </div>

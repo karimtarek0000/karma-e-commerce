@@ -58,15 +58,15 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
   <!-- Input to add quantity -->
   <div class="quantitt__wrapper">
     <ShareLoader
-      v-if="showLoader(addToCartStatus, productId!, product.productId._id)"
+      v-if="showLoader(addToCartStatus, productId!, product?.productId._id)"
       class="!border-t-secondary"
     />
     <input
       v-else
       class="w-full rounded-md"
       type="number"
-      :value="product?.quantity"
-      min="0"
+      :value="product?.quantity || 1"
+      min="1"
       @change="changeQuantityHandler($event, product)"
     />
   </div>
