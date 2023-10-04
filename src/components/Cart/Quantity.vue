@@ -18,7 +18,7 @@ const {
   status: addToCartStatus,
   error: addToCartError,
   execute: addToCartExecute,
-} = await useLazyAsyncData(
+} = await useAsyncData(
   () =>
     http("/cart", {
       method: "POST",

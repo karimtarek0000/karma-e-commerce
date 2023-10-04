@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { CartProduct } from "../../../.nuxt/components";
+
 // ----------- Composables ------------
 const { isDesktop } = useDevice();
+const { data: cart } = useNuxtData("cart");
 const http = useHttp();
 const {
   params: { prodId },
@@ -20,6 +23,13 @@ const { data: product } = await useAsyncData<{ product: Product }>(
 const imgSelected = ref<{ secure_url: string; public_id: string }>(
   product.value?.product.images[0]!
 );
+
+// ----------- Computed ------------
+const productFromCart = computed(() => {
+  return cart.value?.cart.products.find(
+    (prod: CartProduct) => prod?.productId?._id === product.value?.product?._id
+  );
+});
 
 // ----------- Meta ------------
 useSeoMeta({
@@ -109,12 +119,15 @@ useSeoMeta({
             </div>
 
             <!-- Actions -->
-            <div class="flex flex-wrap mb-12 -mx-2">
-              <div class="w-full px-2 mb-2 md:w-2/3 md:mb-0">
+            <div class="flex flex-wrap items-center mb-12 -mx-2">
+              <div class="flex items-center w-full px-2 md:w-2/3 md:mb-0">
                 <ClientOnly>
-                  <CartAddTo :product="(product?.product as Product)" />
+                  <CartAddTo class="!mt-0 !mb-0" :product="(product?.product as Product)" />
                 </ClientOnly>
               </div>
+              <ClientOnly>
+                <CartQuantity :product="productFromCart" />
+              </ClientOnly>
             </div>
           </div>
         </div>
