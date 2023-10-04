@@ -38,7 +38,7 @@ const submitHandler = async ({ email }: { email: string }) => {
   }
 
   if (error.value) {
-    toast.error(error.value.data.message);
+    toast.error(error.value.message);
   }
 };
 </script>

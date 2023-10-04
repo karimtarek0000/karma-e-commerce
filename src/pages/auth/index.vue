@@ -42,7 +42,7 @@ const submitHandler = async (userData: { email: string; password: string }): Pro
   }
 
   if (error.value) {
-    toast.error(error.value.data.message);
+    toast.error(error.value.message);
   }
 };
 

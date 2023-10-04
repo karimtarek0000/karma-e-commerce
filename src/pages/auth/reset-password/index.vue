@@ -41,7 +41,7 @@ const submitHandler = async ({ newPassword }: { newPassword: string }) => {
   }
 
   if (error.value) {
-    toast.error(error.value.data.message);
+    toast.error(error.value.message);
   }
 };
 </script>
