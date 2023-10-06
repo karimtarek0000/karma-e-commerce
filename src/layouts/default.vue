@@ -13,4 +13,7 @@ const { isDesktop } = useDevice();
   </main>
   <Footer />
   <NavbarMobile v-if="!isDesktop" />
+
+  <!-- Modal -->
+  <ModalController />
 </template>
