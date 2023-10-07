@@ -10,8 +10,9 @@ const comp = reactive<any>({
 });
 
 // ------------- Functions --------------
-const confirmHandler = (): Promise<boolean> =>
-  new Promise((resolve) => (confirmStatus.value = resolve));
+const confirmHandler = (): Promise<boolean> => {
+  return new Promise((resolve) => (confirmStatus.value = resolve));
+};
 const closeModalHandler = (): string => (modalName.value = "");
 const confirmStatusHandler = (status: boolean): void => {
   closeModalHandler();

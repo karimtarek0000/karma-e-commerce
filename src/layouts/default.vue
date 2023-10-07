@@ -4,11 +4,8 @@ const { modalControllerRef, openModalHandler } = useModalController();
 
 const test = async () => {
   openModalHandler({
-    $modalType: "confirm",
-    $classes: "!items-start",
-    $pickText: "deleteProduct",
+    $modalType: "order",
   });
-  await modalControllerRef?.value?.confirmHandler();
 };
 </script>
 
