@@ -2,9 +2,9 @@
 const { isDesktop } = useDevice();
 const { modalControllerRef, openModalHandler } = useModalController();
 
-const test = () => {
-  openModalHandler("confirm");
-  // modalControllerRef?.value?.confirmHandler();
+const test = async () => {
+  openModalHandler("confirm", "!items-start");
+  await modalControllerRef?.value?.confirmHandler();
 };
 </script>
 

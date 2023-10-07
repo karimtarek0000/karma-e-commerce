@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ------------- Composables --------------
-const { toggleModal, modalName } = useModalController();
+const { toggleModal, modalName, classes } = useModalController();
 
 // ------------- Data --------------
 const confirmStatus = ref();
@@ -13,7 +13,10 @@ const comp = reactive<any>({
 const confirmHandler = (): Promise<boolean> =>
   new Promise((resolve) => (confirmStatus.value = resolve));
 const closeModalHandler = (): string => (modalName.value = "");
-const confirmStatusHandler = (status: boolean): Promise<boolean> => confirmStatus.value(status);
+const confirmStatusHandler = (status: boolean): void => {
+  if (!status) closeModalHandler();
+  confirmStatus.value(status);
+};
 
 // ------ For expose any you want -------
 defineExpose({ confirmHandler });
@@ -21,7 +24,7 @@ defineExpose({ confirmHandler });
 
 <template>
   <Transition name="fade">
-    <div class="modal" v-if="toggleModal">
+    <div class="modal" :class="classes" v-if="toggleModal">
       <Transition name="slide" mode="out-in" :appear="true" @afterLeave="toggleModal = false">
         <div class="modal__wrapper" v-if="modalName">
           <!-- Close -->
@@ -36,53 +39,5 @@ defineExpose({ confirmHandler });
 </template>
 
 <style scoped>
-.modal {
-  @apply fixed top-0 z-50 flex items-center justify-center w-full h-full backdrop-blur bg-black/80 start-0;
-}
-.modal__wrapper {
-  @apply bg-white relative rounded-md w-[600px] min-h-[200px] px-2 py-1;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: 0.3s opacity ease-in-out;
-}
-
-/* Animation for modal */
-.slide-enter-active {
-  animation: slideDown 0.5s ease-in-out forwards;
-}
-.slide-leave-active {
-  animation: slideUp 0.5s ease-in-out forwards;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  will-change: animation;
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-@keyframes slideUp {
-  from {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-}
+@import "@/assets/style/modal.css";
 </style>

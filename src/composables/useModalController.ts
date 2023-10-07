@@ -1,12 +1,14 @@
 const modalControllerRef = ref<any>("modalControllerRef");
 const toggleModal = ref<boolean>(false);
 const modalName = ref<string>("");
+const classes = ref<string | null>();
 
 export const useModalController = () => {
-  const openModalHandler = (_modalName: string): void => {
+  const openModalHandler = (modelType: string, classesString?: string): void => {
     toggleModal.value = true;
-    modalName.value = _modalName;
+    modalName.value = modelType;
+    classes.value = classesString;
   };
 
-  return { modalControllerRef, toggleModal, modalName, openModalHandler };
+  return { modalControllerRef, openModalHandler, classes, toggleModal, modalName };
 };
