@@ -6,6 +6,7 @@ defineProps<{ product: CartProduct }>();
 
 // ----------- Composables ------------
 const { data: cart } = useNuxtData("cart");
+const { modalControllerRef, openModalHandler } = useModalController();
 const http = useHttp();
 const toast = useToast();
 
@@ -32,14 +33,19 @@ const {
 const deleteProductFromCartHandler = async (_productId: string): Promise<void> => {
   productId.value = _productId;
 
-  await deleteProductCartExecute();
+  openModalHandler("confirm", "!items-start");
+  const status = await modalControllerRef?.value?.confirmHandler();
 
-  if (!deleteProductLoader.value && !deleteProductError.value) {
-    cart.value.cart = cartAfterDelete?.value?.cart as Cart;
-    toast.success(`Quantity deleted successfully`);
-  }
-  if (deleteProductError.value) {
-    toast.error(deleteProductError.value.message);
+  if (status) {
+    await deleteProductCartExecute();
+
+    if (!deleteProductLoader.value && !deleteProductError.value) {
+      cart.value.cart = cartAfterDelete?.value?.cart as Cart;
+      toast.success(`Quantity deleted successfully`);
+    }
+    if (deleteProductError.value) {
+      toast.error(deleteProductError.value.message);
+    }
   }
 
   productId.value = null;

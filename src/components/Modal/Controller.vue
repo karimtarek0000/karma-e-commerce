@@ -14,7 +14,7 @@ const confirmHandler = (): Promise<boolean> =>
   new Promise((resolve) => (confirmStatus.value = resolve));
 const closeModalHandler = (): string => (modalName.value = "");
 const confirmStatusHandler = (status: boolean): void => {
-  if (!status) closeModalHandler();
+  closeModalHandler();
   confirmStatus.value(status);
 };
 
