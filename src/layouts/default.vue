@@ -1,11 +1,9 @@
 <script setup lang="ts">
 const { isDesktop } = useDevice();
-const { modalControllerRef, openModalHandler } = useModalController();
+const { openModalHandler } = useModalController();
 
-const test = async () => {
-  openModalHandler({
-    $modalType: "order",
-  });
+const test = () => {
+  openModalHandler({ $modalType: "order" });
 };
 </script>
 
@@ -23,7 +21,7 @@ const test = async () => {
 
   <!-- Modal -->
   <Teleport to="body">
-    <ModalController :ref="modalControllerRef" />
+    <ModalController />
   </Teleport>
 
   <button @click="test">open modal</button>

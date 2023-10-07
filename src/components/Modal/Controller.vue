@@ -1,26 +1,13 @@
 <script setup lang="ts">
 // ------------- Composables --------------
-const { toggleModal, modalName, classes, pickText } = useModalController();
+const { toggleModal, modalName, classes, pickText, closeModalHandler, confirmStatusHandler } =
+  useModalController();
 
-// ------------- Data --------------
-const confirmStatus = ref();
+// -------------- Components --------------
 const comp = reactive<any>({
   confirm: shallowRef(resolveComponent("ModalConfirm")),
   order: shallowRef(resolveComponent("ModalOrder")),
 });
-
-// ------------- Functions --------------
-const confirmHandler = (): Promise<boolean> => {
-  return new Promise((resolve) => (confirmStatus.value = resolve));
-};
-const closeModalHandler = (): string => (modalName.value = "");
-const confirmStatusHandler = (status: boolean): void => {
-  closeModalHandler();
-  confirmStatus.value(status);
-};
-
-// ------ For expose any you want -------
-defineExpose({ confirmHandler });
 </script>
 
 <template>
