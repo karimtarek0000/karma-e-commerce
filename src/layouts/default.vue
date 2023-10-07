@@ -4,7 +4,7 @@ const { modalControllerRef, openModalHandler } = useModalController();
 
 const test = () => {
   openModalHandler("confirm");
-  modalControllerRef?.value?.confirmHandler();
+  // modalControllerRef?.value?.confirmHandler();
 };
 </script>
 

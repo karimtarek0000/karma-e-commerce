@@ -16,9 +16,7 @@ const closeModalHandler = (): string => (modalName.value = "");
 const confirmStatusHandler = (status: boolean): Promise<boolean> => confirmStatus.value(status);
 
 // ------ For expose any you want -------
-defineExpose({
-  confirmHandler,
-});
+defineExpose({ confirmHandler });
 </script>
 
 <template>

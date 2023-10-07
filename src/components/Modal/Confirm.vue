@@ -6,8 +6,13 @@ defineProps<{
 
 <template>
   <h1>Confirm</h1>
-  <button @click="confirmStatusHandler(true)">Confirm</button>
-  <button @click="confirmStatusHandler(false)">cancel</button>
+
+  <div class="flex items-center">
+    <button class="px-2 py-1 text-white bg-secondary" @click="confirmStatusHandler(true)">
+      Confirm
+    </button>
+    <button @click="confirmStatusHandler(false)">cancel</button>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>
