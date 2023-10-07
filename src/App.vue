@@ -9,6 +9,7 @@ const resetError = async (error: string) => {
   <NuxtLayout>
     <NuxtErrorBoundary>
       <NuxtPage />
+
       <template #error="{ error }">
         <div class="flex flex-col items-center gap-3 mx-auto mt-5 w-fit">
           <h2 class="px-3 py-2 mx-auto text-white bg-red-500 rounded-md">

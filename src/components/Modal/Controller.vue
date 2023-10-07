@@ -1,40 +1,90 @@
 <script setup lang="ts">
-const boo = ref(true);
-const confirmStatus = ref();
+// ------------- Composables --------------
+const { toggleModal, modalName } = useModalController();
 
-// ------------- Components --------------
-const confirm = resolveComponent("ModalConfirm");
-const order = resolveComponent("ModalOrder");
+// ------------- Data --------------
+const confirmStatus = ref();
+const comp = reactive<any>({
+  confirm: shallowRef(resolveComponent("ModalConfirm")),
+  order: shallowRef(resolveComponent("ModalOrder")),
+});
 
 // ------------- Functions --------------
-const confirmHandler = (): Promise<boolean> => {
-  return new Promise((resolve) => (confirmStatus.value = resolve));
-};
-
+const confirmHandler = (): Promise<boolean> =>
+  new Promise((resolve) => (confirmStatus.value = resolve));
+const closeModalHandler = (): string => (modalName.value = "");
 const confirmStatusHandler = (status: boolean): Promise<boolean> => confirmStatus.value(status);
+
+// ------ For expose any you want -------
+defineExpose({
+  confirmHandler,
+});
 </script>
 
 <template>
-  <!-- <Transition mode="out-in">
-    <Component :is="boo ? order : confirm"></Component>
-  </Transition> -->
-  <!-- <button @click="boo = !boo">toggle</button> -->
+  <Transition name="fade">
+    <div class="modal" v-if="toggleModal">
+      <Transition name="slide" mode="out-in" :appear="true" @afterLeave="toggleModal = false">
+        <div class="modal__wrapper" v-if="modalName">
+          <!-- Close -->
+          <button class="text-3xl" @click="closeModalHandler">&times;</button>
+
+          <!-- Modal -->
+          <Component :is="comp[modalName]" v-bind="{ confirmStatusHandler }" />
+        </div>
+      </Transition>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
-.v-enter-active {
-  opacity: 1;
-  animation: slideUp 1s ease-in-out forwards;
+.modal {
+  @apply fixed top-0 z-50 flex items-center justify-center w-full h-full backdrop-blur bg-black/80 start-0;
+}
+.modal__wrapper {
+  @apply bg-white relative rounded-md w-[600px] min-h-[200px] px-2 py-1;
 }
 
-@keyframes slideUp {
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.3s opacity ease-in-out;
+}
+
+/* Animation for modal */
+.slide-enter-active {
+  animation: slideDown 0.5s ease-in-out forwards;
+}
+.slide-leave-active {
+  animation: slideUp 0.5s ease-in-out forwards;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  will-change: animation;
+}
+
+@keyframes slideDown {
   from {
-    transform: translateY(-10px);
+    transform: translateY(-50px);
     opacity: 0;
   }
   to {
     transform: translateY(0px);
     opacity: 1;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
   }
 }
 </style>

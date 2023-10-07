@@ -1,5 +1,11 @@
 <script setup lang="ts">
 const { isDesktop } = useDevice();
+const { modalControllerRef, openModalHandler } = useModalController();
+
+const test = () => {
+  openModalHandler("confirm");
+  modalControllerRef?.value?.confirmHandler();
+};
 </script>
 
 <template>
@@ -15,5 +21,9 @@ const { isDesktop } = useDevice();
   <NavbarMobile v-if="!isDesktop" />
 
   <!-- Modal -->
-  <ModalController />
+  <Teleport to="body">
+    <ModalController :ref="modalControllerRef" />
+  </Teleport>
+
+  <button @click="test">open modal</button>
 </template>
