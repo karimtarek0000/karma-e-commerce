@@ -3,7 +3,11 @@ const { isDesktop } = useDevice();
 const { modalControllerRef, openModalHandler } = useModalController();
 
 const test = async () => {
-  openModalHandler("confirm", "!items-start");
+  openModalHandler({
+    $modalType: "confirm",
+    $classes: "!items-start",
+    $pickText: "deleteProduct",
+  });
   await modalControllerRef?.value?.confirmHandler();
 };
 </script>

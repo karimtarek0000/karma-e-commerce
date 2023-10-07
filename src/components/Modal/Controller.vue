@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ------------- Composables --------------
-const { toggleModal, modalName, classes } = useModalController();
+const { toggleModal, modalName, classes, pickText } = useModalController();
 
 // ------------- Data --------------
 const confirmStatus = ref();
@@ -31,7 +31,7 @@ defineExpose({ confirmHandler });
           <button class="text-3xl" @click="closeModalHandler">&times;</button>
 
           <!-- Modal -->
-          <Component :is="comp[modalName]" v-bind="{ confirmStatusHandler }" />
+          <Component :is="comp[modalName]" v-bind="{ confirmStatusHandler, pickText }" />
         </div>
       </Transition>
     </div>

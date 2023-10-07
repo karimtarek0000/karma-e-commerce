@@ -33,7 +33,11 @@ const {
 const deleteProductFromCartHandler = async (_productId: string): Promise<void> => {
   productId.value = _productId;
 
-  openModalHandler("confirm", "!items-start");
+  openModalHandler({
+    $modalType: "confirm",
+    $classes: "!items-start",
+    $pickText: "deleteProduct",
+  });
   const status = await modalControllerRef?.value?.confirmHandler();
 
   if (status) {
