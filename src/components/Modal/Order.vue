@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { createInput } from "@formkit/vue";
 
-// --------------- Components ---------
+// ---------- Components ---------
 const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
 
-// ------------- Data -----------------
+// ------------- Data -------------
 const form = reactive<OrderModal>({
   phoneNumber: "",
   coupon: "",
@@ -13,7 +13,7 @@ const form = reactive<OrderModal>({
 const paymentMethodSelected = ref<string>("");
 const paymentMethods = ref<string[]>(["card", "cash"]);
 
-// ------------- Functions -----------------
+// ------------- Functions --------------
 const submitHandler = (data: OrderModal) => {};
 </script>
 

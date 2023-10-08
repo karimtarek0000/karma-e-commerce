@@ -15,10 +15,10 @@ defineProps<{
 <template>
   <VueMultiselect
     class="border rounded-md border-secondary"
-    :searchable="false"
     deselect-label=""
     placeholder="Select payment method"
     selectLabel=""
+    :searchable="false"
     :options="context.attrs.options"
     :modelValue="context._value"
     @update:modelValue="context.node.input($event)"
