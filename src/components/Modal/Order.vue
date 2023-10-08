@@ -67,14 +67,14 @@ const submitHandler = (data: OrderModal) => {
         />
       </div>
 
-      <!-- Apply coupon -->
+      <!-- Apply coupon code -->
       <div class="mt-3">
         <FormKit
           type="text"
-          id="coupon"
-          name="coupon"
-          label="Enter your coupon (optional)"
-          placeholder="Enter your coupon"
+          id="couponCode"
+          name="couponCode"
+          label="Enter your coupon code (optional)"
+          placeholder="Enter your coupon code"
           autocomplete="off"
         />
       </div>
