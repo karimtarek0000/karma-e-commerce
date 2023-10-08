@@ -68,7 +68,8 @@ declare global {
   };
   type OrderModal = {
     phoneNumber: string;
-    coupon: string;
+    couponCode: string;
+    address: string;
     paymentMethod: "card" | "cash" | "";
   };
 }

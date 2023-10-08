@@ -7,14 +7,17 @@ const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
 // ------------- Data -------------
 const form = reactive<OrderModal>({
   phoneNumber: "",
-  coupon: "",
+  couponCode: "",
+  address: "",
   paymentMethod: "",
 });
 const paymentMethodSelected = ref<string>("");
 const paymentMethods = ref<string[]>(["card", "cash"]);
 
 // ------------- Functions --------------
-const submitHandler = (data: OrderModal) => {};
+const submitHandler = (data: OrderModal) => {
+  console.log(data);
+};
 </script>
 
 <template>
@@ -46,6 +49,20 @@ const submitHandler = (data: OrderModal) => {};
           :validation-messages="{
             matches: 'Phone number must be 11 digits',
           }"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Address -->
+      <div>
+        <FormKit
+          type="textarea"
+          id="address"
+          name="address"
+          rows="5"
+          label="Enter your address"
+          placeholder="Enter your address"
+          validation="required"
           autocomplete="off"
         />
       </div>
