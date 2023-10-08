@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { createInput } from "@formkit/vue";
 
+// --------------- Components ---------
 const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
 
 // ------------- Data -----------------
