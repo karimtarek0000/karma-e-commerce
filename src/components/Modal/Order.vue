@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import VueMultiselect from "vue-multiselect";
 import { createInput } from "@formkit/vue";
 
+const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
+
 // ------------- Data -----------------
-const form = reactive<{
-  phoneNumber: string;
-  coupon: string;
-}>({
+const form = reactive<OrderModal>({
   phoneNumber: "",
   coupon: "",
+  paymentMethod: "",
 });
-const paymentMethodSelected = ref<string>();
+const paymentMethodSelected = ref<string>("");
 const paymentMethods = ref<string[]>(["card", "cash"]);
 
 // ------------- Functions -----------------
-const submitHandler = (data: { phoneNumber: string }) => {
-  console.log(data);
-};
+const submitHandler = (data: OrderModal) => {};
 </script>
 
 <template>
@@ -66,27 +63,25 @@ const submitHandler = (data: { phoneNumber: string }) => {
 
       <!-- Payment method -->
       <div class="mt-3">
-        <label for="paymentMethod" class="block mb-1 text-14">Select payment method</label>
-        <VueMultiselect
-          v-model="paymentMethodSelected"
-          id="paymentMethod"
+        <label for="paymentMethod" class="block mb-1 text-14">*Select payment method</label>
+        <FormKit
+          :type="paymentMethodMS"
+          id="paymentMethods"
+          name="paymentMethod"
+          validation="required"
           :options="paymentMethods"
-          :searchable="false"
-          deselect-label=""
-          placeholder="Select payment method"
-          selectLabel=""
-          class="border rounded-md border-secondary"
-        >
-        </VueMultiselect>
+          :value="paymentMethodSelected"
+        />
       </div>
 
       <!-- Actions -->
       <div class="mt-3 mb-2 text-center col-span-full">
         <button
-          :disabled="!valid"
+          :disabled="loading || !valid"
           class="flex items-center justify-center w-full px-12 py-3 text-sm text-white transition border rounded-md gap-x-2 hover:bg-secondary/90 bg-secondary shrink-0"
         >
-          Submit order
+          <ShareLoader v-if="loading" />
+          Checkout
         </button>
       </div>
     </template>

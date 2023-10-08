@@ -66,6 +66,11 @@ declare global {
     productId: Product;
     quantity: number;
   };
+  type OrderModal = {
+    phoneNumber: string;
+    coupon: string;
+    paymentMethod: "card" | "cash" | "";
+  };
 }
 
 export {};
