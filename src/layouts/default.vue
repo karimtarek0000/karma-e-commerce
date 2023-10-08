@@ -1,10 +1,5 @@
 <script setup lang="ts">
 const { isDesktop } = useDevice();
-const { openModalHandler } = useModalController();
-
-const test = () => {
-  openModalHandler({ $modalType: "order" });
-};
 </script>
 
 <template>
@@ -23,6 +18,4 @@ const test = () => {
   <Teleport to="body">
     <ModalController />
   </Teleport>
-
-  <button @click="test">open modal</button>
 </template>
