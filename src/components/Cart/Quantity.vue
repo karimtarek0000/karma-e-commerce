@@ -41,7 +41,7 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
 
     if (!addToCartLoader.value && !addToCartError.value) {
       await refreshNuxtData("cart");
-      toast.success(`Quantity updated successfully`);
+      toast.success("Quantity updated successfully");
     }
     if (addToCartError.value) {
       toast.error(addToCartError.value.message);
@@ -49,7 +49,7 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
 
     productId.value = null;
   } else {
-    toast.error("Must grather than 0");
+    toast.error("Must at least one");
   }
 };
 </script>
@@ -58,7 +58,7 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
   <!-- Input to add quantity -->
   <div class="quantitt__wrapper">
     <ShareLoader
-      v-if="showLoader(addToCartStatus, productId!, product?.productId._id)"
+      v-if="showLoader(addToCartStatus, productId!, product?.productId?._id)"
       class="!border-t-secondary"
     />
     <input

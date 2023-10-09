@@ -25,8 +25,10 @@ const imgSelected = ref<{ secure_url: string; public_id: string }>(
 
 // ----------- Computed ------------
 const productFromCart = computed((): CartProduct => {
-  return cart.value?.cart.products.find(
-    (prod: CartProduct) => prod?.productId?._id === product.value?.product?._id
+  return (
+    cart.value?.cart.products.find(
+      (prod: CartProduct) => prod?.productId?._id === product.value?.product?._id
+    ) || { productId: product.value?.product, quantity: 1 }
   );
 });
 
