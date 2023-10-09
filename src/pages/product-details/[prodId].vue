@@ -120,7 +120,8 @@ useSeoMeta({
 
             <!-- Actions -->
             <ClientOnly>
-              <div class="flex flex-wrap items-center justify-between w-2/3 gap-2 mt-16">
+              <div class="actions">
+                <!-- Added product to cart -->
                 <CartAddTo
                   class="!mt-0 !mb-0 !w-[70%]"
                   v-bind="{
@@ -128,13 +129,21 @@ useSeoMeta({
                     product:product?.product as Product
                   }"
                 />
+
+                <!-- Change quantity -->
                 <CartQuantity
                   v-if="isLoggedIn"
                   :class="[productFromCart && 'pointer-events-none']"
                   v-bind="{ product: productFromCart, status: false }"
                   @sendQuantity="quantity = $event"
                 />
-                <CartCheckout v-if="isLoggedIn" class="w-full mt-3" :options="productFromCart" />
+
+                <!-- Checkout -->
+                <CartCheckout
+                  v-if="isLoggedIn"
+                  class="w-full mt-3"
+                  :options="{ productId: product?.product._id, quantity }"
+                />
               </div>
             </ClientOnly>
           </div>
@@ -170,6 +179,9 @@ useSeoMeta({
 }
 .big-img {
   @apply flex justify-center w-full max-lg:h-[12.5rem] min-h-[29.75rem] border-2 rounded-md border-secondary/20;
+}
+.actions {
+  @apply flex flex-wrap items-center justify-between w-2/3 gap-2 mt-16;
 }
 
 /* Zoom image */

@@ -2,7 +2,7 @@
 const { openModalHandler } = useModalController();
 
 // ----------- Define ------------
-const { options } = defineProps<{
+const props = defineProps<{
   options: OptionsPropsOrder | any;
 }>();
 const emit = defineEmits(["closeQuickView"]);
@@ -11,10 +11,10 @@ const emit = defineEmits(["closeQuickView"]);
 const openOrderModal = () => {
   openModalHandler({
     $modalType: "order",
-    $otherOptions: options,
+    $otherOptions: props.options,
   });
 
-  if (options?.cartId) emit("closeQuickView");
+  if (props.options?.cartId) emit("closeQuickView");
 };
 </script>
 
