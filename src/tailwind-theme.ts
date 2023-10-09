@@ -1,6 +1,7 @@
 const shared = {
   label: "text-sm font-medium text-black",
-  input: "w-full mt-1 text-sm bg-white rounded-md shadow-sm focus:border-secondary border-secondary",
+  input:
+    "w-full mt-1 text-sm bg-white rounded-md shadow-sm focus:border-secondary border-secondary",
   message: "text-red-800 font-bold mt-[5px] text-14",
 };
 
@@ -9,6 +10,9 @@ export default {
     label: shared.label,
     input: shared.input,
     message: shared.message,
+  },
+  textarea: {
+    input: "w-full resize-none rounded-md",
   },
   checkbox: {
     wrapper: "flex gap-2",

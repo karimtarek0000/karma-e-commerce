@@ -1,7 +1,14 @@
 <script setup lang="ts">
 // ------------- Composables --------------
-const { toggleModal, modalName, classes, pickText, closeModalHandler, confirmStatusHandler } =
-  useModalController();
+const {
+  toggleModal,
+  modalName,
+  classes,
+  pickText,
+  otherOptions,
+  closeModalHandler,
+  confirmStatusHandler,
+} = useModalController();
 
 // -------------- Components --------------
 const comp = reactive<any>({
@@ -19,7 +26,10 @@ const comp = reactive<any>({
           <button class="text-3xl" @click="closeModalHandler">&times;</button>
 
           <!-- Modal -->
-          <Component :is="comp[modalName]" v-bind="{ confirmStatusHandler, pickText }" />
+          <Component
+            :is="comp[modalName]"
+            v-bind="{ confirmStatusHandler, pickText, options: otherOptions }"
+          />
         </div>
       </Transition>
     </div>

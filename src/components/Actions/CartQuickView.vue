@@ -60,7 +60,7 @@ defineProps<{
         <NuxtLink to="/cart" class="view-cart-btn"
           >View my cart <span class="font-bold">({{ products?.length }})</span></NuxtLink
         >
-        <NuxtLink to="/" class="checkout-btn">Checkout</NuxtLink>
+        <slot name="checkout" />
       </div>
     </div>
 
@@ -81,9 +81,6 @@ defineProps<{
 }
 .view-cart-btn {
   @apply block px-5 py-3 text-sm text-black transition border border-secondary rounded hover:ring-1 hover:ring-secondary;
-}
-.checkout-btn {
-  @apply block px-5 py-3 text-sm text-gray-100 transition bg-secondary rounded hover:bg-secondary/90;
 }
 :deep(.delete-product__share-loader) {
   @apply w-[25px] h-[25px];

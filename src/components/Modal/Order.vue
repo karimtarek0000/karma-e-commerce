@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { createInput } from "@formkit/vue";
 
+// ---------- Define ---------
+const props = defineProps<{
+  options: OptionsPropsOrder;
+}>();
+
+// ---------- Composables ---------
+const http = useHttp();
+
 // ---------- Components ---------
 const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
 
@@ -15,7 +23,31 @@ const paymentMethodSelected = ref<string>("");
 const paymentMethods = ref<string[]>(["card", "cash"]);
 
 // ------------- Functions --------------
-const submitHandler = (data: OrderModal) => {
+const submitHandler = async (data: OrderModal) => {
+  const { address, phoneNumber, couponCode, paymentMethod } = data;
+  const body: any = {
+    address,
+    phoneNumber,
+    paymentMethod,
+  };
+
+  // If exist coupon code
+  if (couponCode) body.couponCode = couponCode;
+
+  // For One Product
+  if (props.options?.productId) {
+    const { productId, quantity } = props.options;
+    body.productId = productId;
+    body.quantity = quantity;
+  }
+
+  // const { pending, error } = await useAsyncData(() =>
+  //   http(`order/${props.options?.cartId}`, {
+  //     method: "POST",
+  //     body,
+  //   })
+  // );
+
   console.log(data);
 };
 </script>
@@ -53,22 +85,8 @@ const submitHandler = (data: OrderModal) => {
         />
       </div>
 
-      <!-- Address -->
-      <div>
-        <FormKit
-          type="textarea"
-          id="address"
-          name="address"
-          rows="5"
-          label="Enter your address"
-          placeholder="Enter your address"
-          validation="required"
-          autocomplete="off"
-        />
-      </div>
-
       <!-- Apply coupon code -->
-      <div class="mt-3">
+      <div class="my-3">
         <FormKit
           type="text"
           id="couponCode"
@@ -80,7 +98,7 @@ const submitHandler = (data: OrderModal) => {
       </div>
 
       <!-- Payment method -->
-      <div class="mt-3">
+      <div>
         <label for="paymentMethod" class="block mb-1 text-14">*Select payment method</label>
         <FormKit
           :type="paymentMethodMS"
@@ -89,6 +107,20 @@ const submitHandler = (data: OrderModal) => {
           validation="required"
           :options="paymentMethods"
           :value="paymentMethodSelected"
+        />
+      </div>
+
+      <!-- Address -->
+      <div class="mt-3">
+        <FormKit
+          type="textarea"
+          id="address"
+          name="address"
+          rows="5"
+          label="Enter your address"
+          placeholder="Enter your address"
+          validation="required"
+          autocomplete="off"
         />
       </div>
 

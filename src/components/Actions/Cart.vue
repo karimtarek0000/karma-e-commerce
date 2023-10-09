@@ -53,12 +53,15 @@ const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
 
   productId.value = "";
 };
+const toggleQuickViewHandler = () => {
+  toggleCartQuickView.value = !toggleCartQuickView.value;
+};
 </script>
 
 <template>
   <div class="cart">
     <!-- Toggle to open and close cart -->
-    <button class="max-lg:hidden" @click="toggleCartQuickView = !toggleCartQuickView">
+    <button class="max-lg:hidden" @click="toggleQuickViewHandler">
       <ActionsCartCounter v-show="!!productsLength" :num="productsLength || 0" />
       <ShareRenderSVG iconName="cart" />
     </button>
@@ -71,7 +74,14 @@ const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
       :statusLoader="status"
       v-show="toggleCartQuickView"
       @deleteProduct="deleteProductFromCart"
-    />
+    >
+      <template #checkout>
+        <CartCheckout
+          :options="{ cartId: cart?.cart._id }"
+          @closeQuickView="toggleQuickViewHandler"
+        />
+      </template>
+    </ActionsCartQuickView>
   </div>
 </template>
 

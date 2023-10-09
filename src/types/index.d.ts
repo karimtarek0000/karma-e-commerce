@@ -72,6 +72,11 @@ declare global {
     address: string;
     paymentMethod: "card" | "cash" | "";
   };
+  type OptionsPropsOrder = {
+    cartId?: string;
+    productId?: string;
+    quantity?: number;
+  };
 }
 
 export {};
