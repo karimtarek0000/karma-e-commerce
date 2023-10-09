@@ -50,17 +50,15 @@ const submitHandler = async (data: OrderModal) => {
     pending,
     error,
   } = await useAsyncData(() =>
-    http(`order/${options?.cartId}`, {
+    http(`order/${options?.cartId ?? ""}`, {
       method: "POST",
       body,
     })
   );
 
   if (!pending.value && !error.value) {
-    await refreshNuxtData("cart");
-
-    !order.value?.checkOutURL && toast.success(order.value.message);
-    order.value?.checkOutURL && open(order.value?.checkOutURL);
+    !options?.productId && (await refreshNuxtData("cart"));
+    !order.value?.checkOutURL ? toast.success(order.value.message) : open(order.value?.checkOutURL);
 
     // Close modal
     closeModalHandler();
