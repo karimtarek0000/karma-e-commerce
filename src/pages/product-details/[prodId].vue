@@ -19,16 +19,15 @@ const { data: product } = await useAsyncData<{ product: Product }>(
 );
 
 // ----------- Data ------------
+const quantity = ref<number>(1);
 const imgSelected = ref<{ secure_url: string; public_id: string }>(
   product.value?.product.images[0]!
 );
 
 // ----------- Computed ------------
 const productFromCart = computed((): CartProduct => {
-  return (
-    cart.value?.cart.products.find(
-      (prod: CartProduct) => prod?.productId?._id === product.value?.product?._id
-    ) || { productId: product.value?.product, quantity: 1 }
+  return cart.value?.cart.products.find(
+    (prod: CartProduct) => prod?.productId?._id === product.value?.product?._id
   );
 });
 
@@ -93,7 +92,7 @@ useSeoMeta({
           </div>
 
           <!-- Col 2 -->
-          <div class="px-4">
+          <div class="w-1/2 px-4">
             <div class="mb-6 lg:max-w-md max-md:text-center">
               <!-- Title -->
               <h2
@@ -121,9 +120,20 @@ useSeoMeta({
 
             <!-- Actions -->
             <ClientOnly>
-              <div class="flex flex-wrap items-center justify-between gap-2 mt-16">
-                <CartAddTo class="!mt-0 !mb-0 !w-[75%]" :product="(product?.product as Product)" />
-                <CartQuantity v-if="isLoggedIn" :product="productFromCart" />
+              <div class="flex flex-wrap items-center justify-between w-2/3 gap-2 mt-16">
+                <CartAddTo
+                  class="!mt-0 !mb-0 !w-[70%]"
+                  v-bind="{
+                    quantity,
+                    product:product?.product as Product
+                  }"
+                />
+                <CartQuantity
+                  v-if="isLoggedIn"
+                  :class="[productFromCart && 'pointer-events-none']"
+                  v-bind="{ product: productFromCart, status: false }"
+                  @sendQuantity="quantity = $event"
+                />
                 <CartCheckout v-if="isLoggedIn" class="w-full mt-3" :options="productFromCart" />
               </div>
             </ClientOnly>
@@ -144,7 +154,7 @@ useSeoMeta({
   focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50 hover:bg-opacity-60 rounded-xl;
 }
 .col1 {
-  @apply flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 lg:mb-0;
+  @apply flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 grow-0 lg:mb-0;
 }
 .priceAndDiscount {
   @apply flex items-center gap-2 mb-6 text-2xl max-md:justify-center text-secondary;

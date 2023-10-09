@@ -2,7 +2,10 @@
 import { useToast } from "vue-toastification";
 
 // ----------- Define ------------
-defineProps<{ product: CartProduct }>();
+const { status } = withDefaults(defineProps<{ product: CartProduct; status: boolean }>(), {
+  status: true,
+});
+const emit = defineEmits(["sendQuantity"]);
 
 // ----------- Composables ------------
 const http = useHttp();
@@ -31,9 +34,8 @@ const {
 );
 
 // ----------------- Functions -------------------
-const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void> => {
+const sendNewQuantityToCart = async (product: CartProduct) => {
   productId.value = product.productId._id;
-  quantity.value = +e.target.value;
   product.quantity = quantity.value;
 
   if (quantity.value) {
@@ -51,6 +53,14 @@ const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void
   } else {
     toast.error("Must at least one");
   }
+};
+
+const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void> => {
+  quantity.value = +e.target.value;
+
+  if (status) return sendNewQuantityToCart(product);
+
+  emit("sendQuantity", quantity.value);
 };
 </script>
 

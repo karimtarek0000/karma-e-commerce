@@ -4,6 +4,7 @@ import { useToast } from "vue-toastification";
 // -------------------- Define ----------------------
 const props = defineProps<{
   product: Product;
+  quantity?: number;
 }>();
 
 // ----------- Composables ------------
@@ -27,7 +28,7 @@ const {
       method: "POST",
       body: {
         productId: pickProduct.value?._id,
-        quantity: 1,
+        quantity: props.quantity || 1,
       },
     }),
   { immediate: false }
