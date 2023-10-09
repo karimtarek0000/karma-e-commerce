@@ -73,7 +73,7 @@ export default defineNuxtConfig({
 
   // Google signin
   googleSignIn: {
-    clientId: "810539462889-hmj4v9ifvujcrr2f4qa4clgula26ekd1.apps.googleusercontent.com",
+    clientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID,
   },
 
   // Pinia - state mangement
