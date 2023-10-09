@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// ---------- Define ----------
 const { showBtn } = withDefaults(
   defineProps<{
     showBtn?: boolean;
@@ -7,8 +8,24 @@ const { showBtn } = withDefaults(
     showBtn: true,
   }
 );
+
+// ---------- Composables ----------
 const { itemStatus, toggleItemHandler } = useToggle(!showBtn);
 const { logout, user } = useAuth();
+
+// ---------- Data ----------
+const links = ref([
+  {
+    title: "my cart",
+    path: "/cart",
+    icon: "cart",
+  },
+  {
+    title: "my orders",
+    path: "/orders",
+    icon: "added-to-cart",
+  },
+]);
 </script>
 
 <template>
@@ -24,13 +41,13 @@ const { logout, user } = useAuth();
     </button>
     <!-- Dropdown -->
     <ul class="dropdown" v-show="itemStatus" @click="toggleItemHandler">
-      <NuxtLink class="dropdown-link" to="/cart">
-        <ShareRenderSVG iconName="cart" class="w-[15px]" />
-        <span class="ms-auto pe-5">my cart</span>
+      <NuxtLink v-for="link in links" :key="link.title" class="dropdown-link" :to="link.path">
+        <ShareRenderSVG :iconName="link.icon" class="w-[15px]" />
+        <span v-text="link.title" />
       </NuxtLink>
       <button @click="logout" class="dropdown-link">
         <ShareRenderSVG iconName="logout" class="w-[15px]" />
-        <span class="ms-auto pe-5">logout</span>
+        <span>logout</span>
       </button>
     </ul>
   </div>
@@ -38,9 +55,9 @@ const { logout, user } = useAuth();
 
 <style scoped>
 .dropdown {
-  @apply absolute overflow-hidden shadow-md bg-white w-[7.5rem] mt-2 z-10 rounded-md top-[100%] end-0;
+  @apply absolute overflow-hidden shadow-md bg-white w-[9rem] mt-2 z-10 rounded-md top-[100%] end-0;
 }
 .dropdown-link {
-  @apply flex items-center p-2 capitalize gap-x-5 text-14 hover:bg-gray-200 w-full;
+  @apply flex justify-start items-center p-2 capitalize gap-x-5 text-14 hover:bg-gray-200 w-full;
 }
 </style>

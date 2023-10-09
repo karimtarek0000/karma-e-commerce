@@ -74,7 +74,7 @@ const addToCardHandler = async (product: Product) => {
   >
     <ShareLoader v-show="loadingBtnCart" />
     {{ productInCartStatus ? "in cart" : "Add to cart" }}
-    <ShareRenderSVG :iconName="productInCartStatus ? 'added-to-cart' : 'to-cart'" />
+    <ShareRenderSVG fill="#FFF" :iconName="productInCartStatus ? 'added-to-cart' : 'to-cart'" />
   </button>
 </template>
 
