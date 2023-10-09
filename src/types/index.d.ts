@@ -66,6 +66,14 @@ declare global {
     productId: Product;
     quantity: number;
   };
+  type Order = {
+    _id: string;
+    products: Product[];
+    subTotal: number;
+    paidAmount: number;
+    address: string;
+    phoneNumbers: string[];
+  };
   type OrderModal = {
     phoneNumber: string;
     couponCode: string;

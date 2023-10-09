@@ -60,7 +60,7 @@ const submitHandler = async (data: OrderModal) => {
     await refreshNuxtData("cart");
 
     !order.value?.checkOutURL && toast.success(order.value.message);
-    order.value?.checkOutURL && open(order.value?.checkOutURL, "_blank");
+    order.value?.checkOutURL && open(order.value?.checkOutURL);
 
     // Close modal
     closeModalHandler();

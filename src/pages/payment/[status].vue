@@ -27,11 +27,11 @@ const {
 // ----------- Life cycle hooks ------------
 watch(loader, () => {
   if (!loader.value && !error.value) {
-    toast.success(order.value.message);
+    toast.success(order.value?.message);
   }
 
   if (error.value) {
-    toast.error(order.value.message);
+    toast.error(order.value?.message);
   }
 
   navigateTo("/");
@@ -41,7 +41,7 @@ watch(loader, () => {
 <template>
   <div class="wrapper">
     <div class="max-w-[15.5rem]">
-      <NuxtImg src="/pay.svg" class="res-image" fit="cover" />
+      <NuxtImg src="/img/payment.svg" class="res-image" fit="cover" />
     </div>
     <h1 class="title">payment process <span class="text-red-500">please wait...</span></h1>
 
