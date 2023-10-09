@@ -10,7 +10,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return navigateTo("/");
   }
 
-  if (!accessToken.value && to.path === "/cart") {
+  // ------- Guards ---------
+  const paths = ["/cart", "/payment"];
+
+  if (!accessToken.value && paths.some((p) => to.path.includes(p))) {
     return navigateTo("/auth");
   }
 });
