@@ -27,7 +27,9 @@ const {
 // ----------- Life cycle hooks ------------
 watch(loader, () => {
   if (!loader.value && !error.value) {
-    toast.success(order.value?.message);
+    order.value?.message.includes("canceled")
+      ? toast.error(order.value?.message)
+      : toast.success(order.value?.message);
   }
 
   if (error.value) {
