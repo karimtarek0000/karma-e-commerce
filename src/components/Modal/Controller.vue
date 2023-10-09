@@ -28,7 +28,7 @@ const comp = reactive<any>({
           <!-- Modal -->
           <Component
             :is="comp[modalName]"
-            v-bind="{ confirmStatusHandler, pickText, options: otherOptions }"
+            v-bind="{ confirmStatusHandler, closeModalHandler, pickText, options: otherOptions }"
           />
         </div>
       </Transition>

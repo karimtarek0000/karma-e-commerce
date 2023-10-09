@@ -13,10 +13,15 @@ useSeoMeta({
 
 <template>
   <div class="wrapper">
-    <!-- Total -->
-    <h3 v-if="cartProducts?.length" class="px-2 text-white rounded-md text-22 bg-secondary w-fit">
-      Total: <strong> {{ cart?.cart?.subTotal?.toLocaleString() || 0 }}</strong>
-    </h3>
+    <div v-if="cartProducts?.length" class="header">
+      <!-- Total -->
+      <h3 class="total">
+        Total: <strong> {{ cart?.cart?.subTotal?.toLocaleString() || 0 }}</strong>
+      </h3>
+
+      <!-- Checkout -->
+      <CartCheckout class="!w-fit" :options="{ cartId: cart?.cart._id }" />
+    </div>
 
     <!-- Card -->
     <CartProduct
@@ -49,5 +54,11 @@ useSeoMeta({
 <style scoped>
 .wrapper {
   @apply flex flex-col mt-3 mb-10 gap-3 overflow-hidden;
+}
+.header {
+  @apply flex items-center justify-between max-md:flex-col;
+}
+.total {
+  @apply px-2 text-white rounded-md text-22 bg-secondary w-fit;
 }
 </style>

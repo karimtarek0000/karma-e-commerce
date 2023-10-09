@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
 import { createInput } from "@formkit/vue";
 
 // ---------- Define ---------
 const props = defineProps<{
   options: OptionsPropsOrder;
+  closeModalHandler: () => {};
 }>();
 
 // ---------- Composables ---------
 const http = useHttp();
+const toast = useToast();
 
 // ---------- Components ---------
 const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
@@ -41,14 +44,29 @@ const submitHandler = async (data: OrderModal) => {
     body.quantity = quantity;
   }
 
-  // const { pending, error } = await useAsyncData(() =>
-  //   http(`order/${props.options?.cartId}`, {
-  //     method: "POST",
-  //     body,
-  //   })
-  // );
+  // ------ API ------
+  const {
+    data: order,
+    pending,
+    error,
+  } = await useAsyncData(() =>
+    http(`order/${props.options?.cartId}`, {
+      method: "POST",
+      body,
+    })
+  );
 
-  console.log(data);
+  if (!pending.value && !error.value) {
+    await refreshNuxtData("cart");
+    toast.success(order.value.message);
+  }
+
+  if (error.value) {
+    toast.error(error.value.message);
+  }
+
+  // Close modal
+  props.closeModalHandler();
 };
 </script>
 
@@ -77,7 +95,7 @@ const submitHandler = async (data: OrderModal) => {
           name="phoneNumber"
           label="Add another phone number (optional)"
           placeholder="Enter your phone"
-          :validation="[['matches', /^0(11|12|10)[0-9]{8}$/]]"
+          :validation="[['required'], ['matches', /^0(11|12|10)[0-9]{8}$/]]"
           :validation-messages="{
             matches: 'Phone number must be 11 digits',
           }"
