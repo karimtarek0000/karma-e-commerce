@@ -3,7 +3,7 @@ import { useToast } from "vue-toastification";
 import { createInput } from "@formkit/vue";
 
 // ---------- Define ---------
-const props = defineProps<{
+const { options, closeModalHandler } = defineProps<{
   options: OptionsPropsOrder;
   closeModalHandler: () => {};
 }>();
@@ -34,12 +34,12 @@ const submitHandler = async (data: OrderModal) => {
     paymentMethod,
   };
 
-  // If exist coupon code
+  // If coupon code exist
   if (couponCode) body.couponCode = couponCode;
 
   // For One Product
-  if (props.options?.productId) {
-    const { productId, quantity } = props.options;
+  if (options?.productId) {
+    const { productId, quantity } = options;
     body.productId = productId;
     body.quantity = quantity;
   }
@@ -50,7 +50,7 @@ const submitHandler = async (data: OrderModal) => {
     pending,
     error,
   } = await useAsyncData(() =>
-    http(`order/${props.options?.cartId}`, {
+    http(`order/${options?.cartId}`, {
       method: "POST",
       body,
     })
@@ -66,7 +66,7 @@ const submitHandler = async (data: OrderModal) => {
   }
 
   // Close modal
-  props.closeModalHandler();
+  closeModalHandler();
 };
 </script>
 
