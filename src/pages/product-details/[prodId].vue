@@ -120,20 +120,13 @@ useSeoMeta({
             </div>
 
             <!-- Actions -->
-            <div
-              class="flex flex-wrap items-center mb-12 -mx-2 max-lg:justify-center max-lg:gap-y-4"
-            >
-              <!-- Add product in cart -->
-              <div class="flex items-center w-full px-2 md:w-2/3 md:mb-0 max-lg:order-last">
-                <ClientOnly>
-                  <CartAddTo class="!mt-0 !mb-0" :product="(product?.product as Product)" />
-                </ClientOnly>
+            <ClientOnly>
+              <div class="flex flex-wrap items-center justify-between gap-2 mt-16">
+                <CartAddTo class="!mt-0 !mb-0 !w-[75%]" :product="(product?.product as Product)" />
+                <CartQuantity v-if="isLoggedIn" :product="productFromCart" />
+                <CartCheckout v-if="isLoggedIn" class="w-full mt-3" :options="productFromCart" />
               </div>
-              <!-- Change quantity -->
-              <ClientOnly v-if="isLoggedIn" class="max-lg:order-first">
-                <CartQuantity :product="productFromCart" />
-              </ClientOnly>
-            </div>
+            </ClientOnly>
           </div>
         </div>
       </div>

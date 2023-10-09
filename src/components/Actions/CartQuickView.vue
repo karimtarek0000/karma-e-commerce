@@ -80,7 +80,7 @@ defineProps<{
   @apply space-y-4 max-h-[14.375rem] overflow-auto scrollbar-none;
 }
 .view-cart-btn {
-  @apply block px-5 py-3 text-sm text-black transition border border-secondary rounded hover:ring-1 hover:ring-secondary;
+  @apply block px-5 py-3 text-sm text-black transition border border-secondary rounded-md hover:ring-1 hover:ring-secondary;
 }
 :deep(.delete-product__share-loader) {
   @apply w-[25px] h-[25px];

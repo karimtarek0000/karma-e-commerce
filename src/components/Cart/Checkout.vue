@@ -2,8 +2,8 @@
 const { openModalHandler } = useModalController();
 
 // ----------- Define ------------
-const props = defineProps<{
-  options: OptionsPropsOrder;
+const { options } = defineProps<{
+  options: OptionsPropsOrder | any;
 }>();
 const emit = defineEmits(["closeQuickView"]);
 
@@ -11,10 +11,10 @@ const emit = defineEmits(["closeQuickView"]);
 const openOrderModal = () => {
   openModalHandler({
     $modalType: "order",
-    $otherOptions: props.options,
+    $otherOptions: options,
   });
 
-  if (props.options.cartId) emit("closeQuickView");
+  if (options?.cartId) emit("closeQuickView");
 };
 </script>
 
@@ -24,6 +24,6 @@ const openOrderModal = () => {
 
 <style scoped>
 .checkout-btn {
-  @apply w-full px-5 py-3 text-sm text-gray-100 transition bg-secondary rounded hover:bg-secondary/90;
+  @apply w-full px-5 py-3 text-sm text-gray-100 transition bg-secondary rounded-md hover:bg-secondary/90;
 }
 </style>
