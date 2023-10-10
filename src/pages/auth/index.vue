@@ -129,7 +129,13 @@ const { isReady, login } = useOneTap({
           Not have an account?
           <NuxtLink to="/auth/sign-up" class="text-gray-700 underline">Create new account</NuxtLink>
         </p>
-        <hr />
+        <div class="relative my-8">
+          <hr />
+          <span
+            class="absolute px-2 py-1 bg-white text-secondary -translate-x-2/4 -translate-y-2/4 top-2/4 start-2/4"
+            >Or</span
+          >
+        </div>
         <button
           type="button"
           :disabled="!isReady"
