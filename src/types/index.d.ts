@@ -70,9 +70,13 @@ declare global {
     _id: string;
     products: Product[];
     subTotal: number;
+    couponId: string;
     paidAmount: number;
     address: string;
     phoneNumbers: string[];
+    orderStatus: string;
+    paymentMethod: "cash" | "card";
+    createdAt: Date;
   };
   type OrderModal = {
     phoneNumber: string;

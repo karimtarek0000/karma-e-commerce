@@ -15,6 +15,7 @@ const {
   pending: loader,
   error,
 } = await useLazyAsyncData(
+  "orderInfo",
   () =>
     http(`/order/${status}Order?token=${token}`, {
       method: "PATCH",
@@ -36,7 +37,7 @@ watch(loader, () => {
     toast.error(order.value?.message);
   }
 
-  navigateTo("/");
+  navigateTo(`/order-info/${order.value?.order?._id}`);
 });
 </script>
 

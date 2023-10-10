@@ -58,7 +58,13 @@ const submitHandler = async (data: OrderModal) => {
 
   if (!pending.value && !error.value) {
     !options?.productId && (await refreshNuxtData("cart"));
-    !order.value?.checkOutURL ? toast.success(order.value.message) : open(order.value?.checkOutURL);
+
+    if (!order.value?.checkOutURL) {
+      await navigateTo(`/order-info/${order.value.order._id}`);
+      toast.success(order.value.message);
+    } else {
+      open(order.value?.checkOutURL);
+    }
 
     // Close modal
     closeModalHandler();
