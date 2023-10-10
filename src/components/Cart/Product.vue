@@ -29,6 +29,12 @@ defineProps<{ product: CartProduct }>();
           product.productId?.discount
         }}</span>
       </div>
+
+      <NuxtLink
+        class="block mt-3 underline text-secondary"
+        :to="`product-details/${product.productId._id}`"
+        >Go to product page</NuxtLink
+      >
     </div>
 
     <!-- Actions -->
