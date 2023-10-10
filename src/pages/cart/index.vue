@@ -39,7 +39,10 @@ useSeoMeta({
     </CartProduct>
 
     <!-- If no any product -->
-    <div v-if="!cartProducts?.length" class="max-w-[15.5rem] mx-auto py-4 text-center">
+    <div
+      v-if="!cartProducts?.length"
+      class="max-w-[15.5rem] min-h-[16rem] mx-auto py-4 text-center"
+    >
       <NuxtImg src="/img/cartempty.svg" class="res-image" fit="cover" />
       <h3 class="font-bold">Cart not exist any product yet!</h3>
       <NuxtLink

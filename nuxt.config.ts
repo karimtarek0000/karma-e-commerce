@@ -103,8 +103,16 @@ export default defineNuxtConfig({
     cloudinary: {
       baseURL: "https://res.cloudinary.com/dmtlew6gk/image/upload/",
     },
+    unsplash: {
+      baseURL: "https://images.unsplash.com/",
+    },
     presets: {
       cloudinary: {
+        modifiers: {
+          format: "webp",
+        },
+      },
+      unsplash: {
         modifiers: {
           format: "webp",
         },
