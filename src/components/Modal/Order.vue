@@ -49,7 +49,7 @@ const submitHandler = async (data: OrderModal) => {
     data: order,
     pending,
     error,
-  } = await useAsyncData(() =>
+  } = await useAsyncData("orderInfo", () =>
     http(`order/${options?.cartId ?? ""}`, {
       method: "POST",
       body,
