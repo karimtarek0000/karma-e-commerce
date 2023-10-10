@@ -17,7 +17,7 @@ definePageMeta({
   <div class="order-info">
     <div class="wrapper" v-if="order">
       <!-- Info -->
-      <div class="px-3 py-2">
+      <div class="px-3">
         <h2 class="title">order info</h2>
 
         <!-- Items -->
@@ -52,8 +52,11 @@ definePageMeta({
           </li>
         </ul>
       </div>
-      <!-- TODO: QR code -->
-      <div></div>
+      <!-- QR code -->
+      <div class="overflow-hidden p-7">
+        <img :src="orderData?.orderQrCode" alt="qrcode" />
+        <p class="text-center text-14">Scan QRcode to get products details</p>
+      </div>
     </div>
   </div>
 </template>
@@ -63,7 +66,7 @@ definePageMeta({
   @apply flex items-center justify-center my-32;
 }
 .wrapper {
-  @apply grid w-full lg:max-w-[50%] grid-cols-1 lg:grid-cols-2 border rounded-md border-secondary;
+  @apply grid w-full items-center lg:max-w-[50%] grid-cols-1 lg:grid-cols-2 border rounded-md border-secondary;
 }
 .title {
   @apply py-1 mb-3 font-bold text-center capitalize border-b border-b-secondary text-18;
