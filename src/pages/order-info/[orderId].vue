@@ -48,7 +48,7 @@ definePageMeta({
           </li>
           <li>
             <span>Date:</span>
-            <span>2023-10-10</span>
+            <span>{{ formatDate(order.createdAt, "en-US") }}</span>
           </li>
         </ul>
       </div>

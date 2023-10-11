@@ -21,3 +21,13 @@ export const isProductInCart = (initialProductId: string) => {
 export const showLoader = (status: string, selectedId: string, id: string) => {
   return status === "pending" && selectedId === id;
 };
+
+export const formatDate = (date: Date, lang = "ar-EG") => {
+  const options: any = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  return new Date(date).toLocaleDateString(lang, options);
+};
