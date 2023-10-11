@@ -40,6 +40,8 @@ export const useHttp = () => {
           credentials: "include",
         });
 
+        if (!refreshToken?.accessToken) logout();
+
         accessToken.value = refreshToken.accessToken;
       }
     },
