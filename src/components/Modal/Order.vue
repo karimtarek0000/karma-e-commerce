@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useToast } from "vue-toastification";
 import { createInput } from "@formkit/vue";
+import { useToast } from "vue-toastification";
 
 // ---------- Define ---------
 const { options, closeModalHandler } = defineProps<{
@@ -34,6 +34,7 @@ const {
   error,
   execute: couponCheckExecute,
 } = await useAsyncData(
+  "couponCheck",
   () =>
     http("/coupons/check", {
       method: "POST",
@@ -48,11 +49,16 @@ const {
 couponCheckLoading.value = false;
 
 // ------------- Functions --------------
-const couponCodeCheckHandler = (value: any) =>
-  debounce(async () => {
-    couponCode.value = value;
-    await couponCheckExecute();
-  }, 1000);
+const couponCodeCheckHandler = (value: any): void => {
+  if (value) {
+    return debounce(async () => {
+      couponCode.value = value;
+      await couponCheckExecute();
+    }, 1000);
+  }
+  clearNuxtData("couponCheck");
+};
+
 const submitHandler = async (data: OrderModal) => {
   const { address, phoneNumber, couponCode, paymentMethod } = data;
   const body: any = {
@@ -103,9 +109,7 @@ const submitHandler = async (data: OrderModal) => {
 };
 
 // ------------- Life cycle --------------
-onUnmounted(() => {
-  coupon.value = "";
-});
+onUnmounted(() => clearNuxtData("couponCheck"));
 </script>
 
 <template>
