@@ -53,8 +53,12 @@ definePageMeta({
         </ul>
       </div>
       <!-- QR code -->
-      <div class="overflow-hidden p-7">
-        <img :src="orderData?.orderQrCode" alt="qrcode" />
+      <div class="flex flex-col overflow-hidden p-7">
+        <img
+          :src="orderData?.orderQrCode"
+          class="sm:max-w-[50%] lg:max-w-full mx-auto"
+          alt="qrcode"
+        />
         <p class="text-center text-14">Scan QRcode to get products details</p>
       </div>
     </div>
@@ -63,10 +67,10 @@ definePageMeta({
 
 <style scoped>
 .order-info {
-  @apply flex items-center justify-center my-32;
+  @apply flex items-center justify-center my-5 lg:my-32;
 }
 .wrapper {
-  @apply grid w-full items-center lg:max-w-[50%] grid-cols-1 lg:grid-cols-2 border rounded-md border-secondary;
+  @apply grid w-[80%] mx-auto items-center lg:max-w-[50%] grid-cols-1 lg:grid-cols-2 border rounded-md border-secondary;
 }
 .title {
   @apply py-1 mb-3 font-bold text-center capitalize border-b border-b-secondary text-18;
