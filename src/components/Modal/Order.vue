@@ -11,6 +11,7 @@ const { options, closeModalHandler } = defineProps<{
 // ---------- Composables ---------
 const http = useHttp();
 const toast = useToast();
+const debounce = useDebounce();
 
 // ---------- Components ---------
 const paymentMethodMS = createInput(resolveComponent("ShareMSelect"));
@@ -24,8 +25,34 @@ const form = reactive<OrderModal>({
 });
 const paymentMethodSelected = ref<string>("");
 const paymentMethods = ref<string[]>(["card", "cash"]);
+const couponCode = ref<string>();
+
+// ------------- API --------------
+const {
+  data: coupon,
+  pending: couponCheckLoading,
+  error,
+  execute: couponCheckExecute,
+} = await useAsyncData(
+  () =>
+    http("/coupons/check", {
+      method: "POST",
+      body: {
+        couponCode: couponCode.value,
+      },
+    }),
+  {
+    immediate: false,
+  }
+);
+couponCheckLoading.value = false;
 
 // ------------- Functions --------------
+const couponCodeCheckHandler = (value: any) =>
+  debounce(async () => {
+    couponCode.value = value;
+    await couponCheckExecute();
+  }, 1000);
 const submitHandler = async (data: OrderModal) => {
   const { address, phoneNumber, couponCode, paymentMethod } = data;
   const body: any = {
@@ -74,6 +101,11 @@ const submitHandler = async (data: OrderModal) => {
     toast.error(error.value.message);
   }
 };
+
+// ------------- Life cycle --------------
+onUnmounted(() => {
+  coupon.value = "";
+});
 </script>
 
 <template>
@@ -110,7 +142,7 @@ const submitHandler = async (data: OrderModal) => {
       </div>
 
       <!-- Apply coupon code -->
-      <div class="my-3">
+      <div class="relative my-3">
         <FormKit
           type="text"
           id="couponCode"
@@ -118,8 +150,20 @@ const submitHandler = async (data: OrderModal) => {
           label="Enter your coupon code (optional)"
           placeholder="Enter your coupon code"
           autocomplete="off"
+          @input="couponCodeCheckHandler"
         />
+        <!-- Loading -->
+        <div class="absolute bottom-2 end-2">
+          <ShareLoader v-if="couponCheckLoading" class="!border-t-secondary" />
+        </div>
       </div>
+      <!-- Error -->
+      <p class="mb-2 text-red-800 text-14" v-if="error">{{ error.message }}</p>
+      <!-- Show coupon result -->
+      <p v-if="coupon" class="mb-2 text-14 text-secondary">
+        This coupon will do off <span class="font-bold">{{ coupon?.coupon?.couponAmount }}</span>
+        {{ coupon?.coupon?.couponAmountType === "fixed" ? "EGP" : "%" }} from total amount
+      </p>
 
       <!-- Payment method -->
       <div>
