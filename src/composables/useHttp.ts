@@ -40,8 +40,6 @@ export const useHttp = () => {
           credentials: "include",
         });
 
-        if (!refreshToken?.accessToken) logout();
-
         accessToken.value = refreshToken.accessToken;
       }
     },
@@ -53,10 +51,18 @@ export const useHttp = () => {
       const response = await fetcher.raw(request, options);
       return response._data;
     } catch (error: any) {
-      if (error.response?.status === 401 || error.response?.status === 403) {
+      const status = error.response?.status;
+      // If refresh token expired
+      if (error.response?._data.message === "TokenExpiredError: jwt expired" && status === 500) {
+        return logout();
+      }
+
+      // When user unauthenticated
+      if (status === 401 || status === 403) {
         const response = await fetcher.raw(request, options);
         return response._data;
       }
+
       return Promise.reject(error.response._data);
     }
   };
