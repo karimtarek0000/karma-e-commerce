@@ -26,7 +26,7 @@ const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order
     </div>
 
     <!-- Wrapper cards -->
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
       <!-- Order Card -->
       <ul class="order-card" v-for="(order, i) in orders?.orders" :key="order._id">
         <li class="py-1 mb-2 font-bold text-center border-b border-b-secondary">
@@ -36,12 +36,27 @@ const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order
           <span>payment method:</span> <span class="font-bold">{{ order.paymentMethod }}</span>
         </li>
         <li>
+          <span>Coupon:</span>
+          <span class="font-bold">{{ order.couponId ? "Exist" : "Not Exist" }}</span>
+        </li>
+        <li>
+          <span>sub total:</span>
+          <span class="font-bold">{{ order.subTotal.toLocaleString() }}</span>
+        </li>
+        <li>
           <span>paid amount:</span>
           <span class="font-bold">{{ order.paidAmount.toLocaleString() }}</span>
         </li>
         <li>
           <span>date:</span>
           <span class="font-bold">{{ formatDate(order.createdAt, "en-US") }}</span>
+        </li>
+        <!-- View all products -->
+        <li class="flex items-center py-2 mt-2 font-bold border-t border-t-secondary">
+          <span>products</span>
+          <button class="px-2 py-1 text-white rounded-sm text-14 bg-secondary">
+            view products
+          </button>
         </li>
       </ul>
     </div>
@@ -53,7 +68,7 @@ const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order
   @apply flex items-center justify-center my-20;
 }
 .order-card {
-  @apply min-w-[400px] flex flex-col gap-1 px-2 py-1 capitalize border rounded-md border-secondary;
+  @apply flex flex-col gap-1 px-2 py-1 capitalize border rounded-md border-secondary;
 }
 .order-card li:not(:first-of-type) {
   @apply flex justify-between;
