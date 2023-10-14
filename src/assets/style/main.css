@@ -9,11 +9,8 @@
   }
 
   body {
-    font-family: "Roboto", "sans-serif";
-  }
-
-  html {
     @apply scrollbar scrollbar-w-1 scrollbar-thumb-primary scrollbar-track-white;
+    font-family: "Roboto", "sans-serif";
   }
 
   html,
