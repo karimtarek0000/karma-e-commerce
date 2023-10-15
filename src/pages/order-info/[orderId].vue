@@ -88,6 +88,6 @@ useSeoMeta({
   @apply font-bold capitalize;
 }
 .link {
-  @apply px-3 py-2 mt-5 text-white rounded-md bg-secondary mxa-auto;
+  @apply px-3 py-2 mt-5 text-white rounded-md bg-secondary;
 }
 </style>
