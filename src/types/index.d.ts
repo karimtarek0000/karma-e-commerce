@@ -76,6 +76,7 @@ declare global {
     phoneNumbers: string[];
     orderStatus: string;
     paymentMethod: "cash" | "card";
+    orderStatus: string;
     createdAt: Date;
   };
   type OrderModal = {

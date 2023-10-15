@@ -22,15 +22,17 @@ const goToProductDetails = (productId: string): void => {
   </header>
 
   <!-- Wrapper products -->
-  <div class="mt-8 space-y-3">
+  <div class="mt-8 mb-5 space-y-3">
     <!-- Products -->
     <div class="product-card" v-for="(product, i) in productsOrder" :key="product.productId">
-      <div class="flex items-center gap-3">
-        <span>{{ i + 1 }} -</span>
-        <span class="truncate"
-          ><span class="font-bold pe-2">Product:</span>{{ product?.title }}</span
-        >
-        <span><span class="font-bold pe-2">Quantity:</span> {{ product?.quantity }}</span>
+      <div class="info">
+        <span>{{ i + 1 }} <span class="max-md:hidden">-</span></span>
+        <div class="flex items-center gap-4">
+          <span class="truncate"
+            ><span class="font-bold pe-2">Product:</span>{{ product?.title }}</span
+          >
+          <span><span class="font-bold pe-2">Quantity:</span> {{ product?.quantity }}</span>
+        </div>
       </div>
 
       <!-- Go to product for more details about this product -->
@@ -41,7 +43,10 @@ const goToProductDetails = (productId: string): void => {
 
 <style scoped>
 .product-card {
-  @apply flex items-center justify-between pb-2 border-b border-b-black/50;
+  @apply flex items-center gap-2 max-md:flex-col justify-between pb-2 border-b border-b-black/50;
+}
+.info {
+  @apply flex items-center justify-between gap-3 max-md:flex-col;
 }
 .link {
   @apply underline text-secondary underline-offset-4;

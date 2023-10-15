@@ -7,7 +7,7 @@ const cartProducts = computed((): CartProduct[] => cart.value?.cart?.products);
 
 // ----------- Meta ------------
 useSeoMeta({
-  title: "Cart",
+  title: "My cart",
 });
 </script>
 
@@ -59,7 +59,7 @@ useSeoMeta({
   @apply flex flex-col mt-3 mb-10 gap-3 overflow-hidden;
 }
 .header {
-  @apply flex items-center justify-between max-md:flex-col;
+  @apply flex gap-3 items-center justify-between max-md:flex-col;
 }
 .total {
   @apply px-2 text-white rounded-md text-22 bg-secondary w-fit;

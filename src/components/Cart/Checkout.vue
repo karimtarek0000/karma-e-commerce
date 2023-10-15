@@ -19,11 +19,14 @@ const openOrderModal = () => {
 </script>
 
 <template>
-  <button @click="openOrderModal" class="checkout-btn">Checkout</button>
+  <button @click="openOrderModal" class="checkout-btn">
+    Checkout
+    <ShareRenderSVG iconName="checkout" />
+  </button>
 </template>
 
 <style scoped>
 .checkout-btn {
-  @apply w-full px-5 py-3 text-sm text-gray-100 transition bg-secondary rounded-md hover:bg-secondary/90;
+  @apply flex justify-center items-center w-full gap-2 px-5 py-3 text-sm text-gray-100 transition bg-secondary rounded-md hover:bg-secondary/90;
 }
 </style>

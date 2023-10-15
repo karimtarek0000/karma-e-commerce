@@ -19,23 +19,32 @@ const openConfirmModal = (products: OrderProduct[], num: number): void => {
     $otherOptions: { products, num },
   });
 };
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: "My orders",
+});
 </script>
 
 <template>
-  <div class="wrapper">
-    <!-- If no any order -->
-    <div v-if="!loader && !orders?.orders.length" class="flex flex-col items-center">
-      <div class="max-w-[15.5rem]">
-        <NuxtImg src="/img/orders.svg" class="res-image" fit="cover" />
-      </div>
-      <h1 class="mt-2 font-bold text-center text-18">No any order yet!</h1>
-      <NuxtLink to="/" class="px-3 py-2 mt-3 text-white rounded-md bg-secondary">
-        Go to home
-      </NuxtLink>
-    </div>
+  <header class="my-5 text-2xl font-bold text-center">
+    <h1>Orders</h1>
+  </header>
 
+  <!-- If no any order -->
+  <div v-if="!loader && !orders?.orders.length" class="flex flex-col items-center my-32">
+    <div class="max-w-[15.5rem]">
+      <NuxtImg src="/img/orders.svg" class="res-image" fit="cover" />
+    </div>
+    <h1 class="mt-2 font-bold text-center text-18">No any order yet!</h1>
+    <NuxtLink to="/" class="px-3 py-2 mt-3 text-white rounded-md bg-secondary">
+      Go to home
+    </NuxtLink>
+  </div>
+
+  <div class="wrapper">
     <!-- Wrapper cards -->
-    <div class="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
+    <div class="wrapper-cards">
       <!-- Loader -->
       <LoadersCardProductOrder v-if="loader" v-for="i in 3" :key="i" />
 
@@ -62,10 +71,14 @@ const openConfirmModal = (products: OrderProduct[], num: number): void => {
           <span class="font-bold">{{ order.paidAmount.toLocaleString() }}</span>
         </li>
         <li>
+          <span>Order Status:</span>
+          <span class="font-bold">{{ order?.orderStatus }}</span>
+        </li>
+        <li>
           <span>date:</span>
           <span class="font-bold">{{ formatDate(order.createdAt, "en-US") }}</span>
         </li>
-        <!-- View all products -->
+        <!-- Click to view all products -->
         <li class="flex items-center py-2 mt-2 font-bold border-t border-t-secondary">
           <span>products</span>
           <button
@@ -82,7 +95,10 @@ const openConfirmModal = (products: OrderProduct[], num: number): void => {
 
 <style scoped>
 .wrapper {
-  @apply flex items-center justify-center my-20;
+  @apply flex items-center justify-center;
+}
+.wrapper-cards {
+  @apply grid w-full my-3 md:grid-cols-2 grid-cols-1 gap-3 lg:grid-cols-3 max-lg:px-2;
 }
 .order-card {
   @apply flex flex-col gap-1 px-2 py-1 capitalize border rounded-md border-secondary;
