@@ -14,6 +14,7 @@ const {
 const comp = reactive<any>({
   confirm: shallowRef(resolveComponent("ModalConfirm")),
   order: shallowRef(resolveComponent("ModalOrder")),
+  products: shallowRef(resolveComponent("ModalProducts")),
 });
 </script>
 

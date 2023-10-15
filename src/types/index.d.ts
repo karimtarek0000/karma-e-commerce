@@ -68,7 +68,7 @@ declare global {
   };
   type Order = {
     _id: string;
-    products: Product[];
+    products: OrderProduct[];
     subTotal: number;
     couponId: string;
     paidAmount: number;
@@ -83,6 +83,11 @@ declare global {
     couponCode: string;
     address: string;
     paymentMethod: "card" | "cash" | "";
+  };
+  type OrderProduct = {
+    productId: string;
+    quantity: number;
+    title: string;
   };
   type OptionsPropsOrder = {
     cartId?: string;

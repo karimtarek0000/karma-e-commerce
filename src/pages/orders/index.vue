@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // ----------- Composables ------------
 const http = useHttp();
+const { openModalHandler } = useModalController();
 
 // ----------- API ------------
 const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order[] }>(
@@ -10,6 +11,14 @@ const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order
     server: false,
   }
 );
+
+// ---------- Functions ------------
+const openConfirmModal = (products: OrderProduct[], num: number): void => {
+  openModalHandler({
+    $modalType: "products",
+    $otherOptions: { products, num },
+  });
+};
 </script>
 
 <template>
@@ -29,9 +38,11 @@ const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order
     <div class="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
       <!-- Order Card -->
       <ul class="order-card" v-for="(order, i) in orders?.orders" :key="order._id">
+        <!-- Title -->
         <li class="py-1 mb-2 font-bold text-center border-b border-b-secondary">
           Order: #{{ i + 1 }}
         </li>
+        <!-- Info -->
         <li>
           <span>payment method:</span> <span class="font-bold">{{ order.paymentMethod }}</span>
         </li>
@@ -54,7 +65,10 @@ const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order
         <!-- View all products -->
         <li class="flex items-center py-2 mt-2 font-bold border-t border-t-secondary">
           <span>products</span>
-          <button class="px-2 py-1 text-white rounded-sm text-14 bg-secondary">
+          <button
+            @click="openConfirmModal(order.products, i + 1)"
+            class="px-2 py-1 text-white rounded-sm text-14 bg-secondary"
+          >
             view products
           </button>
         </li>
