@@ -11,11 +11,16 @@ definePageMeta({
     return /^[0-9A-z]{24}$/.test(params.orderId as string);
   },
 });
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Order info",
+});
 </script>
 
 <template>
-  <div class="order-info">
-    <div class="wrapper" v-if="order">
+  <div class="order-info" v-if="order">
+    <div class="wrapper">
       <!-- Info -->
       <div class="px-3">
         <h2 class="title">order info</h2>
@@ -62,12 +67,13 @@ definePageMeta({
         <p class="text-center text-14">Scan QRcode to get products details</p>
       </div>
     </div>
+    <NuxtLink class="link" to="/orders">Go to orders</NuxtLink>
   </div>
 </template>
 
 <style scoped>
 .order-info {
-  @apply flex items-center justify-center my-5 lg:my-32;
+  @apply flex flex-col items-center justify-center my-5 lg:my-32;
 }
 .wrapper {
   @apply grid w-[80%] mx-auto items-center lg:max-w-[50%] grid-cols-1 lg:grid-cols-2 border rounded-md border-secondary;
@@ -80,5 +86,8 @@ definePageMeta({
 }
 .items li span:nth-child(2) {
   @apply font-bold capitalize;
+}
+.link {
+  @apply px-3 py-2 mt-5 text-white rounded-md bg-secondary mxa-auto;
 }
 </style>
