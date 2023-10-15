@@ -24,7 +24,7 @@ const openConfirmModal = (products: OrderProduct[], num: number): void => {
 <template>
   <div class="wrapper">
     <!-- If no any order -->
-    <div v-if="false" class="flex flex-col items-center">
+    <div v-if="!loader && !orders?.orders.length" class="flex flex-col items-center">
       <div class="max-w-[15.5rem]">
         <NuxtImg src="/img/orders.svg" class="res-image" fit="cover" />
       </div>
@@ -36,8 +36,11 @@ const openConfirmModal = (products: OrderProduct[], num: number): void => {
 
     <!-- Wrapper cards -->
     <div class="grid w-full grid-cols-1 gap-3 lg:grid-cols-3">
+      <!-- Loader -->
+      <LoadersCardProductOrder v-if="loader" v-for="i in 3" :key="i" />
+
       <!-- Order Card -->
-      <ul class="order-card" v-for="(order, i) in orders?.orders" :key="order._id">
+      <ul v-else class="order-card" v-for="(order, i) in orders?.orders" :key="order._id">
         <!-- Title -->
         <li class="py-1 mb-2 font-bold text-center border-b border-b-secondary">
           Order: #{{ i + 1 }}
