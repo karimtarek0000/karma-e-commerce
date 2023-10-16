@@ -1,5 +1,6 @@
 import type { FetchOptions, FetchRequest } from "ofetch";
 import { ofetch } from "ofetch";
+import { useToast } from "vue-toastification";
 
 export const useHttp = () => {
   // -------------------------- BASE DATA --------------------------
@@ -7,6 +8,7 @@ export const useHttp = () => {
   const accessToken = useCookie("accessToken");
   const headers = useRequestHeaders(["cookie"]);
   const { setUserDataWhenLoggedIn, logout } = useAuth();
+  const toast = useToast();
 
   // -------------------------- CREATE --------------------------
   const fetcher = ofetch.create({
@@ -55,8 +57,10 @@ export const useHttp = () => {
       return response._data;
     } catch (error: any) {
       const status = error.response?.status;
+
       // If refresh token expired
       if (error.response?._data.message === "TokenExpiredError: jwt expired" && status === 500) {
+        toast.error("Your session has expired, please signin again.");
         return logout();
       }
 
