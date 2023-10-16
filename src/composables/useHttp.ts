@@ -1,15 +1,17 @@
-import type { FetchRequest, FetchOptions } from "ofetch";
+import type { FetchOptions, FetchRequest } from "ofetch";
 import { ofetch } from "ofetch";
 
 export const useHttp = () => {
   // -------------------------- BASE DATA --------------------------
   const config = useRuntimeConfig();
   const accessToken = useCookie("accessToken");
+  const headers = useRequestHeaders(["cookie"]);
   const { setUserDataWhenLoggedIn, logout } = useAuth();
 
   // -------------------------- CREATE --------------------------
   const fetcher = ofetch.create({
     baseURL: config.public.BASE_URL,
+    headers,
     credentials: "include",
 
     // -------------------------- REQUEST --------------------------
@@ -37,6 +39,7 @@ export const useHttp = () => {
         const refreshToken = await ofetch("/auth/refresh-token", {
           baseURL: config.public.BASE_URL,
           method: "GET",
+          headers,
           credentials: "include",
         });
 
