@@ -72,14 +72,6 @@ export default defineNuxtConfig({
     "nuxt-swiper",
   ],
 
-  swiper: {
-    // Swiper options
-    //----------------------
-    // prefix: 'Swiper',
-    // styleLang: 'css',
-    // modules: ["navigation", "pagination"],
-  },
-
   // Google signin
   googleSignIn: {
     clientId: process.env.GOOGLE_CLIENT_ID,
