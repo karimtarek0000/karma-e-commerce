@@ -6,29 +6,34 @@ const links = ref([
     name: "home",
     path: "/",
     icon: "home",
+    status: true,
   },
   {
     name: "categories",
     path: "/all-categories",
     icon: "categories",
+    status: true,
   },
   {
     name: "cart",
     path: "/cart",
     icon: "my-cart",
+    status: isLoggedIn,
   },
 ]);
 </script>
 
 <template>
   <nav class="navbar">
-    <NuxtLink v-for="link in links" :key="link.name" :to="link.path" class="link">
-      <ShareRenderSVG :iconName="link.icon" sizes="w-[20px]" />
-      {{ link.name }}
+    <template v-for="link in links" :key="link.name">
+      <NuxtLink v-if="link.status" :to="link.path" class="link">
+        <ShareRenderSVG :iconName="link.icon" sizes="w-[20px]" />
+        {{ link.name }}
+        <!-- Cart count - Show counter if this cart link -->
+        <ActionsCartCounter v-if="link.name === 'cart'" class="!end-5" :num="1" />
+      </NuxtLink>
+    </template>
 
-      <!-- Cart count - Show counter if this cart link -->
-      <ActionsCartCounter v-if="link.name === 'cart'" class="!end-5" :num="1" />
-    </NuxtLink>
     <!-- For open side menu -->
     <button v-if="isLoggedIn" type="button" @click="toggleItemHandler" class="link">
       <ShareRenderSVG iconName="profile" sizes="w-[20px]" />
