@@ -69,7 +69,16 @@ export default defineNuxtConfig({
     "nuxt-vue3-google-signin",
     "@nuxtjs/device",
     "@formkit/nuxt",
+    "nuxt-swiper",
   ],
+
+  swiper: {
+    // Swiper options
+    //----------------------
+    // prefix: 'Swiper',
+    // styleLang: 'css',
+    // modules: ["navigation", "pagination"],
+  },
 
   // Google signin
   googleSignIn: {

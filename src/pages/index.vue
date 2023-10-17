@@ -5,7 +5,12 @@ useSeoMeta({
 </script>
 
 <template>
-  <h1>test</h1>
+  <!-- Slider products -->
+  <SliderSwiper class="h-[400px]">
+    <SwiperSlide v-for="slide in 5" :key="slide" class="bg-red-500">
+      {{ slide }}
+    </SwiperSlide>
+  </SliderSwiper>
 </template>
 
 <style scoped></style>
