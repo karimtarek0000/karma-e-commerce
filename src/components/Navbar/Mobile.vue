@@ -71,7 +71,7 @@ const links = ref([
 }
 
 .backdrop {
-  @apply fixed z-[45] w-full h-full backdrop-blur bg-black/60;
+  @apply fixed z-[45] top-0 start-0 w-full h-full backdrop-blur bg-black/60;
 }
 :deep(.dropdown) {
   @apply w-full;
