@@ -92,8 +92,8 @@ useSeoMeta({
           </div>
 
           <!-- Col 2 -->
-          <div class="w-1/2 px-4">
-            <div class="mb-6 lg:max-w-md max-md:text-center">
+          <div class="px-4 lg:w-1/2">
+            <div class="mb-6 lg:max-w-md max-lg:text-center">
               <!-- Title -->
               <h2
                 class="mt-6 mb-4 text-2xl font-bold lg:text-3xl"
@@ -123,7 +123,7 @@ useSeoMeta({
               <div class="actions">
                 <!-- Added product to cart -->
                 <CartAddTo
-                  class="!mt-0 !mb-0 !w-[70%]"
+                  class="!mt-0 !mb-0 !w-[70%] max-xl:!w-[60%]"
                   v-bind="{
                     quantity,
                     product:product?.product as Product
@@ -166,10 +166,10 @@ useSeoMeta({
   @apply flex w-full gap-2 px-4 max-md:flex-col lg:w-1/2 grow-0 lg:mb-0;
 }
 .priceAndDiscount {
-  @apply flex items-center gap-2 mb-6 text-2xl max-md:justify-center text-secondary;
+  @apply flex items-center gap-2 mb-6 text-2xl max-lg:justify-center text-secondary;
 }
 .rating {
-  @apply flex items-center gap-2 mb-6 max-md:justify-center;
+  @apply flex items-center gap-2 mb-6 max-lg:justify-center;
 }
 .quantity {
   @apply flex items-center mt-10 mb-20 max-md:justify-center;
@@ -181,7 +181,7 @@ useSeoMeta({
   @apply flex justify-center w-full max-lg:h-[12.5rem] min-h-[29.75rem] border-2 rounded-md border-secondary/20;
 }
 .actions {
-  @apply flex flex-wrap items-center justify-between w-2/3 gap-2 mt-16;
+  @apply flex flex-wrap items-center justify-center lg:justify-between max-lg:mx-auto md:w-2/3 gap-2 mt-16;
 }
 
 /* Zoom image */
