@@ -25,4 +25,6 @@ useSeoMeta({
   </SliderSwiper>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* swiper-slide-prev swiper-slide-active */
+</style>

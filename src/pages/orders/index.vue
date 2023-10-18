@@ -95,7 +95,7 @@ useSeoMeta({
 
 <style scoped>
 .wrapper {
-  @apply flex items-center justify-center;
+  @apply flex items-center justify-center lg:px-5;
 }
 .wrapper-cards {
   @apply grid w-full my-3 md:grid-cols-2 grid-cols-1 gap-3 lg:grid-cols-3 max-lg:px-2;

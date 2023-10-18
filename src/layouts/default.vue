@@ -8,7 +8,7 @@ const { isDesktop } = useDevice();
     <CategoryNavbar v-if="isDesktop" />
     <CategoryNavbarMobile v-if="!isDesktop" />
   </header>
-  <main class="h-screen px-2 overflow-x-hidden">
+  <main class="h-screen overflow-x-hidden max-lg:px-2 2xl:container">
     <slot />
   </main>
   <Footer />

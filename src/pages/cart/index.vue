@@ -56,7 +56,7 @@ useSeoMeta({
 
 <style scoped>
 .wrapper {
-  @apply flex flex-col mt-3 mb-10 gap-3 overflow-hidden;
+  @apply flex flex-col mt-3 mb-10 gap-3 overflow-hidden lg:px-10;
 }
 .header {
   @apply flex gap-3 items-center justify-between max-md:flex-col;
