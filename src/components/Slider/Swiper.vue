@@ -7,7 +7,8 @@ const options = {
   effect: "creative",
   autoplay: {
     delay: 8000,
-    disableOnInteraction: true,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
   },
   creativeEffect: {
     prev: {
