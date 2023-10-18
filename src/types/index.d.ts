@@ -95,6 +95,11 @@ declare global {
     productId?: string;
     quantity?: number;
   };
+  type SliderProducts = {
+    productId: Product;
+    tag?: string;
+    sliderImage: { public_id: string; secure_url: string };
+  };
 }
 
 export {};

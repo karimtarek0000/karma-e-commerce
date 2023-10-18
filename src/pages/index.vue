@@ -1,4 +1,14 @@
 <script setup lang="ts">
+// ---------- Composables -----------
+const http = useHttp();
+
+// ---------- API -----------
+const { data: sliderProducts } = useAsyncData(() => http("/home/slider"));
+
+// ---------- Data -----------
+const products = ref<SliderProducts[]>(sliderProducts.value?.sliderProducts);
+
+// ---------- Meta -----------
 useSeoMeta({
   title: "Home",
 });
@@ -6,9 +16,9 @@ useSeoMeta({
 
 <template>
   <!-- Slider products -->
-  <SliderSwiper class="h-[400px]">
-    <SwiperSlide v-for="slide in 5" :key="slide" class="bg-red-500">
-      {{ slide }}
+  <SliderSwiper>
+    <SwiperSlide v-for="product in products" :key="product?.productId?._id">
+      <SliderSlideProduct :product="product" />
     </SwiperSlide>
   </SliderSwiper>
 </template>
