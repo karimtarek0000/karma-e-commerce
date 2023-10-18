@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="h-[80vh] relative bg-gradient-to-r from-black">
+  <div class="h-[83vh] relative bg-gradient-to-r from-black">
     <!-- Image -->
     <NuxtImg
       :src="replaceCloudinaryURL(product.sliderImage.secure_url)"
@@ -28,6 +28,8 @@ defineProps<{
       <p class="max-w-md leading-8 text-18 text-white/70">
         {{ product?.productId.description }}
       </p>
+      <span class="font-bold text-18">{{ product.productId.priceAfterDiscount }} EGP</span>
+
       <!-- Go to product details -->
       <NuxtLink class="btn" :to="`/product-details/${product.productId._id}`">Shop now</NuxtLink>
     </div>
