@@ -56,7 +56,7 @@ const swiper = useSwiper();
 
 <style scoped>
 .btn {
-  @apply z-10 absolute top-2/4 -translate-y-2/4  h-[3.125rem]  w-[3.125rem];
+  @apply z-10 absolute top-2/4 -translate-y-2/4 h-[1.875rem] w-[1.875rem]  lg:h-[3.125rem]  lg:w-[3.125rem];
 }
 .btn-prev {
   @apply start-0;

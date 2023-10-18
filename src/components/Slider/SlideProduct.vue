@@ -21,11 +21,9 @@ defineProps<{
     <span v-if="product.tag" class="tag"> best price </span>
 
     <!-- Info -->
-    <div
-      class="absolute flex flex-col items-start gap-6 text-white top-2/4 -translate-y-2/4 start-24"
-    >
-      <h3 class="text-5xl capitalize">{{ product?.productId.title }}</h3>
-      <p class="max-w-md leading-8 text-18 text-white/70">
+    <div class="info">
+      <h3 class="info__title">{{ product?.productId.title }}</h3>
+      <p class="info__desc">
         {{ product?.productId.description }}
       </p>
       <span class="font-bold text-18">{{ product.productId.priceAfterDiscount }} EGP</span>
@@ -37,6 +35,15 @@ defineProps<{
 </template>
 
 <style scoped>
+.info {
+  @apply absolute flex flex-col items-center gap-6 px-6 text-white sm:items-start top-2/4 -translate-y-2/4 start-0 sm:start-24;
+}
+.info__title {
+  @apply text-3xl capitalize sm:text-5xl;
+}
+.info__desc {
+  @apply max-w-md leading-8 max-sm:text-center lg:text-18 text-white/70;
+}
 .tag {
   @apply absolute px-3 py-1 capitalize text-white rounded-md bg-secondary top-5 start-5;
 }
