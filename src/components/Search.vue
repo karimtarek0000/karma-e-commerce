@@ -1,10 +1,13 @@
 <script setup lang="ts">
+// ---------------- Composables -----------------
 const debounce = useDebounce();
 const http = useHttp();
 
 // ---------------- Data -----------------
 const search = ref<string>("");
 const pageNumber = ref<number>(1);
+
+// ---------------- API -----------------
 const {
   data: products,
   error,
@@ -31,7 +34,6 @@ const searchHandler = async (): Promise<void> => {
     }
   }
 };
-
 const searchPaginationHandler = async (): Promise<void> => {
   if (searchProductsList.value.length && products.value.products.length) {
     pageNumber.value += 1;
@@ -42,8 +44,11 @@ const searchPaginationHandler = async (): Promise<void> => {
     }
   }
 };
-
 const clearInput = (): string => (search.value = "");
+const goToProductDetails = (productId: string): void => {
+  navigateTo(`/product-details/${productId}`);
+  clearInput();
+};
 
 // ---------------- Watches -----------------
 watch(search, (newValue) => {
@@ -72,11 +77,11 @@ watch(search, (newValue) => {
     <div v-show="search" class="search-list-wrapper">
       <!-- Data -->
       <div v-scroll="searchPaginationHandler" v-if="searchProductsList?.length" class="search-list">
-        <NuxtLink
+        <button
           v-for="product in searchProductsList"
           :key="product?._id"
-          :to="`/product-details/${product?.slug}`"
           class="flex items-center px-1 py-2 gap-x-2"
+          @click="goToProductDetails(product?._id)"
         >
           <NuxtImg
             :src="replaceCloudinaryURL(product?.images[0]?.secure_url)"
@@ -90,8 +95,9 @@ watch(search, (newValue) => {
             :alt="product?.title"
           />
           <h5 class="font-bold capitalize truncate text-14">{{ product?.title }}</h5>
-        </NuxtLink>
+        </button>
       </div>
+
       <!-- Loader -->
       <h5 v-else class="flex items-center justify-center mt-8 font-bold text-center gap-x-3">
         No data exist <ShareRenderSVG iconName="search" sizes="w-[1.22rem]" />
