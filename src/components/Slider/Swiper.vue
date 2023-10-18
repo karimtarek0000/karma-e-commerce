@@ -5,10 +5,10 @@ const options = {
   slidesPerView: 1,
   loop: true,
   effect: "creative",
-  // autoplay: {
-  //   delay: 8000,
-  //   disableOnInteraction: true,
-  // },
+  autoplay: {
+    delay: 8000,
+    disableOnInteraction: true,
+  },
   creativeEffect: {
     prev: {
       shadow: false,

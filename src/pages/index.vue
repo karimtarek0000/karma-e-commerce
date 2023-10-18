@@ -3,10 +3,12 @@
 const http = useHttp();
 
 // ---------- API -----------
-const { data: sliderProducts } = useAsyncData(() => http("/home/slider"));
-
-// ---------- Data -----------
-const products = ref<SliderProducts[]>(sliderProducts.value?.sliderProducts);
+const { data: sliderProducts } = await useAsyncData<{ sliderProducts: SliderProducts[] }>(
+  () => http("/home/slider"),
+  {
+    pick: ["sliderProducts"],
+  }
+);
 
 // ---------- Meta -----------
 useSeoMeta({
@@ -17,7 +19,7 @@ useSeoMeta({
 <template>
   <!-- Slider products -->
   <SliderSwiper>
-    <SwiperSlide v-for="product in products" :key="product?.productId?._id">
+    <SwiperSlide v-for="product in sliderProducts?.sliderProducts" :key="product?.productId?._id">
       <SliderSlideProduct :product="product" />
     </SwiperSlide>
   </SliderSwiper>
