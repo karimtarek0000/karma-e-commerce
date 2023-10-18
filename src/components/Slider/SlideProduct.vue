@@ -12,6 +12,7 @@ defineProps<{
       provider="cloudinary"
       preset="cloudinary"
       fit="cover"
+      loading="lazy"
       :alt="product?.productId.title"
       class="relative w-full -z-[1] res-image"
     />
