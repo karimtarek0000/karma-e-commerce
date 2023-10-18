@@ -6,10 +6,7 @@
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div>
           <Logo />
-          <p class="max-w-xs mt-4 text-gray-500">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
-            molestias.
-          </p>
+          <p class="max-w-xs mt-4 text-gray-500">E-commerce shoping online</p>
 
           <ul class="flex gap-6 mt-8">
             <li>
@@ -196,7 +193,9 @@
         </div>
       </div>
 
-      <p class="text-xs text-gray-500">&copy; 2022. Company Name. All rights reserved.</p>
+      <p class="text-xs text-gray-500">
+        &copy; {{ new Date().getFullYear() }} karim tarek All rights reserved.
+      </p>
     </div>
   </footer>
 </template>
