@@ -1,6 +1,15 @@
 <script setup lang="ts">
+// ----------- Composables --------------
+const http = useHttp();
 const { itemStatus, toggleItemHandler } = useToggle();
 const { user, isLoggedIn } = useAuth();
+
+// ----------- API ------------
+const { data: cart } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
+  pick: ["cart"],
+});
+
+// ----------- Data --------------
 const links = ref([
   {
     name: "home",
@@ -21,6 +30,9 @@ const links = ref([
     status: isLoggedIn,
   },
 ]);
+
+// ----------- Computed ------------
+const productsLength = computed((): number => cart.value?.cart?.products?.length as number);
 </script>
 
 <template>
@@ -30,7 +42,11 @@ const links = ref([
         <ShareRenderSVG :iconName="link.icon" sizes="w-[20px]" />
         {{ link.name }}
         <!-- Cart count - Show counter if this cart link -->
-        <ActionsCartCounter v-if="link.name === 'cart'" class="!end-5" :num="1" />
+        <ActionsCartCounter
+          class="!end-5"
+          v-if="!!productsLength && link.name === 'cart'"
+          :num="productsLength || 0"
+        />
       </NuxtLink>
     </template>
 
@@ -40,6 +56,7 @@ const links = ref([
       settings
     </button>
   </nav>
+
   <!-- Side menu -->
   <Teleport to="body">
     <aside :class="['sidemenu', { 'sidemenu-active': itemStatus }]">
