@@ -1,0 +1,45 @@
+.info__title,
+.info__desc,
+.info__price,
+.go_to_prod_btn {
+  @apply opacity-0;
+}
+
+.swiper-slide-active .info__title,
+.swiper-slide-active .info__desc,
+.swiper-slide-active .info__price {
+  animation: slideLeft 0.7s ease-in-out both;
+}
+.swiper-slide-active .go_to_prod_btn {
+  animation: slideUp 0.7s ease-in-out both;
+}
+.swiper-slide-active .info__desc {
+  animation-delay: 0.3s;
+}
+.swiper-slide-active .info__price {
+  animation-delay: 0.5s;
+}
+.swiper-slide-active .go_to_prod_btn {
+  animation-delay: 0.6s;
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
