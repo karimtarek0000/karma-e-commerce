@@ -44,6 +44,8 @@ useSeoMeta({
       </template>
     </div>
   </section>
+
+  <NuxtLink to="/" class="view-all-btn">view all products</NuxtLink>
 </template>
 
 <style scoped>
@@ -52,5 +54,8 @@ useSeoMeta({
 }
 .title {
   @apply my-12 text-2xl font-bold text-center capitalize lg:text-3xl;
+}
+.view-all-btn {
+  @apply px-4 py-2 block mx-auto my-8 capitalize transition-colors duration-200 bg-white w-fit text-secondary hover:bg-secondary hover:text-white border border-secondary rounded-md;
 }
 </style>
