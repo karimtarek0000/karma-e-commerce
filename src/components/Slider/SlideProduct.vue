@@ -22,7 +22,7 @@ defineProps<{
 
     <!-- Info -->
     <div class="info">
-      <h3 class="info__title">{{ product?.productId.title }}</h3>
+      <h1 class="info__title">{{ product?.productId.title }}</h1>
       <p class="info__desc">
         {{ product?.productId.description }}
       </p>
