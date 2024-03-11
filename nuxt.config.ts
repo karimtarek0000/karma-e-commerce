@@ -21,12 +21,7 @@ export default defineNuxtConfig({
         { name: "description", content: "Karma | E-commerce" },
         { name: "theme-color", content: "#454692" },
       ],
-      link: [
-        { rel: "apple-touch-icon", sizes: "180x180", href: "/favicons/apple-touch-icon.png" },
-        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicons/favicon-32x32.png" },
-        { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicons/favicon-16x16.png" },
-        { rel: "manifest", href: "/favicons/site.webmanifest" },
-      ],
+      link: [{ rel: "icon", type: "image/svg+xml", href: "favicon.svg" }],
     },
   },
   runtimeConfig: {
@@ -56,11 +51,7 @@ export default defineNuxtConfig({
     transpile: ["vue-toastification"],
   },
   plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
-  css: [
-    "~/assets/style/main.css",
-    "~/assets/style/toast.css",
-    "vue-multiselect/dist/vue-multiselect.css",
-  ],
+  css: ["~/assets/style/main.css", "~/assets/style/toast.css", "vue-multiselect/dist/vue-multiselect.css"],
   modules: [
     "@nuxtjs/google-fonts",
     "@pinia/nuxt",
