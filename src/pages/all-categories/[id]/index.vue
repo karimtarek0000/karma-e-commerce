@@ -161,7 +161,6 @@ if (categoryError.value || productsError.value) {
     <aside class="px-4 py-4 bg-black/5" v-if="isDesktop">
       <!-- Name of category -->
       <h4 class="name-category">{{ categories?.categories[0]?.name }}</h4>
-      page number {{ pageNumber }}
       <!-- All sub categories -->
       <ul class="mt-3 ms-3">
         <li v-for="subCategory in subCategories" :key="subCategory?._id">
