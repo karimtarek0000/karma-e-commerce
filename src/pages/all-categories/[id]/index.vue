@@ -9,6 +9,7 @@ const {
   params: { id },
   query,
 } = useRoute();
+const { payload } = useNuxtApp();
 
 // ----------- Data ------------
 const pageNumber = ref<number>(+query?.page! || 1);
@@ -22,14 +23,16 @@ const { data: categories, error: categoryError } = await useAsyncData(() =>
     query: { _id: id },
   })
 );
-const subCategories: SubGategory[] = categories?.value?.categories[0]?.subCategories;
+const subCategories: SubGategory[] =
+  categories?.value?.categories[0]?.subCategories;
 
 // Products
 const {
   data: allProducts,
   error: productsError,
   pending: productsLoading,
-} = await useAsyncData(
+  execute,
+} = await useLazyAsyncData(
   () =>
     http("/products", {
       query: {
@@ -39,9 +42,15 @@ const {
         page: pageNumber.value,
         size: 8,
       },
+      onResponse({ response }) {
+        const key = `products-${pageNumber.value}-category${id}-subCategory${setSubCategory.value?._id}`;
+        payload.data[key] = response._data;
+      },
     }),
   {
-    watch: [pageNumber, setSubCategory, setBrand],
+    watch: [setSubCategory, setBrand],
+    server: false,
+    immediate: false,
   }
 );
 
@@ -83,7 +92,9 @@ watch(
   () => query.subCategory,
   (value) => {
     if (value) {
-      const subCategory = subCategories.find((subCategory) => subCategory._id === value);
+      const subCategory = subCategories.find(
+        (subCategory) => subCategory._id === value
+      );
       if (subCategory) {
         pickSubCategoryHandler(subCategory);
       }
@@ -99,6 +110,22 @@ watch([setSubCategory, setBrand], () => {
 watch(setSubCategory, () => {
   setBrand.value = null;
 });
+
+watch(
+  pageNumber,
+  () => {
+    const key = `products-${pageNumber.value}-category${id}-subCategory${setSubCategory?.value?._id}`;
+    const { data } = useNuxtData(key);
+    if (data.value) {
+      allProducts.value = data.value;
+    } else {
+      execute();
+    }
+  },
+  {
+    immediate: true,
+  }
+);
 
 // ----------- Meta ------------
 useSeoMeta({
@@ -121,7 +148,8 @@ if (!categories?.value?.categories.length) {
 }
 if (categoryError.value || productsError.value) {
   throw showError({
-    statusCode: categoryError.value?.statusCode || productsError.value?.statusCode,
+    statusCode:
+      categoryError.value?.statusCode || productsError.value?.statusCode,
     message: categoryError.value?.message || productsError.value?.message,
   });
 }
@@ -133,23 +161,41 @@ if (categoryError.value || productsError.value) {
     <aside class="px-4 py-4 bg-black/5" v-if="isDesktop">
       <!-- Name of category -->
       <h4 class="name-category">{{ categories?.categories[0]?.name }}</h4>
-
+      page number {{ pageNumber }}
       <!-- All sub categories -->
       <ul class="mt-3 ms-3">
         <li v-for="subCategory in subCategories" :key="subCategory?._id">
-          <button @click="pickSubCategoryHandler(subCategory)" class="btn" type="button">
+          <button
+            @click="pickSubCategoryHandler(subCategory)"
+            class="btn"
+            type="button"
+          >
             <span class="wrapper-icon">
-              <ShareRenderSVG v-show="subCategory?._id === setSubCategory?._id" iconName="check" />
+              <ShareRenderSVG
+                v-show="subCategory?._id === setSubCategory?._id"
+                iconName="check"
+              />
             </span>
             {{ subCategory?.name?.replace("men ", "") }}
           </button>
 
           <!-- All brands -->
           <ul :class="listBrandClassess(subCategory?._id)">
-            <li v-for="brand in subCategory?.brands" :key="brand?._id" class="mb-3">
-              <button @click="pickBrandHandler(brand)" class="btn !font-normal" type="button">
+            <li
+              v-for="brand in subCategory?.brands"
+              :key="brand?._id"
+              class="mb-3"
+            >
+              <button
+                @click="pickBrandHandler(brand)"
+                class="btn !font-normal"
+                type="button"
+              >
                 <span class="wrapper-icon">
-                  <ShareRenderSVG v-show="setBrand?._id === brand?._id" iconName="check" />
+                  <ShareRenderSVG
+                    v-show="setBrand?._id === brand?._id"
+                    iconName="check"
+                  />
                 </span>
                 {{ brand?.name }}
               </button>
@@ -227,7 +273,11 @@ if (categoryError.value || productsError.value) {
       <!-- Cards grid -->
       <div class="cards-grid">
         <!-- Card -->
-        <LoadersCardProduct v-if="productsLoading" v-for="index in 8" :key="index" />
+        <LoadersCardProduct
+          v-if="productsLoading"
+          v-for="index in 8"
+          :key="index"
+        />
         <template v-else v-for="product in products" :key="product._id">
           <NuxtLink :to="`/product-details/${product._id}`">
             <ProductCard :product="product">
