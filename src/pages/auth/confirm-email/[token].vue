@@ -14,7 +14,7 @@ const {
   error,
   pending: loader,
   execute,
-} = await useLazyAsyncData(() => http(`/auth/confirm/${token}`), {
+} = await useLazyAsyncData(() => http(CONFIRM_EMAIL(token as string)), {
   immediate: false,
 });
 loader.value = false;

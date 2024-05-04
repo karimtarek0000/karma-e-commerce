@@ -1,29 +1,18 @@
 <script setup lang="ts">
+// --------- Composables -----------
 import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 const http = useHttp();
-
-// ----------- Meta ------------
-useSeoMeta({
-  title: "Auth - Forget Password",
-});
-
-// --------- Data -----------
-const form = reactive({
-  email: "",
-});
 const router = useRouter();
 const toast = useToast();
 
-// --------- Define -----------
-definePageMeta({
-  layout: "auth",
-});
+// --------- Data -----------
+const form = reactive({ email: "" });
 
 // --------- Functions -----------
 const submitHandler = async ({ email }: { email: string }) => {
   const { data, error, pending } = await useLazyAsyncData(() =>
-    http("/auth/forget-password", {
+    http(FORGET_PASSWORD, {
       method: "POST",
       body: {
         email,
@@ -41,6 +30,16 @@ const submitHandler = async ({ email }: { email: string }) => {
     toast.error(error.value.message);
   }
 };
+
+// --------- Define -----------
+definePageMeta({
+  layout: "auth",
+});
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Forget Password",
+});
 </script>
 
 <template>

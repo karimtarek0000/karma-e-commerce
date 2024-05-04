@@ -4,52 +4,48 @@ import { useBtnHideOrShowPassword } from "@/composables/forms";
 import { useOneTap, type CredentialResponse } from "vue3-google-signin";
 import { useToast } from "vue-toastification";
 
-// ----------- Meta ------------
-useSeoMeta({
-  title: "Auth - Sign in",
-});
-
 // --------- Composables -----------
 const http = useHttp();
 const { dataURL } = useAuth();
+const router = useRouter();
+const toast = useToast();
+const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 
 // --------- Data -----------
 const form = reactive({
   email: "",
   password: "",
 });
-const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
-const router = useRouter();
-const toast = useToast();
 const url = dataURL !== "" ? dataURL : "/";
-
-// --------- Define -----------
-definePageMeta({
-  layout: "auth",
-});
 
 // --------- Functions -----------
 // Login with email
-const submitHandler = async (userData: { email: string; password: string }): Promise<void> => {
+const submitHandler = async (userData: {
+  email: string;
+  password: string;
+}): Promise<void> => {
   const { error, pending } = await useLazyAsyncData(() =>
-    http("/auth/sign-in", { method: "POST", body: userData })
+    http(SIGN_IN, { method: "POST", body: userData })
   );
-
   if (!error.value && !pending.value) {
     reset("signInForm");
     toast.success("Login successfully");
     router.replace(url);
   }
-
   if (error.value) {
     toast.error(error.value.message);
   }
 };
 
 // Login with Google
-const successSignInGoogle = async (response: CredentialResponse): Promise<void> => {
+const successSignInGoogle = async (
+  response: CredentialResponse
+): Promise<void> => {
   const { error, pending } = await useLazyAsyncData(() =>
-    http("/auth/login-with-google", { method: "POST", body: { idToken: response.credential } })
+    http("/auth/login-with-google", {
+      method: "POST",
+      body: { idToken: response.credential },
+    })
   );
 
   if (!error.value && !pending.value) {
@@ -61,10 +57,19 @@ const successSignInGoogle = async (response: CredentialResponse): Promise<void> 
     toast.error(error.value.data.message);
   }
 };
-
 const { isReady, login } = useOneTap({
   disableAutomaticPrompt: true,
   onSuccess: successSignInGoogle,
+});
+
+// --------- Define -----------
+definePageMeta({
+  layout: "auth",
+});
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Sign in",
 });
 </script>
 
@@ -105,15 +110,23 @@ const { isReady, login } = useOneTap({
         />
 
         <!-- To show or hide password -->
-        <button @click="showPasswordToggle" type="button" class="absolute top-[34px] end-2">
-          <ShareRenderSVG :iconName="showPassword ? 'visible-password' : 'un-password'" />
+        <button
+          @click="showPasswordToggle"
+          type="button"
+          class="absolute top-[34px] end-2"
+        >
+          <ShareRenderSVG
+            :iconName="showPassword ? 'visible-password' : 'un-password'"
+          />
         </button>
       </div>
 
       <!-- Actions -->
       <div class="text-center col-span-full">
         <div class="flex justify-end mb-4">
-          <NuxtLink to="/auth/forget-password" class="text-gray-700 underline text-end"
+          <NuxtLink
+            to="/auth/forget-password"
+            class="text-gray-700 underline text-end"
             >forget password?</NuxtLink
           >
         </div>
@@ -127,7 +140,9 @@ const { isReady, login } = useOneTap({
         </button>
         <p class="my-4 text-sm text-gray-500">
           Not have an account?
-          <NuxtLink to="/auth/sign-up" class="text-gray-700 underline">Create new account</NuxtLink>
+          <NuxtLink to="/auth/sign-up" class="text-gray-700 underline"
+            >Create new account</NuxtLink
+          >
         </p>
         <div class="relative my-8">
           <hr />

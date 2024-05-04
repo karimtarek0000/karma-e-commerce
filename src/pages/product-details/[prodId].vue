@@ -12,7 +12,7 @@ const { handleMouseMove, mainImageRef, viewImageRef } = useZoomImg();
 // ----------- API ------------
 const { data: product } = await useAsyncData<{ product: Product }>(
   "product",
-  () => http(`/products/${prodId}`),
+  () => http(PRODUCT_ID(prodId as string)),
   {
     pick: ["product"],
   }
@@ -51,7 +51,10 @@ useSeoMeta({
                 v-for="image in product?.product.images"
                 :key="image.public_id"
                 class="thumbnail-img"
-                :class="imgSelected.public_id === image.public_id && '!border-secondary/90'"
+                :class="
+                  imgSelected.public_id === image.public_id &&
+                  '!border-secondary/90'
+                "
                 @click="imgSelected = image"
               >
                 <NuxtImg
@@ -101,7 +104,10 @@ useSeoMeta({
               />
 
               <!-- Discription -->
-              <p class="mb-3 text-lg text-black" v-text="product?.product.description" />
+              <p
+                class="mb-3 text-lg text-black"
+                v-text="product?.product.description"
+              />
 
               <!-- Price and discount -->
               <p class="priceAndDiscount">

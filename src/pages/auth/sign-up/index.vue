@@ -2,12 +2,12 @@
 import { reset } from "@formkit/core";
 import { useToast } from "vue-toastification";
 import { useBtnHideOrShowPassword } from "@/composables/forms";
-const http = useHttp();
 
-// ----------- Meta ------------
-useSeoMeta({
-  title: "Auth - Sign up",
-});
+// --------- Composables -----------
+const http = useHttp();
+const router = useRouter();
+const toast = useToast();
+const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
 
 // --------- Data -----------
 const form = reactive<UserDataSignUp>({
@@ -17,14 +17,6 @@ const form = reactive<UserDataSignUp>({
   password: "",
   role: "User",
 });
-const router = useRouter();
-const toast = useToast();
-const { showPasswordToggle, showPassword } = useBtnHideOrShowPassword();
-
-// --------- Define -----------
-definePageMeta({
-  layout: "auth",
-});
 
 // --------- Functions -----------
 const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
@@ -32,7 +24,7 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
   const userData = { name, email, phoneNumber, password, role };
 
   const { data, error, pending } = await useLazyAsyncData(() =>
-    http("/auth", {
+    http(AUTH, {
       method: "POST",
       body: userData,
     })
@@ -48,6 +40,16 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
     toast.error(error.value.message);
   }
 };
+
+// --------- Define -----------
+definePageMeta({
+  layout: "auth",
+});
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Auth - Sign up",
+});
 </script>
 
 <template>
@@ -126,8 +128,14 @@ const submitHandler = async (userDataForm: UserDataSignUp): Promise<void> => {
         />
 
         <!-- To show or hide password -->
-        <button @click="showPasswordToggle" type="button" class="absolute top-[34px] end-2">
-          <ShareRenderSVG :iconName="showPassword ? 'visible-password' : 'un-password'" />
+        <button
+          @click="showPasswordToggle"
+          type="button"
+          class="absolute top-[34px] end-2"
+        >
+          <ShareRenderSVG
+            :iconName="showPassword ? 'visible-password' : 'un-password'"
+          />
         </button>
       </div>
 

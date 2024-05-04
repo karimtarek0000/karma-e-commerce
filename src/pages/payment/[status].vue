@@ -17,7 +17,7 @@ const {
 } = await useLazyAsyncData(
   "orderInfo",
   () =>
-    http(`/order/${status}Order?token=${token}`, {
+    http(PAYMENT_ORDER(status as string, token as string), {
       method: "PATCH",
     }),
   {
@@ -37,7 +37,7 @@ watch(loader, () => {
     toast.error(order.value?.message);
   }
 
-  navigateTo(`/order-info/${order.value?.order?._id}`);
+  navigateTo(ORDER_INFO(order.value?.order?._id));
 });
 </script>
 
@@ -46,7 +46,9 @@ watch(loader, () => {
     <div class="max-w-[15.5rem]">
       <NuxtImg src="/img/payment.svg" class="res-image" fit="cover" />
     </div>
-    <h1 class="title">payment process <span class="text-red-500">please wait...</span></h1>
+    <h1 class="title">
+      payment process <span class="text-red-500">please wait...</span>
+    </h1>
 
     <!-- Loder -->
     <ShareLoader v-if="loader" class="!border-t-secondary" />

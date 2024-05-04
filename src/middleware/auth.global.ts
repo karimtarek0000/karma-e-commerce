@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   }
 
   // ------- Guards ---------
-  const paths = ["/cart", "/payment", "/order-info"];
+  const paths = ["/cart", "/payment", "/order-info", "/orders"];
 
   if (!accessToken.value && paths.some((p) => to.path.includes(p))) {
     return navigateTo("/auth");

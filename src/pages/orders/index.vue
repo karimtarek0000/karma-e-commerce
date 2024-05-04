@@ -4,13 +4,12 @@ const http = useHttp();
 const { openModalHandler } = useModalController();
 
 // ----------- API ------------
-const { data: orders, pending: loader } = await useLazyAsyncData<{ orders: Order[] }>(
-  () => http("/order"),
-  {
-    pick: ["orders"],
-    server: false,
-  }
-);
+const { data: orders, pending: loader } = await useLazyAsyncData<{
+  orders: Order[];
+}>(() => http(ORDER), {
+  pick: ["orders"],
+  server: false,
+});
 
 // ---------- Functions ------------
 const openConfirmModal = (products: OrderProduct[], num: number): void => {
@@ -32,7 +31,10 @@ useSeoMeta({
   </header>
 
   <!-- If no any order -->
-  <div v-if="!loader && !orders?.orders.length" class="flex flex-col items-center my-32">
+  <div
+    v-if="!loader && !orders?.orders.length"
+    class="flex flex-col items-center my-32"
+  >
     <div class="max-w-[15.5rem]">
       <NuxtImg src="/img/orders.svg" class="res-image" fit="cover" />
     </div>
@@ -49,18 +51,26 @@ useSeoMeta({
       <LoadersCardProductOrder v-if="loader" v-for="i in 3" :key="i" />
 
       <!-- Order Card -->
-      <ul v-else class="order-card" v-for="(order, i) in orders?.orders" :key="order._id">
+      <ul
+        v-else
+        class="order-card"
+        v-for="(order, i) in orders?.orders"
+        :key="order._id"
+      >
         <!-- Title -->
         <li class="py-1 mb-2 font-bold text-center border-b border-b-secondary">
           Order: #{{ i + 1 }}
         </li>
         <!-- Info -->
         <li>
-          <span>payment method:</span> <span class="font-bold">{{ order.paymentMethod }}</span>
+          <span>payment method:</span>
+          <span class="font-bold">{{ order.paymentMethod }}</span>
         </li>
         <li>
           <span>Coupon:</span>
-          <span class="font-bold">{{ order.couponId ? "Exist" : "Not Exist" }}</span>
+          <span class="font-bold">{{
+            order.couponId ? "Exist" : "Not Exist"
+          }}</span>
         </li>
         <li>
           <span>sub total:</span>
@@ -76,10 +86,14 @@ useSeoMeta({
         </li>
         <li>
           <span>date:</span>
-          <span class="font-bold">{{ formatDate(order.createdAt, "en-US") }}</span>
+          <span class="font-bold">{{
+            formatDate(order.createdAt, "en-US")
+          }}</span>
         </li>
         <!-- Click to view all products -->
-        <li class="flex items-center py-2 mt-2 font-bold border-t border-t-secondary">
+        <li
+          class="flex items-center py-2 mt-2 font-bold border-t border-t-secondary"
+        >
           <span>products</span>
           <button
             @click="openConfirmModal(order.products, i + 1)"

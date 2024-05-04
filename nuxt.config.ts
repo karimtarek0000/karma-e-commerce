@@ -2,8 +2,12 @@ import { $fetch } from "ofetch";
 
 // ------------------ For dynamic pages ----------------------
 const products = async () => {
-  const res = await $fetch(`${process.env.NUXT_PUBLIC_BASE_URL}/products?size=5`);
-  return res.products.map((product: Product) => `/product-details/${product._id}`);
+  const res = await $fetch(
+    `${process.env.NUXT_PUBLIC_BASE_URL}/products?size=5`
+  );
+  return res.products.map(
+    (product: Product) => `/product-details/${product._id}`
+  );
 };
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -44,14 +48,18 @@ export default defineNuxtConfig({
   // },
 
   imports: {
-    dirs: ["./stores"],
+    dirs: ["./stores", "./services/"],
   },
   build: {
     // vue-toastification - old commonjs module
     transpile: ["vue-toastification"],
   },
   plugins: ["~/plugins/piniaPlugin.ts", "~/plugins/infinityScroll.ts"],
-  css: ["~/assets/style/main.css", "~/assets/style/toast.css", "vue-multiselect/dist/vue-multiselect.css"],
+  css: [
+    "~/assets/style/main.css",
+    "~/assets/style/toast.css",
+    "vue-multiselect/dist/vue-multiselect.css",
+  ],
   modules: [
     "@nuxtjs/google-fonts",
     "@pinia/nuxt",

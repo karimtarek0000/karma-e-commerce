@@ -4,10 +4,10 @@ const http = useHttp();
 
 // ---------- API (Parallel) -----------
 const [{ data: sliderProducts }, { data: products }] = await Promise.all([
-  useAsyncData<{ sliderProducts: SliderProducts[] }>(() => http("/home/slider"), {
+  useAsyncData<{ sliderProducts: SliderProducts[] }>(() => http(SLIDER), {
     pick: ["sliderProducts"],
   }),
-  useAsyncData<{ products: Product[] }>(() => http("/products?reviewRatings[gte]=4&size=10"), {
+  useAsyncData<{ products: Product[] }>(() => http(TOP_RATINGS()), {
     pick: ["products"],
   }),
 ]);
@@ -22,7 +22,10 @@ useSeoMeta({
   <!-- Slider products -->
   <header>
     <SliderSwiper>
-      <SwiperSlide v-for="product in sliderProducts?.sliderProducts" :key="product?.productId?._id">
+      <SwiperSlide
+        v-for="product in sliderProducts?.sliderProducts"
+        :key="product?.productId?._id"
+      >
         <SliderSlideProduct :product="product" />
       </SwiperSlide>
     </SliderSwiper>
@@ -50,7 +53,7 @@ useSeoMeta({
 
 <style scoped>
 .cards-grid {
-  @apply px-5 max-xl:px-2 grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-4;
+  @apply px-5 max-xl:px-2 grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-4;
 }
 .title {
   @apply my-12 text-2xl font-bold text-center capitalize lg:text-3xl;
