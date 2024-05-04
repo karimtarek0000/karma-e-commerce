@@ -4,12 +4,20 @@ const http = useHttp();
 
 // ---------- API (Parallel) -----------
 const [{ data: sliderProducts }, { data: products }] = await Promise.all([
-  useAsyncData<{ sliderProducts: SliderProducts[] }>(() => http(SLIDER), {
-    pick: ["sliderProducts"],
-  }),
-  useAsyncData<{ products: Product[] }>(() => http(TOP_RATINGS()), {
-    pick: ["products"],
-  }),
+  useAsyncData<{ sliderProducts: SliderProducts[] }>(
+    "slider",
+    () => http(SLIDER),
+    {
+      pick: ["sliderProducts"],
+    }
+  ),
+  useAsyncData<{ products: Product[] }>(
+    "top-rated-products",
+    () => http(TOP_RATINGS(8)),
+    {
+      pick: ["products"],
+    }
+  ),
 ]);
 
 // ---------- Meta -----------
@@ -37,28 +45,19 @@ useSeoMeta({
     <h2 class="title">top rated products</h2>
 
     <!-- Cards grid -->
-    <div class="cards-grid">
-      <template v-for="product in products?.products" :key="product._id">
-        <NuxtLink :to="`/product-details/${product._id}`">
-          <ProductCard :product="product">
-            <CartAddTo :product="product" />
-          </ProductCard>
-        </NuxtLink>
-      </template>
-    </div>
+    <ProductTopRated v-if="products?.products" :products="products?.products" />
   </section>
 
-  <NuxtLink to="/" class="view-all-btn">view all products</NuxtLink>
+  <NuxtLink to="/products/top-rated" class="view-all-btn"
+    >view all top rated</NuxtLink
+  >
 </template>
 
 <style scoped>
-.cards-grid {
-  @apply px-5 max-xl:px-2 grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-4;
-}
 .title {
   @apply my-12 text-2xl font-bold text-center capitalize lg:text-3xl;
 }
 .view-all-btn {
-  @apply px-4 py-2 block mx-auto my-8 capitalize transition-colors duration-200 bg-white w-fit text-secondary hover:bg-secondary hover:text-white border border-secondary rounded-md;
+  @apply px-4 py-2 block mx-auto my-8 uppercase transition-colors duration-200 bg-white w-fit text-secondary hover:bg-secondary hover:text-white border border-secondary rounded-md;
 }
 </style>

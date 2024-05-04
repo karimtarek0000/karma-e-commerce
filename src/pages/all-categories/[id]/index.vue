@@ -265,7 +265,7 @@ if (categoryError.value || productsError.value) {
           :key="index"
         />
         <template v-else v-for="product in products" :key="product._id">
-          <NuxtLink :to="`/product-details/${product._id}`">
+          <NuxtLink :to="`/products/product-details/${product._id}`">
             <ProductCard :product="product">
               <CartAddTo :product="product" />
             </ProductCard>

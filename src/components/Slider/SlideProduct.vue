@@ -26,10 +26,14 @@ defineProps<{
       <p class="info__desc">
         {{ product?.productId.description }}
       </p>
-      <span class="info__price">{{ product.productId.priceAfterDiscount }} EGP</span>
+      <span class="info__price"
+        >{{ product.productId.priceAfterDiscount }} EGP</span
+      >
 
       <!-- Go to product details -->
-      <NuxtLink class="go_to_prod_btn" :to="`/product-details/${product.productId._id}`"
+      <NuxtLink
+        class="go_to_prod_btn"
+        :to="`/products/product-details/${product.productId._id}`"
         >Shop now</NuxtLink
       >
     </div>

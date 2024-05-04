@@ -23,7 +23,7 @@ export const useAuth = defineStore("auth", {
       const http = useHttp();
       const toast = useToast();
 
-      const { error, pending } = await useLazyAsyncData(() => http("/auth/logout"));
+      const { error, pending } = await useLazyAsyncData(() => http(LOG_OUT));
 
       if (!error.value && !pending.value) {
         const accessToken = useCookie("accessToken");

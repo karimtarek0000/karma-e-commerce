@@ -46,7 +46,7 @@ const searchPaginationHandler = async (): Promise<void> => {
 };
 const clearInput = (): string => (search.value = "");
 const goToProductDetails = (productId: string): void => {
-  navigateTo(`/product-details/${productId}`);
+  navigateTo(`/products/product-details/${productId}`);
   clearInput();
 };
 
@@ -64,11 +64,24 @@ watch(search, (newValue) => {
 <template>
   <form class="relative max-lg:w-full me-auto">
     <!-- Search input -->
-    <input v-model="search" class="input" type="text" placeholder="What are you looking for ?" />
+    <input
+      v-model="search"
+      class="input"
+      type="text"
+      placeholder="What are you looking for ?"
+    />
     <div class="absolute top-2/4 -translate-y-2/4 end-3">
       <ShareRenderSVG v-show="!search" iconName="search" sizes="w-[1.22rem]" />
-      <ShareLoader v-show="loader && search" class="!border-t-primary !w-7 !h-7" />
-      <button @click="clearInput" v-show="search && !loader" type="button" class="text-2xl">
+      <ShareLoader
+        v-show="loader && search"
+        class="!border-t-primary !w-7 !h-7"
+      />
+      <button
+        @click="clearInput"
+        v-show="search && !loader"
+        type="button"
+        class="text-2xl"
+      >
         &times;
       </button>
     </div>
@@ -76,7 +89,11 @@ watch(search, (newValue) => {
     <!-- Search list -->
     <div v-show="search" class="search-list-wrapper">
       <!-- Data -->
-      <div v-scroll="searchPaginationHandler" v-if="searchProductsList?.length" class="search-list">
+      <div
+        v-scroll="searchPaginationHandler"
+        v-if="searchProductsList?.length"
+        class="search-list"
+      >
         <button
           v-for="product in searchProductsList"
           :key="product?._id"
@@ -94,12 +111,17 @@ watch(search, (newValue) => {
             fit="thumbnail"
             :alt="product?.title"
           />
-          <h5 class="font-bold capitalize truncate text-14">{{ product?.title }}</h5>
+          <h5 class="font-bold capitalize truncate text-14">
+            {{ product?.title }}
+          </h5>
         </button>
       </div>
 
       <!-- Loader -->
-      <h5 v-else class="flex items-center justify-center mt-8 font-bold text-center gap-x-3">
+      <h5
+        v-else
+        class="flex items-center justify-center mt-8 font-bold text-center gap-x-3"
+      >
         No data exist <ShareRenderSVG iconName="search" sizes="w-[1.22rem]" />
       </h5>
     </div>

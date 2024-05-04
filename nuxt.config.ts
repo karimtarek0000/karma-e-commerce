@@ -6,7 +6,7 @@ const products = async () => {
     `${process.env.NUXT_PUBLIC_BASE_URL}/products?size=5`
   );
   return res.products.map(
-    (product: Product) => `/product-details/${product._id}`
+    (product: Product) => `/products/product-details/${product._id}`
   );
 };
 

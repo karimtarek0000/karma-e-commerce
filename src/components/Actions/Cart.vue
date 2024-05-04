@@ -3,7 +3,6 @@ import { useToast } from "vue-toastification";
 
 // ----------- Composables ------------
 const http = useHttp();
-const auth = useAuth();
 const toast = useToast();
 
 // ----------- Data ------------
@@ -12,9 +11,13 @@ const productId = ref<string>("");
 
 // ----------- API ------------
 // Get cart
-const { data: cart } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
-  pick: ["cart"],
-});
+const { data: cart } = await useAsyncData<{ cart: Cart }>(
+  "cart",
+  () => http(CART),
+  {
+    pick: ["cart"],
+  }
+);
 
 // Delete product from cart
 const {
@@ -25,7 +28,7 @@ const {
   status,
 } = await useAsyncData<{ cart: Cart }>(
   "deleteCart",
-  () => http(`/cart/${productId.value}`, { method: "DELETE" }),
+  () => http(DELETE_PRODUCT_FROM_CART(productId.value), { method: "DELETE" }),
   {
     server: false,
     pick: ["cart"],
@@ -34,7 +37,9 @@ const {
 );
 
 // ----------- Computed ------------
-const productsLength = computed((): number => cart.value?.cart?.products?.length as number);
+const productsLength = computed(
+  (): number => cart.value?.cart?.products?.length as number
+);
 
 // ----------- Functions ------------
 const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
@@ -44,7 +49,9 @@ const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
   await deleteExcute();
 
   if (!deleteLoader.value && !deleteError.value) {
-    cart.value.cart = cartAfterDelete?.value?.cart as Cart;
+    if (cart.value) {
+      cart.value.cart = cartAfterDelete?.value?.cart as Cart;
+    }
     toast.success(`Delete product ${title} successfully`);
   }
   if (deleteError.value) {
@@ -62,7 +69,10 @@ const toggleQuickViewHandler = () => {
   <div class="cart">
     <!-- Toggle to open and close cart -->
     <button class="max-lg:hidden" @click="toggleQuickViewHandler">
-      <ActionsCartCounter v-show="!!productsLength" :num="productsLength || 0" />
+      <ActionsCartCounter
+        v-show="!!productsLength"
+        :num="productsLength || 0"
+      />
       <ShareRenderSVG iconName="cart" />
     </button>
 

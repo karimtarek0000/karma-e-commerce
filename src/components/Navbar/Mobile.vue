@@ -5,9 +5,13 @@ const { itemStatus, toggleItemHandler } = useToggle();
 const { user, isLoggedIn } = useAuth();
 
 // ----------- API ------------
-const { data: cart } = await useAsyncData<{ cart: Cart }>("cart", () => http("/cart"), {
-  pick: ["cart"],
-});
+const { data: cart } = await useAsyncData<{ cart: Cart }>(
+  "cart",
+  () => http(CART),
+  {
+    pick: ["cart"],
+  }
+);
 
 // ----------- Data --------------
 const links = ref([
@@ -32,7 +36,9 @@ const links = ref([
 ]);
 
 // ----------- Computed ------------
-const productsLength = computed((): number => cart.value?.cart?.products?.length as number);
+const productsLength = computed(
+  (): number => cart.value?.cart?.products?.length as number
+);
 </script>
 
 <template>
@@ -51,7 +57,12 @@ const productsLength = computed((): number => cart.value?.cart?.products?.length
     </template>
 
     <!-- For open side menu -->
-    <button v-if="isLoggedIn" type="button" @click="toggleItemHandler" class="link">
+    <button
+      v-if="isLoggedIn"
+      type="button"
+      @click="toggleItemHandler"
+      class="link"
+    >
       <ShareRenderSVG iconName="profile" sizes="w-[20px]" />
       settings
     </button>
@@ -61,7 +72,9 @@ const productsLength = computed((): number => cart.value?.cart?.products?.length
   <Teleport to="body">
     <aside :class="['sidemenu', { 'sidemenu-active': itemStatus }]">
       <div class="flex items-center justify-between">
-        <button @click="toggleItemHandler" type="button" class="text-2xl">&times;</button>
+        <button @click="toggleItemHandler" type="button" class="text-2xl">
+          &times;
+        </button>
         <span class="mx-4">{{ user?.name }}</span>
       </div>
       <hr />

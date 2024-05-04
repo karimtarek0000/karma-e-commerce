@@ -2,15 +2,19 @@
 const http = useHttp();
 
 // ----------------- From API ---------------------
-const { data: categories } = await useAsyncData(() => http("/categories"));
+const { data: categories } = await useAsyncData(() => http(CATEGORIES));
 const allCategories = reactive<Gategory[]>(categories.value?.categories);
 </script>
 
 <template>
   <nav class="navbar">
-    <NuxtLink v-for="category in allCategories" :key="category?._id" :to="`/all-categories/${category?._id}`" class="px-2 py-2 uppercase">{{
-      category?.name
-    }}</NuxtLink>
+    <NuxtLink
+      v-for="category in allCategories"
+      :key="category?._id"
+      :to="`/all-categories/${category?._id}`"
+      class="px-2 py-2 uppercase"
+      >{{ category?.name }}</NuxtLink
+    >
   </nav>
 </template>
 
