@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import VueMultiselect from "vue-multiselect";
-
 // ----------- Composables ------------
 const { isDesktop } = useDevice();
 const auth = useAuth();
@@ -16,7 +14,7 @@ const pageNumber = ref<number>(+query?.page! || 1);
 const setSubCategory = ref<SubGategory | null>();
 const setBrand = ref<Brand | null>();
 
-// ----------------------- API --------------------
+// ----------------------- APIs --------------------
 // Category
 const { data: categories, error: categoryError } = await useAsyncData(() =>
   http("/categories", {
@@ -57,7 +55,7 @@ const {
 const products = ref<Product[]>(allProducts.value?.products);
 const metaDataPaginForProducts = ref(allProducts?.value?.metaData);
 
-// ----------- Function ------------
+// ----------- Functions ------------
 const pickSubCategoryHandler = (_subCategory: SubGategory): void => {
   // Render all category products if user clicked again on the same subcategory
   setBrand.value = null;
@@ -82,6 +80,16 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
     },
   ];
 };
+const changePageNumberHandler = (_pageNumber: number = 1) => {
+  pageNumber.value = _pageNumber;
+  const key = `products-${_pageNumber}-category${id}-subCategory${setSubCategory?.value?._id}`;
+  const { data } = useNuxtData(key);
+  if (data.value) {
+    allProducts.value = data.value;
+  } else {
+    execute();
+  }
+};
 
 // ----------- Watches ------------
 watch(allProducts, (values) => {
@@ -104,40 +112,19 @@ watch(
     immediate: true,
   }
 );
-watch([setSubCategory, setBrand], () => {
-  pageNumber.value = 1;
-});
-watch(setSubCategory, () => {
-  setBrand.value = null;
-});
-
-watch(
-  pageNumber,
-  () => {
-    const key = `products-${pageNumber.value}-category${id}-subCategory${setSubCategory?.value?._id}`;
-    const { data } = useNuxtData(key);
-    if (data.value) {
-      allProducts.value = data.value;
-    } else {
-      execute();
-    }
-  },
-  {
-    immediate: true,
-  }
-);
-
-// ----------- Meta ------------
-useSeoMeta({
-  title: `${categories.value?.categories[0]?.name} - category`,
-});
+watch([setSubCategory, setBrand], () => (pageNumber.value = 1));
+watch(setSubCategory, () => (setBrand.value = null));
 
 // ----------- Lifecycle ------------
 onMounted(() => {
   auth.$patch((store) => {
     store.dataURL = "";
   });
+  changePageNumberHandler();
 });
+
+// ----------- Meta ------------
+useSeoMeta({ title: `${categories.value?.categories[0]?.name} - category` });
 
 // ----------- Handling Errors ------------
 if (!categories?.value?.categories.length) {
@@ -249,7 +236,7 @@ if (categoryError.value || productsError.value) {
           :total="metaDataPaginForProducts?.totalCountProducts"
           :perPage="metaDataPaginForProducts?.limit"
           :currentPage="pageNumber"
-          @changePage="pageNumber = $event"
+          @changePage="changePageNumberHandler"
         />
       </ClientOnly>
 
