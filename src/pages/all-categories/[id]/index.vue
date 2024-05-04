@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useCacheExpire } from "@/composables/useCacheExpire";
 // ----------- Composables ------------
 const { isDesktop } = useDevice();
 const auth = useAuth();
@@ -42,7 +43,7 @@ const {
       },
       onResponse({ response }) {
         const key = `products-${pageNumber.value}-category${id}-subCategory${setSubCategory.value?._id}`;
-        payload.data[key] = response._data;
+        payload.data[key] = { ...response._data, fetchedAt: new Date() };
       },
     }),
   {
@@ -85,7 +86,8 @@ const changePageNumberHandler = (_pageNumber: number = 1) => {
   const key = `products-${_pageNumber}-category${id}-subCategory${setSubCategory?.value?._id}`;
   const { data } = useNuxtData(key);
   if (data.value) {
-    allProducts.value = data.value;
+    const isExpire = useCacheExpire(data.value.fetchedAt, 40 * 1000);
+    isExpire ? (allProducts.value = data.value) : execute();
   } else {
     execute();
   }
