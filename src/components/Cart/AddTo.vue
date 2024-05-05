@@ -76,7 +76,7 @@ const addToCardHandler = async (product: Product) => {
     @click.prevent="addToCardHandler(product)"
   >
     <ShareLoader v-show="loadingBtnCart" />
-    {{ productInCartStatus ? "in cart" : "Add to cart" }}
+    {{ productInCartStatus ? "In cart" : "Add to cart" }}
     <ShareRenderSVG
       fill="#FFF"
       :iconName="productInCartStatus ? 'added-to-cart' : 'to-cart'"
