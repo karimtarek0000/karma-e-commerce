@@ -41,7 +41,6 @@ const loadingBtnCart = computed(
 
 // ----------- Function ------------
 const addToCardHandler = async (product: Product) => {
-  x;
   if (!auth.isLoggedIn) {
     auth.$patch((store) => {
       store.dataURL = `${path}${
