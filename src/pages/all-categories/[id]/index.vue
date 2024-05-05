@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import VueMultiselect from "vue-multiselect";
 import { useCacheExpire } from "@/composables/useCacheExpire";
+
 // ----------- Composables ------------
 const { isDesktop } = useDevice();
 const auth = useAuth();
