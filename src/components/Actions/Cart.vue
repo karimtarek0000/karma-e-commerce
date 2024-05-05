@@ -19,47 +19,12 @@ const { data: cart } = await useAsyncData<{ cart: Cart }>(
   }
 );
 
-// Delete product from cart
-const {
-  data: cartAfterDelete,
-  pending: deleteLoader,
-  error: deleteError,
-  execute: deleteExcute,
-  status,
-} = await useAsyncData<{ cart: Cart }>(
-  "deleteCart",
-  () => http(DELETE_PRODUCT_FROM_CART(productId.value), { method: "DELETE" }),
-  {
-    server: false,
-    pick: ["cart"],
-    immediate: false,
-  }
-);
-
 // ----------- Computed ------------
 const productsLength = computed(
   (): number => cart.value?.cart?.products?.length as number
 );
 
 // ----------- Functions ------------
-const deleteProductFromCart = async (product: CartProduct): Promise<void> => {
-  const { _id: id, title } = product.productId;
-  productId.value = id;
-
-  await deleteExcute();
-
-  if (!deleteLoader.value && !deleteError.value) {
-    if (cart.value) {
-      cart.value.cart = cartAfterDelete?.value?.cart as Cart;
-    }
-    toast.success(`Delete product ${title} successfully`);
-  }
-  if (deleteError.value) {
-    toast.error(deleteError.value.message);
-  }
-
-  productId.value = "";
-};
 const toggleQuickViewHandler = () => {
   toggleCartQuickView.value = !toggleCartQuickView.value;
 };
@@ -83,7 +48,6 @@ const toggleQuickViewHandler = () => {
       :productId="productId"
       :statusLoader="status"
       v-show="toggleCartQuickView"
-      @deleteProduct="deleteProductFromCart"
     >
       <template #checkout>
         <CartCheckout
