@@ -195,7 +195,7 @@ if (categoryError.value || productsError.value) {
 
     <!-- Selection for subcategories and brands for other devices -->
     <div class="flex flex-wrap items-center gap-3 px-1 my-2" v-if="!isDesktop">
-      <div class="max-sm:w-full grow">
+      <div class="sm:w-full mx-auto max-sm:w-full sm:max-w-[50%]">
         <h4 class="mb-2">Sub category</h4>
         <VueMultiselect
           v-model="setSubCategory"
@@ -207,8 +207,7 @@ if (categoryError.value || productsError.value) {
           label="name"
           track-by="name"
           selectLabel=""
-        >
-        </VueMultiselect>
+        />
       </div>
 
       <div class="grow" v-if="setSubCategory">
