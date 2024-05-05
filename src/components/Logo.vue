@@ -8,6 +8,6 @@
 
 <style scoped>
 .link {
-  @apply lg:me-[1.875rem] w-[100px] h-[27.5px] lg:w-[200px] lg:h-[55px] flex items-center;
+  @apply w-[150px] lg:w-[200px] lg:h-[100px] h-[40px] flex items-center;
 }
 </style>
