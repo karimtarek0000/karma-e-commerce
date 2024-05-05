@@ -68,7 +68,7 @@ const toggleQuickViewHandler = () => {
 <template>
   <div class="cart">
     <!-- Toggle to open and close cart -->
-    <button class="max-lg:hidden" @click="toggleQuickViewHandler">
+    <button @click="toggleQuickViewHandler">
       <ActionsCartCounter
         v-show="!!productsLength"
         :num="productsLength || 0"

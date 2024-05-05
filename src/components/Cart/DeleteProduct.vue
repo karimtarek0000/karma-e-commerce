@@ -23,14 +23,16 @@ const {
 } = await useLazyAsyncData(
   "deleteCart",
   () =>
-    http(`/cart/${productId.value}`, {
+    http(DELETE_PRODUCT_FROM_CART(productId.value as string), {
       method: "DELETE",
     }),
   { immediate: false }
 );
 
 // ----------------- Functions -------------------
-const deleteProductFromCartHandler = async (_productId: string): Promise<void> => {
+const deleteProductFromCartHandler = async (
+  _productId: string
+): Promise<void> => {
   productId.value = _productId;
 
   openModalHandler({
@@ -45,7 +47,7 @@ const deleteProductFromCartHandler = async (_productId: string): Promise<void> =
 
     if (!deleteProductLoader.value && !deleteProductError.value) {
       cart.value.cart = cartAfterDelete?.value?.cart as Cart;
-      toast.success(`Quantity deleted successfully`);
+      toast.success(`Product deleted successfully`);
     }
     if (deleteProductError.value) {
       toast.error(deleteProductError.value.message);
@@ -57,7 +59,10 @@ const deleteProductFromCartHandler = async (_productId: string): Promise<void> =
 </script>
 
 <template>
-  <button class="delete-product" @click="deleteProductFromCartHandler(product.productId?._id)">
+  <button
+    class="delete-product"
+    @click="deleteProductFromCartHandler(product.productId?._id)"
+  >
     <ShareLoader
       v-if="showLoader(deleteProductCartStatus, productId!, product.productId._id)"
       class="delete-product__share-loader"
