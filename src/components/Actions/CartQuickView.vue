@@ -43,7 +43,9 @@ defineProps<{
               <p class="flex items-center justify-center gap-x-3 text-14">
                 Price:
                 <span class="font-bold"
-                  >${{ product.productId.priceAfterDiscount.toLocaleString() }}</span
+                  >${{
+                    product.productId.priceAfterDiscount.toLocaleString()
+                  }}</span
                 >
               </p>
 
@@ -56,9 +58,12 @@ defineProps<{
 
       <!-- Actions -->
       <div class="space-y-2 text-center">
-        <h6><span class="font-bold">Total</span>: ${{ total.toLocaleString() }}</h6>
+        <h6>
+          <span class="font-bold">Total</span>: ${{ total.toLocaleString() }}
+        </h6>
         <NuxtLink to="/cart" class="view-cart-btn"
-          >View my cart <span class="font-bold">({{ products?.length }})</span></NuxtLink
+          >View my cart
+          <span class="font-bold">({{ products?.length }})</span></NuxtLink
         >
         <slot name="checkout" />
       </div>
@@ -74,7 +79,7 @@ defineProps<{
 
 <style scoped>
 .cart-view {
-  @apply absolute rounded-md shadow-xl top-[100%] mt-2 z-20 w-screen max-w-[18.75rem] p-3 bg-white -end-[100%];
+  @apply absolute rounded-md shadow-xl top-[150%] mt-2 z-20 w-screen max-w-[18.75rem] p-3 bg-white -end-[100%];
 }
 .cart-view-list {
   @apply space-y-4 max-h-[14.375rem] overflow-auto scrollbar-none;

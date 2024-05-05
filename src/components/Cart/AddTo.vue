@@ -36,14 +36,17 @@ const {
 
 // ----------- Computed ------------
 const loadingBtnCart = computed(
-  () => props.product._id === pickProduct.value?._id && cartLoader.value
+  () => props.product._id === pickProduct.value?._id
 );
 
 // ----------- Function ------------
 const addToCardHandler = async (product: Product) => {
+  x;
   if (!auth.isLoggedIn) {
     auth.$patch((store) => {
-      store.dataURL = `${path}${query.subCategory ? `?subCategory=${query.subCategory}` : ""}`;
+      store.dataURL = `${path}${
+        query.subCategory ? `?subCategory=${query.subCategory}` : ""
+      }`;
     });
     navigateTo("/auth");
     toast.error("You must be logged in first");
@@ -75,7 +78,10 @@ const addToCardHandler = async (product: Product) => {
   >
     <ShareLoader v-show="loadingBtnCart" />
     {{ productInCartStatus ? "in cart" : "Add to cart" }}
-    <ShareRenderSVG fill="#FFF" :iconName="productInCartStatus ? 'added-to-cart' : 'to-cart'" />
+    <ShareRenderSVG
+      fill="#FFF"
+      :iconName="productInCartStatus ? 'added-to-cart' : 'to-cart'"
+    />
   </button>
 </template>
 

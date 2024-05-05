@@ -3,7 +3,7 @@
 const http = useHttp();
 
 // TODO: check on backend if top rated pagination or not
-// ---------- API (Parallel) -----------
+// ---------- API -----------
 const { data: products } = await useAsyncData<{ products: Product[] }>(
   "top-rated-products",
   () => http(TOP_RATINGS(1000)),

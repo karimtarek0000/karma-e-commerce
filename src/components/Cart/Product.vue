@@ -32,13 +32,15 @@ defineProps<{ product: CartProduct }>();
 
       <NuxtLink
         class="block mt-3 underline text-secondary"
-        :to="`product-details/${product.productId._id}`"
+        :to="`/products/product-details/${product.productId._id}`"
         >Go to product page</NuxtLink
       >
     </div>
 
     <!-- Actions -->
-    <div class="flex flex-col items-center px-3 max-md:mb-2 lg:justify-self-end gap-y-5">
+    <div
+      class="flex flex-col items-center px-3 max-md:mb-2 lg:justify-self-end gap-y-5"
+    >
       <!-- Input to add quantity -->
       <slot name="changeQuantity" />
 

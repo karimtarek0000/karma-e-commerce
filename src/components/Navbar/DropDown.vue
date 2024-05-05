@@ -31,17 +31,18 @@ const links = ref([
 <template>
   <div class="relative">
     <!-- Button toggle dropdown -->
-    <button
-      v-if="showBtn"
-      @click="toggleItemHandler"
-      class="flex justify-between px-2 bg-white rounded-md gap-x-4"
-    >
+    <button v-if="showBtn" @click="toggleItemHandler" class="dropdown-toggle">
       {{ user?.name }}
       <ShareRenderSVG iconName="arrow-down" sizes="w-[13px]" />
     </button>
     <!-- Dropdown -->
     <ul class="dropdown" v-show="itemStatus" @click="toggleItemHandler">
-      <NuxtLink v-for="link in links" :key="link.title" class="dropdown-link" :to="link.path">
+      <NuxtLink
+        v-for="link in links"
+        :key="link.title"
+        class="dropdown-link"
+        :to="link.path"
+      >
         <ShareRenderSVG :iconName="link.icon" class="w-[15px]" />
         <span v-text="link.title" />
       </NuxtLink>
@@ -54,8 +55,11 @@ const links = ref([
 </template>
 
 <style scoped>
+.dropdown-toggle {
+  @apply flex justify-between px-4 py-2 bg-white rounded-md gap-x-4;
+}
 .dropdown {
-  @apply absolute overflow-hidden shadow-md bg-white w-[9rem] mt-2 z-10 rounded-md top-[100%] end-0;
+  @apply absolute overflow-hidden  shadow-md bg-white w-[9rem] mt-2 z-10 rounded-md top-[100%] end-0;
 }
 .dropdown-link {
   @apply flex justify-start items-center p-2 capitalize gap-x-5 text-14 hover:bg-gray-200 w-full;
