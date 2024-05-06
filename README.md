@@ -46,3 +46,9 @@
      - If the user has a valid coupon (Optional)
   4. Now the user can decide to pay with a credit card or cash on delivery
      - Credit card with (Stripe)
+
+##
+
+- **Product details page**
+  1. You can user `enter quantity` for that product
+  2. You can user `checkout` for that product only
