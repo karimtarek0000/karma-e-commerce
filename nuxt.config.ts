@@ -22,7 +22,11 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
       titleTemplate: "Karma - %s",
       meta: [
-        { name: "description", content: "Karma | E-commerce" },
+        {
+          name: "description",
+          content:
+            "Shop the Best Products & Brands in Egypt. Same Day Delivery ✓ Cash on Delivery ✓ Easy Free Returns ✓ Credit Cards & Debit Cards",
+        },
         { name: "theme-color", content: "#454692" },
       ],
       link: [{ rel: "icon", type: "image/svg+xml", href: "favicon.svg" }],
@@ -31,6 +35,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       BASE_URL: "",
+      URL: "",
     },
   },
 
