@@ -12,6 +12,7 @@ const { showBtn } = withDefaults(
 // ---------- Composables ----------
 const { itemStatus, toggleItemHandler } = useToggle(!showBtn);
 const { logout, user } = useAuth();
+const { isDesktop } = useDevice();
 
 // ---------- Data ----------
 const links = ref([
@@ -36,7 +37,11 @@ const links = ref([
       <ShareRenderSVG iconName="arrow-down" sizes="w-[13px]" />
     </button>
     <!-- Dropdown -->
-    <ul class="dropdown" v-show="itemStatus" @click="toggleItemHandler">
+    <ul
+      class="dropdown"
+      v-show="itemStatus"
+      @click="isDesktop && toggleItemHandler()"
+    >
       <NuxtLink
         v-for="link in links"
         :key="link.title"

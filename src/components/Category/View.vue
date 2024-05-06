@@ -29,7 +29,7 @@ defineProps<{ category: Gategory }>();
           :src="replaceCloudinaryURL(category?.image?.secure_url)"
           provider="cloudinary"
           preset="cloudinary"
-          class="res-image"
+          class="w-full res-image"
           width="100%"
           height="500"
           fit="cover"
