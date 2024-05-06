@@ -1,7 +1,5 @@
 <script setup lang="ts">
 // ----------- Composables ------------
-const config = useRuntimeConfig();
-const { fullPath } = useRoute();
 const { data: cart } = useNuxtData("cart");
 const { isDesktop } = useDevice();
 const { isLoggedIn } = useAuth();
@@ -40,7 +38,6 @@ useSeoMeta({
   // Open graph
   ogTitle: product.value?.product.title,
   ogDescription: product.value?.product.description,
-  ogUrl: `${config.public.URL}${fullPath}`,
   ogImage: product.value?.product.images[0].secure_url,
 });
 </script>

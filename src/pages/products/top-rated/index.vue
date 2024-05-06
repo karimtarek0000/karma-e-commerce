@@ -11,6 +11,13 @@ const { data: products } = await useAsyncData<{ products: Product[] }>(
     pick: ["products"],
   }
 );
+
+// ----------- Meta ------------
+useSeoMeta({
+  title: "Top rated products",
+  // Open graph
+  ogTitle: "Top rated products",
+});
 </script>
 
 <template>

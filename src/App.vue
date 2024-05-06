@@ -1,16 +1,19 @@
 <script setup lang="ts">
+// ----------- Composables ------------
 const config = useRuntimeConfig();
+const { fullPath } = useRoute();
 const resetError = async (error: string) => {
   await navigateTo("/");
   error.value = null;
 };
 
+// ----------- Meta ------------
 useSeoMeta({
   title: "Home",
   ogTitle: "Karma ecommerce",
   ogDescription:
     "Shop the Best Products & Brands in Egypt. Same Day Delivery ✓ Cash on Delivery ✓ Easy Free Returns ✓ Credit Cards & Debit Cards",
-  ogUrl: config.public.URL,
+  ogUrl: () => `${config.public.URL}${fullPath}`,
   ogImage:
     "https://www.flutterclutter.dev/images/posts/2020-07-24-flutter-game-tutorial-fruit-ninja-clone/flutter-fruit-ninja-clone.png",
 });
