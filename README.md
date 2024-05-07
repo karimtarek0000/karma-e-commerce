@@ -11,11 +11,14 @@
 
 - **Authentication**
 
-  1. You can user signup with an email after that user will receive an email to validate if this email exists or not after that he can log in directly without being directed to the login page to enter his email
-  2. You can user sign in by email or with his Google account
-  3. You can use the rest of his password he will receive an email and after that, he can change his password safely
-  4. The token for the session will refresh whether on both the Client and the Server
-  5. Middleware will handle guard for specific pages, after the user signin on to our site he will not be able to navigate to the auth page
+  1. You can user signup with an email after that user will receive an email to verify his account when clicked on `click her to confirm you email` button in `email` will redirect to the site to click on `verify` button then you can now signin
+  2. If user try signup with `email` already exist with showing alert `this email already exist`
+  3. You can user sign in by `email` or with his `Google account`
+  4. If user clicked on `forget password` will redirect to page `enter email` if this email exist will receive email to reset the password now user you can clicked on `reset password` after that redirect to the page to enter `new password`
+     _Note_ this email valid till 1 hour only
+  5. You can user rest of his `password` he will receive an `email` and after that, he can change his `password` safely
+  6. The token for the session will refresh whether on both the Client and the Server side
+  7. Middleware will handle guard for specific pages, after the user signin on to our site he will not be able to navigate to the auth page again
 
 ##
 
