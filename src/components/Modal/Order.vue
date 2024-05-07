@@ -135,7 +135,7 @@ onUnmounted(() => clearNuxtData("couponCheck"));
           type="tel"
           id="phoneNumber"
           name="phoneNumber"
-          label="Add another phone number (optional)"
+          label="*Add another phone number"
           placeholder="Enter your phone"
           :validation="[['required'], ['matches', /^0(11|12|10)[0-9]{8}$/]]"
           :validation-messages="{
@@ -151,7 +151,7 @@ onUnmounted(() => clearNuxtData("couponCheck"));
           type="text"
           id="couponCode"
           name="couponCode"
-          label="Enter your coupon code (optional)"
+          label="Enter your coupon code"
           placeholder="Enter your coupon code"
           autocomplete="off"
           @input="couponCodeCheckHandler"
@@ -173,7 +173,7 @@ onUnmounted(() => clearNuxtData("couponCheck"));
 
       <!-- Payment method -->
       <div>
-        <label for="paymentMethod" class="block mb-1 text-14"
+        <label for="paymentMethod" class="block mb-1 text-md"
           >*Select payment method</label
         >
         <FormKit
@@ -193,7 +193,7 @@ onUnmounted(() => clearNuxtData("couponCheck"));
           id="address"
           name="address"
           rows="5"
-          label="Enter your address"
+          label="*Enter your address"
           placeholder="Enter your address"
           validation="required"
           autocomplete="off"
