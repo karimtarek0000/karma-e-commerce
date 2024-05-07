@@ -69,4 +69,9 @@ const links = ref([
 .dropdown-link {
   @apply flex justify-start items-center p-2 capitalize gap-x-5 text-14 hover:bg-gray-200 w-full;
 }
+
+/* Active link */
+.router-link-exact-active {
+  @apply bg-gray-200;
+}
 </style>
