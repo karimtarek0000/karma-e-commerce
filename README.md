@@ -10,7 +10,6 @@
 #### Features
 
 - **Authentication**
-
   1. You can user signup with an email after that user will receive an email to verify his account when clicked on `click her to confirm you email` button in `email` will redirect to the site to click on `verify` button then you can now signin
   2. If user try signup with `email` already exist with showing alert `this email already exist`
   3. You can user sign in by `email` or with his `Google account`
@@ -44,11 +43,12 @@
   1. _Input phone number:_
      - The user should write his phone number
   2. _Input address:_
-     - The user should write the address he wants to receive the order
+     - The user should write the address to receive the order
   3. _Input coupon for discount:_
      - If the user has a valid coupon (Optional)
   4. Now the user can decide to pay with a credit card or cash on delivery
      - Credit card with (Stripe)
+  5. If all the information is correct, user will showing page included all details about that order and he able scan `QRCode` included all informations about products
 
 ##
 
