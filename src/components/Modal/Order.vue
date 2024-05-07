@@ -36,7 +36,7 @@ const {
 } = await useAsyncData(
   "couponCheck",
   () =>
-    http("/coupons/check", {
+    http(COPOUN_CHECK, {
       method: "POST",
       body: {
         couponCode: couponCode.value,
@@ -83,7 +83,7 @@ const submitHandler = async (data: OrderModal) => {
     pending,
     error,
   } = await useAsyncData("orderInfo", () =>
-    http(`order/${options?.cartId ?? ""}`, {
+    http(GET_ORDER(options?.cartId ?? ""), {
       method: "POST",
       body,
     })
@@ -165,13 +165,17 @@ onUnmounted(() => clearNuxtData("couponCheck"));
       <p class="mb-2 text-red-800 text-14" v-if="error">{{ error.message }}</p>
       <!-- Show coupon result -->
       <p v-if="coupon" class="mb-2 text-14 text-secondary">
-        This coupon will do off <span class="font-bold">{{ coupon?.coupon?.couponAmount }}</span>
-        {{ coupon?.coupon?.couponAmountType === "fixed" ? "EGP" : "%" }} from total amount
+        This coupon will do off
+        <span class="font-bold">{{ coupon?.coupon?.couponAmount }}</span>
+        {{ coupon?.coupon?.couponAmountType === "fixed" ? "EGP" : "%" }} from
+        total amount
       </p>
 
       <!-- Payment method -->
       <div>
-        <label for="paymentMethod" class="block mb-1 text-14">*Select payment method</label>
+        <label for="paymentMethod" class="block mb-1 text-14"
+          >*Select payment method</label
+        >
         <FormKit
           :type="paymentMethodMS"
           id="paymentMethods"

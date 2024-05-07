@@ -9,6 +9,7 @@ export const PRODUCT_ID = (id: string) => `${PRODUCTS}/${id}`;
 
 // ============ ORDER ============ //
 export const ORDER = "/order";
+export const GET_ORDER = (id: string) => `${ORDER}/${id}`;
 export const PAYMENT_ORDER = (status: string, token: string) =>
   `${ORDER}/${status}Order?token=${token}`;
 export const ORDER_INFO = (id: string) => `${ORDER}-info/${id}`;
@@ -16,6 +17,9 @@ export const ORDER_INFO = (id: string) => `${ORDER}-info/${id}`;
 // ============ CART ============ //
 export const CART = "/cart";
 export const DELETE_PRODUCT_FROM_CART = (id: string) => `${CART}/${id}`;
+
+// ============ COPOUN ============ //
+export const COPOUN_CHECK = "/coupons/check";
 
 // ============ AUTH ============ //
 export const AUTH = "/auth";

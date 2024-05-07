@@ -28,16 +28,18 @@ const {
 // ----------- Life cycle hooks ------------
 watch(loader, () => {
   if (!loader.value && !error.value) {
-    order.value?.message.includes("canceled")
-      ? toast.error(order.value?.message)
-      : toast.success(order.value?.message);
+    const isCancel = order.value?.message.includes("canceled");
+    if (!isCancel) {
+      toast.success(order.value?.message);
+      navigateTo(ORDER_INFO(order.value?.order?._id));
+    } else {
+      toast.error(order.value?.message);
+    }
   }
 
   if (error.value) {
     toast.error(order.value?.message);
   }
-
-  navigateTo(ORDER_INFO(order.value?.order?._id));
 });
 </script>
 
@@ -47,7 +49,10 @@ watch(loader, () => {
       <NuxtImg src="/img/payment.svg" class="res-image" fit="cover" />
     </div>
     <h1 class="title">
-      payment process <span class="text-red-500">please wait...</span>
+      payment process
+      <span class="text-red-500">{{
+        status === "cancel" ? "Order canceld" : "please wait..."
+      }}</span>
     </h1>
 
     <!-- Loder -->
