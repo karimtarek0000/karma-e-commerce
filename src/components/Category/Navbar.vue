@@ -56,6 +56,6 @@ const overCategoryHandler = (category: Gategory): void => {
 
 /* Active link */
 .router-link-exact-active {
-  @apply text-white bg-secondary;
+  @apply text-white bg-secondary pointer-events-none;
 }
 </style>
