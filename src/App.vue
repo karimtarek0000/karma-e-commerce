@@ -15,7 +15,7 @@ useSeoMeta({
     "Shop the Best Products & Brands in Egypt. Same Day Delivery ✓ Cash on Delivery ✓ Easy Free Returns ✓ Credit Cards & Debit Cards",
   ogUrl: () => `${config.public.CLIENT_URL}${fullPath}`,
   ogImage:
-    "https://www.flutterclutter.dev/images/posts/2020-07-24-flutter-game-tutorial-fruit-ninja-clone/flutter-fruit-ninja-clone.png",
+    "https://karma-e-commerce-karimtarek0000s-projects.vercel.app/_vercel/image?url=/logo/logo.svg&w=1536&q=100",
 });
 </script>
 

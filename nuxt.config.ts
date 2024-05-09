@@ -1,14 +1,14 @@
 import { $fetch } from "ofetch";
 
 // ------------------ For dynamic pages ----------------------
-// const products = async () => {
-//   const res = await $fetch(
-//     `${process.env.NUXT_PUBLIC_BASE_URL}/products?size=5`
-//   );
-//   return res.products.map(
-//     (product: Product) => `/products/product-details/${product._id}`
-//   );
-// };
+const products = async () => {
+  const res = await $fetch(
+    `${process.env.NUXT_PUBLIC_BASE_URL}/products?size=5`
+  );
+  return res.products.map(
+    (product: Product) => `/products/product-details/${product._id}`
+  );
+};
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -40,17 +40,19 @@ export default defineNuxtConfig({
   },
 
   // Render modes
-  // routeRules: {
-  //   "/product-details/**": { swr: 3600 },
-  // },
-  // hooks: {
-  //   async "nitro:config"(nitroConfig: any) {
-  //     if (nitroConfig.dev) return;
+  routeRules: {
+    "/product-details/**": { swr: 3600 },
+    "/products/top-rated": { prerender: true },
+    "/": { prerender: true },
+  },
+  hooks: {
+    async "nitro:config"(nitroConfig: any) {
+      if (nitroConfig.dev) return;
 
-  //     const ids = await products();
-  //     nitroConfig.prerender.routes.push(...ids);
-  //   },
-  // },
+      const ids = await products();
+      nitroConfig.prerender.routes.push(...ids);
+    },
+  },
 
   imports: {
     dirs: ["./stores", "./services/"],
