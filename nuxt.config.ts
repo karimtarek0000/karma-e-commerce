@@ -47,7 +47,7 @@ export default defineNuxtConfig({
   },
   hooks: {
     async "nitro:config"(nitroConfig: any) {
-      // if (nitroConfig.dev) return;
+      if (nitroConfig.dev) return;
 
       const ids = await products();
       nitroConfig.prerender.routes.push(...ids);
