@@ -1,6 +1,7 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   const accessToken = useCookie("accessToken");
   const { setUserDataWhenLoggedIn } = useAuth();
+  console.log("Middleware");
 
   if (accessToken.value) {
     setUserDataWhenLoggedIn(accessToken?.value as string);
