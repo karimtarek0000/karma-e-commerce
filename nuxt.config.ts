@@ -35,6 +35,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       BASE_URL: "",
+      CLIENT_URL: "",
     },
   },
 
