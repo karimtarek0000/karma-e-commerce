@@ -43,7 +43,6 @@ export default defineNuxtConfig({
   routeRules: {
     "/product-details/**": { swr: 3600 },
     "/products/top-rated": { prerender: true },
-    "/": { prerender: true },
   },
   hooks: {
     async "nitro:config"(nitroConfig: any) {
