@@ -3,6 +3,7 @@ const { isDesktop } = useDevice();
 const { isLoggedIn } = useAuth();
 
 const desktopAndLoggedIn = computed((): boolean => isDesktop && isLoggedIn);
+const isLoggedInStatus = computed((): boolean => !isLoggedIn);
 </script>
 
 <template>
@@ -18,7 +19,7 @@ const desktopAndLoggedIn = computed((): boolean => isDesktop && isLoggedIn);
         <!-- Actions -->
         <div class="flex items-center gap-x-3 max-lg:ms-auto">
           <NavbarDropDown v-if="desktopAndLoggedIn" />
-          <NuxtLink v-if="!isLoggedIn" class="btn login" to="/auth"
+          <NuxtLink v-if="isLoggedInStatus" class="btn login" to="/auth"
             >Login</NuxtLink
           >
           <ActionsCart v-if="desktopAndLoggedIn" />
