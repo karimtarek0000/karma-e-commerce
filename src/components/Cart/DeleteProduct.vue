@@ -5,7 +5,7 @@ import { useToast } from "vue-toastification";
 defineProps<{ product: CartProduct }>();
 
 // ----------- Composables ------------
-const { data: cart } = useNuxtData("cart");
+const { data: cart } = useNuxtData("cartShopping");
 const { openModalHandler, confirmHandler } = useModalController();
 const http = useHttp();
 const toast = useToast();

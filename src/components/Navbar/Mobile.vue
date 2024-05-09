@@ -6,7 +6,7 @@ const { user, isLoggedIn } = useAuth();
 
 // ----------- API ------------
 const { data: cart } = await useAsyncData<{ cart: Cart }>(
-  "cart",
+  "cartShopping",
   () => http(CART),
   {
     pick: ["cart"],

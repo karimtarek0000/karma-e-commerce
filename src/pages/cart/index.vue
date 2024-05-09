@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ----------- Composables ------------
-const { data: cart } = useNuxtData("cart");
+const { data: cart } = useNuxtData("cartShopping");
 
 // ----------------- Computed -------------------
 const cartProducts = computed((): CartProduct[] => cart.value?.cart?.products);

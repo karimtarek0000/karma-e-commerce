@@ -24,7 +24,7 @@ const {
   execute: cartExcute,
 } = await useAsyncData(
   () =>
-    http("/cart", {
+    http(CART, {
       method: "POST",
       body: {
         productId: pickProduct.value?._id,
@@ -58,7 +58,7 @@ const addToCardHandler = async (product: Product) => {
 
   if (!cartLoader.value && !cartError.value) {
     productId.value = product._id;
-    await refreshNuxtData("cart");
+    await refreshNuxtData("cartShopping");
     toast.success(`Product ${product.title} added in cart successfully`);
     pickProduct.value = null;
   }

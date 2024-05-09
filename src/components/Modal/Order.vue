@@ -90,7 +90,7 @@ const submitHandler = async (data: OrderModal) => {
   );
 
   if (!pending.value && !error.value) {
-    !options?.productId && (await refreshNuxtData("cart"));
+    !options?.productId && (await refreshNuxtData("cartShopping"));
 
     if (!order.value?.checkOutURL) {
       await navigateTo(`/order-info/${order.value.order._id}`);

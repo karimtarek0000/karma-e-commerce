@@ -31,7 +31,7 @@ export const useAuth = defineStore("auth", {
         this.user = {} as any;
         accessToken.value = null;
         toast.success("Logout successfully");
-        clearNuxtData("cart");
+        clearNuxtData("cartShopping");
         navigateTo("/auth");
       }
 

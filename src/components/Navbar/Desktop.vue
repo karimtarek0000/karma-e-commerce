@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const { isDesktop } = useDevice();
-const { isLoggedIn } = useAuth();
+const { isLoggedIn, loggedIn } = useAuth();
 
 const desktopAndLoggedIn = computed((): boolean => isDesktop && isLoggedIn);
-const isLoggedInStatus = computed((): boolean => isLoggedIn);
 </script>
 
 <template>
@@ -18,11 +17,11 @@ const isLoggedInStatus = computed((): boolean => isLoggedIn);
 
         <!-- Actions -->
         <div class="flex items-center gap-x-3 max-lg:ms-auto">
-          <NavbarDropDown v-if="desktopAndLoggedIn" />
-          <NuxtLink v-if="!isLoggedInStatus" class="btn login" to="/auth"
-            >Login</NuxtLink
-          >
-          <ActionsCart v-if="desktopAndLoggedIn" />
+          <LazyNavbarDropDown v-if="desktopAndLoggedIn" />
+          <ClientOnly v-if="!loggedIn">
+            <NuxtLink class="btn login" to="/auth">Login</NuxtLink>
+          </ClientOnly>
+          <LazyActionsCart v-if="desktopAndLoggedIn" />
         </div>
       </div>
     </div>
@@ -40,4 +39,3 @@ const isLoggedInStatus = computed((): boolean => isLoggedIn);
   @apply text-black border border-secondary hover:bg-secondary hover:text-white transition-colors duration-200;
 }
 </style>
-stores/auth

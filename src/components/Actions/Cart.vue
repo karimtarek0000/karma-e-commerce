@@ -12,10 +12,11 @@ const productId = ref<string>("");
 // ----------- API ------------
 // Get cart
 const { data: cart } = await useAsyncData<{ cart: Cart }>(
-  "cart",
+  "cartShopping",
   () => http(CART),
   {
     pick: ["cart"],
+    server: false,
   }
 );
 
@@ -46,7 +47,6 @@ const toggleQuickViewHandler = () => {
       :total="(cart?.cart?.subTotal as number) || 0"
       :products="cart?.cart.products ?? []"
       :productId="productId"
-      :statusLoader="status"
       v-show="toggleCartQuickView"
     >
       <template #checkout>

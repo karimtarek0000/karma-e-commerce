@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ----------- Composables ------------
-const { data: cart } = useNuxtData("cart");
+const { data: cart } = useNuxtData("cartShopping");
 const { isDesktop } = useDevice();
 const { isLoggedIn } = useAuth();
 const http = useHttp();

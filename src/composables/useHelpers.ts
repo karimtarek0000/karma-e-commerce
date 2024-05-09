@@ -7,7 +7,7 @@ export const replaceCloudinaryURL = (text: string) => {
 };
 
 export const isProductInCart = (initialProductId: string) => {
-  const { data: cart } = useNuxtData("cart");
+  const { data: cart } = useNuxtData("cartShopping");
   const productId = ref<string>(initialProductId);
 
   const productCartIds = computed((): string[] =>

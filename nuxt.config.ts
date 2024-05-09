@@ -41,12 +41,13 @@ export default defineNuxtConfig({
 
   // Render modes
   routeRules: {
-    "/product-details/**": { swr: 3600 },
+    "/product-details/**": { isr: 3600 },
     "/products/top-rated": { prerender: true },
+    "/": { prerender: true },
   },
   hooks: {
     async "nitro:config"(nitroConfig: any) {
-      if (nitroConfig.dev) return;
+      // if (nitroConfig.dev) return;
 
       const ids = await products();
       nitroConfig.prerender.routes.push(...ids);

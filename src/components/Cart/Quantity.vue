@@ -2,9 +2,12 @@
 import { useToast } from "vue-toastification";
 
 // ----------- Define ------------
-const { status } = withDefaults(defineProps<{ product: CartProduct; status: boolean }>(), {
-  status: true,
-});
+const { status } = withDefaults(
+  defineProps<{ product: CartProduct; status: boolean }>(),
+  {
+    status: true,
+  }
+);
 const emit = defineEmits(["sendQuantity"]);
 
 // ----------- Composables ------------
@@ -42,7 +45,7 @@ const sendNewQuantityToCart = async (product: CartProduct) => {
     await addToCartExecute();
 
     if (!addToCartLoader.value && !addToCartError.value) {
-      await refreshNuxtData("cart");
+      await refreshNuxtData("cartShopping");
       toast.success("Quantity updated successfully");
     }
     if (addToCartError.value) {
@@ -55,7 +58,10 @@ const sendNewQuantityToCart = async (product: CartProduct) => {
   }
 };
 
-const changeQuantityHandler = async (e: any, product: CartProduct): Promise<void> => {
+const changeQuantityHandler = async (
+  e: any,
+  product: CartProduct
+): Promise<void> => {
   quantity.value = +e.target.value;
 
   if (status) return sendNewQuantityToCart(product);
