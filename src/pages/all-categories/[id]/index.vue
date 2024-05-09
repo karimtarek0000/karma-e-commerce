@@ -230,7 +230,7 @@ if (categoryError.value || productsError.value) {
     <!-- All products and pagination -->
     <div class="max-h-screen overflow-auto scrollbar-none">
       <!-- Pagination -->
-      <ClientOnly>
+      <ClientOnly v-if="products?.length">
         <SharePagination
           class="mb-5"
           v-if="metaDataPaginForProducts?.totalOfPages > 1"
@@ -273,6 +273,9 @@ if (categoryError.value || productsError.value) {
           </NuxtLink>
         </template>
       </div>
+
+      <!-- If not exist any product -->
+      <ShareProductsNotExist v-if="!products?.length && !productsLoading" />
     </div>
   </div>
 </template>

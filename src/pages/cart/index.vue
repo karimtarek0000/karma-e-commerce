@@ -16,7 +16,8 @@ useSeoMeta({
     <div v-if="cartProducts?.length" class="header">
       <!-- Total -->
       <h3 class="total">
-        Total: <strong> {{ cart?.cart?.subTotal?.toLocaleString() || 0 }}</strong>
+        Total:
+        <strong> {{ cart?.cart?.subTotal?.toLocaleString() || 0 }}</strong>
       </h3>
 
       <!-- Checkout -->
@@ -39,18 +40,7 @@ useSeoMeta({
     </CartProduct>
 
     <!-- If no any product -->
-    <div
-      v-if="!cartProducts?.length"
-      class="max-w-[15.5rem] min-h-[16rem] mx-auto py-4 text-center"
-    >
-      <NuxtImg src="/img/cartempty.svg" class="res-image" fit="cover" />
-      <h3 class="font-bold">Cart not exist any product yet!</h3>
-      <NuxtLink
-        to="/"
-        class="block px-2 py-3 mt-4 text-white rounded-md hover:bg-secondary/95 bg-secondary"
-        >Go to home page</NuxtLink
-      >
-    </div>
+    <ShareProductsNotExist v-if="!cartProducts?.length" />
   </div>
 </template>
 
