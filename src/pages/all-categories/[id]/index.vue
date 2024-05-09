@@ -81,7 +81,7 @@ const listBrandClassess = (_subCategoryId: string): [string, object] => {
     },
   ];
 };
-const changePageNumberHandler = (_pageNumber: number = 1) => {
+const changePageNumberHandler = (_pageNumber: number = pageNumber.value) => {
   pageNumber.value = _pageNumber;
   const key = `products-${_pageNumber}-category${id}-subCategory${setSubCategory?.value?._id}`;
   const { data } = useNuxtData(key);
