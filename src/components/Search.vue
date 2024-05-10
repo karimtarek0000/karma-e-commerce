@@ -66,7 +66,7 @@ watch(search, (newValue) => {
     <!-- Search input -->
     <input
       v-model="search"
-      class="input"
+      class="px-2 py-3 leading-[0] border-0 shrink max-lg:min-w-full min-w-[31.25rem] text-black bg-white rounded-md text-14"
       type="text"
       placeholder="What are you looking for ?"
     />
@@ -129,9 +129,6 @@ watch(search, (newValue) => {
 </template>
 
 <style scoped>
-.input {
-  @apply px-2 py-3 leading-[0] border-0 shrink max-lg:min-w-full min-w-[31.25rem] text-black bg-white rounded-md text-14;
-}
 .search-list-wrapper {
   @apply absolute z-50 block overflow-hidden top-[100%] w-full h-[170px] shadow-md rounded-md mt-2 bg-white;
 }

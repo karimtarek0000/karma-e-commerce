@@ -3,13 +3,15 @@ defineProps<{ category: Gategory }>();
 </script>
 
 <template>
-  <div class="view view-category">
+  <div
+    class="view opacity-0 pointer-events-none translate-y-5 transition-all duration-500 h-[31.25rem] bg-white shadow-lg rounded-sm absolute top-[2.25rem] inset-0 overflow-hidden"
+  >
     <div class="flex h-full">
       <!-- Col 1 -->
       <div class="basis-[60%] shrink-0 p-2">
-        <h2 class="category-name">{{ category.name }}</h2>
+        <h2 class="mb-1 font-bold capitalize text-18">{{ category.name }}</h2>
         <hr />
-        <h3 class="category-title">Sub Categories</h3>
+        <h3 class="mt-1 font-bold uppercase text-14">Sub Categories</h3>
 
         <!-- Links -->
         <div class="flex flex-col items-start mt-4 gap-y-1">
@@ -39,16 +41,3 @@ defineProps<{ category: Gategory }>();
     </div>
   </div>
 </template>
-
-<style scoped>
-.view-category {
-  @apply opacity-0 pointer-events-none  translate-y-5 transition-all duration-500 h-[31.25rem] bg-white shadow-lg rounded-sm absolute top-[2.25rem] inset-0 overflow-hidden;
-}
-
-.category-name {
-  @apply mb-1 font-bold capitalize text-18;
-}
-.category-title {
-  @apply mt-1 uppercase text-14 font-bold;
-}
-</style>

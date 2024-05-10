@@ -13,14 +13,14 @@ const overCategoryHandler = (category: Gategory): void => {
 </script>
 
 <template>
-  <nav class="nav-category">
+  <nav class="py-3 bg-primary">
     <div class="container relative">
-      <div class="wrapper">
-        <div class="links">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-x-4">
           <NuxtLink
             v-for="category in allCategories"
             :key="category.name"
-            class="font-bold link"
+            class="px-3 py-1 font-bold uppercase rounded-sm link text-18 hover:bg-secondary hover:text-white"
             :to="`/all-categories/${category?._id}`"
             @mouseover="overCategoryHandler(category)"
           >
@@ -36,19 +36,6 @@ const overCategoryHandler = (category: Gategory): void => {
 </template>
 
 <style scoped>
-.nav-category {
-  @apply py-3 bg-primary;
-}
-.nav-category .wrapper {
-  @apply flex items-center justify-between;
-}
-.nav-category .links {
-  @apply flex items-center gap-x-4;
-}
-.link {
-  @apply uppercase text-18 rounded-sm px-3 py-1 hover:bg-secondary hover:text-white;
-}
-
 .link:hover ~ .view,
 .view:hover {
   @apply translate-y-0 opacity-100 pointer-events-auto;
