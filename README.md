@@ -1,23 +1,38 @@
 ### Karma e-commerce Full stack (MEVN Stack) [backend with Node.js](https://github.com/karimtarek0000/karma-e-commerce-backend)
 
-#### Usage
-
 - Nuxt Vue with typescript
 - Pina for state management
 - Tailwind CSS
 - Formkit for validation
+- Hybrid renders for pages (CSR - SSR - SSG - ISR)
+- Parts from UI render depend on device, Desktop or (mobile - tablet)
+- Optimice image with Nuxt-image
 
 #### Features
 
-- **Authentication**
-  1. You can user signup with an email after that user will receive an email to verify his account when clicked on `click her to confirm you email` button in `email` will redirect to the site to click on `verify` button then you can now signin
-  2. If user try signup with `email` already exist with showing alert `this email already exist`
-  3. You can user sign in by `email` or with his `Google account` (Google not approved yet to working on production)
-  4. If user clicked on `forget password` will redirect to page `enter email` if this email exist will receive email to reset the password now user you can clicked on `reset password` after that redirect to the page to enter `new password`
-     _Note_ this email valid till 1 hour only
-  5. You can user rest of his `password` he will receive an `email` and after that, he can change his `password` safely
-  6. The token for the session will refresh whether on both the Client and the Server side
-  7. Middleware will handle guard for specific pages, after the user signin on to our site he will not be able to navigate to the auth page again
+- **Authentication pages**
+  - (Signin (SSG) / Signup (SSG) / Forget-password / reset-password)
+    1.  You can user signup with an email after that user will receive an email to verify his account when clicked on `click her to confirm you email` button in `email` will redirect to the site to click on `verify` button then you can now signin
+    2.  If user try signup with `email` already exist with showing alert `this email already exist`
+    3.  You can user sign in by `email` or with his `Google account`
+    4.  If user clicked on `forget password` will redirect to page `enter email` if this email exist will receive email to reset the password now user you can clicked on `reset password` after that redirect to the page to enter `new password`
+        _Note_ this email valid till 1 hour only
+    5.  You can user rest of his `password` he will receive an `email` and after that, he can change his `password` safely
+    6.  The token for the session will refresh whether on both the Client and the Server side
+    7.  Middleware will handle guard for specific pages, after the user signin on to our site he will not be able to navigate to the auth page again
+
+##
+
+- **Home page (SSG)**
+
+1. Section one -> Slider will show specific products
+2. Section two -> Eight top rated products
+
+##
+
+- **All caegories/:idCategory (SSR)**
+  1.  You can user click on specific category and it will show all products related to this category
+  2.  You can user click on `sub-category` to show all products related with it either click on `brand` in `sub-category`
 
 ##
 
@@ -31,7 +46,7 @@
 
 ##
 
-- **Cart page**
+- **Cart page (SSR)**
   1. You can user delete the product
   2. You can user update the quantity of the product
   3. You can user now click on checkout to proceed write of information
@@ -52,8 +67,12 @@
 
 ##
 
-- **Product details page**
+- **Product details page (ISR)**
+
   1. You can user `enter quantity` for that product
   2. You can user `checkout` for that product only
   3. You can use hover on image product to make it zoom in
   4. You can user click on `add to cart` and after that product will be added to the `cart shopping` and the button will be disabled
+
+- **Top rated page (SSG)**
+  1.  After user click on `view more top rated` from home page will going to this page that show all top rated products
