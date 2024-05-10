@@ -1,4 +1,4 @@
-### Karma e-commerce Full stack (MEVN Stack) [backend with Node.js](https://github.com/karimtarek0000/karma-e-commerce-backend)
+### Karma e-commerce (Universal App) Full stack (MEVN Stack) [backend with Node.js](https://github.com/karimtarek0000/karma-e-commerce-backend)
 
 - Nuxt Vue with typescript
 - Pina for state management
@@ -33,6 +33,7 @@
 - **All caegories/:idCategory (SSR)**
   1.  User can click on specific category and it will show all products related to this category
   2.  User can click on `sub-category` to show all products related with it either click on `brand` in `sub-category`
+  3.  All products paginated, when user click on specific page these products will `caching`
 
 ##
 
