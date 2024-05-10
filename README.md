@@ -89,5 +89,6 @@
 ##
 
 - **Dropdown profile**
-  1. Show `user name`
-  2. User can click on any from these and will going to the page -> _(Cart, Orders, Logout)_
+  1. It will show `user name`
+  2. User can click on any from these and will going to the page -> _(Cart, Orders)_
+  3. User can click on `Logout`
