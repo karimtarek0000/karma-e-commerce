@@ -16,7 +16,7 @@ const { data: cart } = await useAsyncData<{ cart: Cart }>(
   () => http(CART),
   {
     pick: ["cart"],
-    server: false,
+    // server: false,
   }
 );
 
