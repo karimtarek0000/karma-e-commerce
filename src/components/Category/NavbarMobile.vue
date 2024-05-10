@@ -7,7 +7,7 @@ const allCategories = reactive<Gategory[]>(categories.value?.categories);
 </script>
 
 <template>
-  <nav class="navbar">
+  <nav class="flex items-center max-w-full overflow-auto bg-primary gap-x-4">
     <NuxtLink
       v-for="category in allCategories"
       :key="category?._id"
@@ -19,9 +19,6 @@ const allCategories = reactive<Gategory[]>(categories.value?.categories);
 </template>
 
 <style scoped>
-.navbar {
-  @apply flex items-center max-w-full overflow-auto bg-primary gap-x-4;
-}
 .router-link-active {
   @apply bg-secondary text-white;
 }
