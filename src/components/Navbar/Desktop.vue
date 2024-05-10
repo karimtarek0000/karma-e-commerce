@@ -23,7 +23,7 @@ const desktopAndLoggedIn = computed((): boolean => isDesktop && isLoggedIn);
               >Login</NuxtLink
             >
           </ClientOnly>
-          <div class="min-w-[25px]">
+          <div v-if="desktopAndLoggedIn" class="min-w-[25px]">
             <Suspense>
               <LazyActionsCart v-if="desktopAndLoggedIn" />
             </Suspense>

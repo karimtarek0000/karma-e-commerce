@@ -3,7 +3,6 @@ import { useToast } from "vue-toastification";
 
 // ----------- Composables ------------
 const http = useHttp();
-const toast = useToast();
 
 // ----------- Data ------------
 const toggleCartQuickView = ref<boolean>(false);

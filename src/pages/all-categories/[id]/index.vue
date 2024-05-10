@@ -19,8 +19,9 @@ const setBrand = ref<Brand | null>();
 
 // ----------------------- APIs --------------------
 // Category
-const { data: categories, error: categoryError } = await useAsyncData(() =>
-  http(CATEGORIES, { query: { _id: id } })
+const { data: categories, error: categoryError } = await useAsyncData(
+  "categories",
+  () => http(CATEGORIES, { query: { _id: id } })
 );
 const subCategories: SubGategory[] =
   categories?.value?.categories[0]?.subCategories;

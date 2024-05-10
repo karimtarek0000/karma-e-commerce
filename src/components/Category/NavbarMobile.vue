@@ -2,7 +2,9 @@
 const http = useHttp();
 
 // ----------------- From API ---------------------
-const { data: categories } = await useAsyncData(() => http(CATEGORIES));
+const { data: categories } = await useAsyncData("categories", () =>
+  http(CATEGORIES)
+);
 const allCategories = reactive<Gategory[]>(categories.value?.categories);
 </script>
 

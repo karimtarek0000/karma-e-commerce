@@ -35,7 +35,9 @@ const { isDesktop } = useDevice();
   </main>
 
   <!-- Only for mobile  -->
-  <NavbarMobile v-if="!isDesktop" />
+  <Suspense>
+    <LazyNavbarMobile v-if="!isDesktop" />
+  </Suspense>
 
   <!-- Modal -->
   <Teleport to="body">
