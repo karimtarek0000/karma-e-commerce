@@ -17,10 +17,12 @@ const desktopAndLoggedIn = computed((): boolean => isDesktop && isLoggedIn);
 
         <!-- Actions -->
         <div class="flex items-center gap-x-3 max-lg:ms-auto">
-          <LazyNavbarDropDown v-if="desktopAndLoggedIn" />
-          <NuxtLink v-if="!loggedIn" class="btn login" to="/auth"
-            >Login</NuxtLink
-          >
+          <ClientOnly>
+            <NavbarDropDown v-if="desktopAndLoggedIn" />
+            <NuxtLink v-if="!loggedIn" class="btn login" to="/auth"
+              >Login</NuxtLink
+            >
+          </ClientOnly>
           <div class="min-w-[25px]">
             <Suspense>
               <LazyActionsCart v-if="desktopAndLoggedIn" />
