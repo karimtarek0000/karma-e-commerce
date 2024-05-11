@@ -4,7 +4,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
   const scrollFn = (binding: any, el: HTMLElement) => {
     const { scrollTop, scrollHeight, clientHeight } = el;
 
-    if (scrollTop + clientHeight >= scrollHeight - 1) {
+    if (scrollTop + clientHeight >= scrollHeight) {
       binding.value();
     }
   };
