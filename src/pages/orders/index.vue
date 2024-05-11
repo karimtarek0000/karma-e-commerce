@@ -26,23 +26,15 @@ useSeoMeta({
 </script>
 
 <template>
-  <header class="my-5 text-2xl font-bold text-center">
+  <header
+    v-if="orders?.orders.length"
+    class="my-5 text-2xl font-bold text-center"
+  >
     <h1>Orders</h1>
   </header>
 
   <!-- If no any order -->
-  <div
-    v-if="!loader && !orders?.orders.length"
-    class="flex flex-col items-center my-32"
-  >
-    <div class="max-w-[15.5rem]">
-      <NuxtImg src="/img/orders.svg" class="res-image" fit="cover" />
-    </div>
-    <h1 class="mt-2 font-bold text-center text-18">No any order yet!</h1>
-    <NuxtLink to="/" class="px-3 py-2 mt-3 text-white rounded-md bg-secondary">
-      Go to home
-    </NuxtLink>
-  </div>
+  <ShareOrdersNotExist v-if="!loader && !orders?.orders.length" />
 
   <div class="wrapper">
     <!-- Wrapper cards -->
