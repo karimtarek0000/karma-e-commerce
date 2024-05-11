@@ -3,7 +3,7 @@
     <div class="max-w-[15.5rem]">
       <NuxtImg
         src="/img/orders.svg"
-        class="res-image max-sm:max-w-[40vw] mx-auto"
+        class="res-image max-sm:max-w-[200px] max-sm:max-h-[200px] mx-auto"
         fit="cover"
       />
     </div>

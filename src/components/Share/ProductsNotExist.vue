@@ -2,7 +2,7 @@
   <div class="not-found">
     <NuxtImg
       src="/img/cartempty.svg"
-      class="res-image max-sm:max-w-[40vw] mx-auto"
+      class="res-image max-sm:max-w-[200px] max-sm:max-h-[200px] mx-auto"
       fit="cover"
     />
     <h3 class="font-bold">Not exist any product yet!</h3>
