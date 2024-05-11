@@ -11,7 +11,7 @@ const clearErrorHandler = () => clearError({ redirect: "/" });
       <NuxtImg
         v-if="error?.statusCode === 404"
         src="/img/404.svg"
-        class="res-image max-sm:max-w-[40vw] mx-auto"
+        class="res-image max-sm:max-w-[100px] mx-auto"
         fit="cover"
       />
     </div>
