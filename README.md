@@ -13,14 +13,14 @@
 - **Authentication pages**
 - (Sign in (SSG) / Sign up (SSG) / Forget-password / Reset-password)
 
-1.  User can sign up with an email after that he will receive an email to verify his account when clicked on `click here to confirm your email` button in `email` will redirect to the site to click on `verify` button then you can now sign in
+1.  User can sign up with an email after that he will receive an email to verify his account when click on `click here to confirm your email` button in `email` will redirect to the site to click on `verify` button then you can now sign in
 2.  If user tries to sign up with an `email` that already exists, a warning alert will show `this email already exists`
 3.  User can sign in by `email` or with his `Google account`
 4.  If user clicked on `forget password` will redirect to page `enter email` if this email exists, they will receive an email to reset the password. Now the user can click on `reset password` after that redirect to the page to enter `new password`
-    _Note_ this email is valid for 1 hour only
+    _Note_ this link is valid for 1 hour only
 5.  User can reset his `password` he will receive an `email` and after that, he can change his `password` safely
 6.  The token for the session will refresh whether on both the `Client` and the `Server side`
-7.  Middleware will handle guard for specific pages, after the user signs in on to our site they will not be able to navigate to the auth page again
+7.  Middleware will handle guard for specific pages, after the user sign in on our site he will not be able to navigate to the `auth page` again
 
 ##
 
@@ -83,7 +83,7 @@
 
 - **Top-rated page (SSG)**
 
-1.  After the user clicks on `view more top-rated` from the home page, they will go to this page that shows all top-rated products
+1.  After the user clicks on `view more top-rated` from the home page, he will go to this page that shows all top-rated products
 
 ##
 
