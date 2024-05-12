@@ -67,7 +67,7 @@
 3. _Input coupon for discount:_
    - If the user has a valid coupon (Optional)
 4. Now the user can decide to pay with a credit card or cash on delivery
-   - Credit card with (Stripe)
+   - Credit card with (Stripe) -> you can use this credit for testing -> (4242 4242 4242 4242 and with any date and CVC)
 5. If all the information is correct, the user will be shown a page including all details about that order and they will be able to scan a `QRCode` that includes all information about the products and will receive an email with an `invoice`
 
 ##
